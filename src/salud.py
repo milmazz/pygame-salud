@@ -10,7 +10,6 @@ from pygame.locals import *
 import constants
 import common
 from menu import MenuItem, MenuActivity
-from keys import KeyActivity
 from reads import PoetryActivity, PoetryActivity2
 
 def main():
