@@ -38,8 +38,8 @@ associations_hover_filename = os.path.join(icons_folder, "gartoon", "association
 illustration_008 = os.path.join(data_folder, "backgrounds", "illustration_008.jpg")
 illustration_012 = os.path.join(data_folder, "backgrounds", "illustration_012.jpg")
 
-poetry = os.path.join(data_folder, "messages", "poetry.txt")
-poetry2 = os.path.join(data_folder, "messages", "poetry2.txt")
+poetry = os.path.join(data_folder, "poetries", "poetry.txt")
+poetry2 = os.path.join(data_folder, "poetries", "poetry2.txt")
 
 # sound buffer length
 mixer_buffersize = 3 * 1024
