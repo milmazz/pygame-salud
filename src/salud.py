@@ -29,8 +29,7 @@ def main():
 	pygame.mouse.set_visible(False)
 
 	items = [
-        MenuItem(constants.readings_filename , KeyActivity), 
-        MenuItem(constants.associations_filename, PoetryActivity), 
+        MenuItem(constants.readings_filename , PoetryActivity), 
         MenuItem(constants.associations_filename, PoetryActivity2), 
     ]
 
