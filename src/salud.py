@@ -11,6 +11,7 @@ import constants
 import common
 from menu import MenuItem, MenuActivity
 from keys import KeyActivity
+from reads import PoetryActivity, PoetryActivity2
 
 def main():
 	# Mixer pre init
@@ -29,8 +30,8 @@ def main():
 
 	items = [
         MenuItem(constants.readings_filename , KeyActivity), 
-        MenuItem(constants.associations_filename, KeyActivity), 
-        MenuItem(constants.associations_filename, KeyActivity), 
+        MenuItem(constants.associations_filename, PoetryActivity), 
+        MenuItem(constants.associations_filename, PoetryActivity2), 
     ]
 
 	MenuActivity(screen, items).run()

@@ -10,8 +10,7 @@ class Activity:
         
         #self.background = pygame.Surface(self.screen.get_size())
         #self.background = self.background.convert()
-        #self.setup_background()
-        self.background = pygame.image.load(constants.background_filename)
+        self.setup_background()
         
         self.center = self.background.get_rect().center
         
@@ -21,7 +20,8 @@ class Activity:
         self.mprev = None
         
     def setup_background(self):
-        pass
+        self.background = pygame.image.load(constants.background_filename).convert()
+        #pass
         
     def load_image(self, name, colorkey=None):
         return common.load_image(name, colorkey)

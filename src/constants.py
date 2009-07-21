@@ -35,9 +35,16 @@ readings_hover_filename = os.path.join(icons_folder, "gartoon", "readings_hover.
 associations_filename = os.path.join(icons_folder, "gartoon", "associations.png")
 associations_hover_filename = os.path.join(icons_folder, "gartoon", "associations_hover.png")
 
+illustration_008 = os.path.join(data_folder, "backgrounds", "illustration_008.jpg")
+illustration_012 = os.path.join(data_folder, "backgrounds", "illustration_012.jpg")
+
+poetry = os.path.join(data_folder, "messages", "poetry.txt")
+poetry2 = os.path.join(data_folder, "messages", "poetry2.txt")
+
 # sound buffer length
 mixer_buffersize = 3 * 1024
 
 # Flags for screen display
-screen_flags = FULLSCREEN | NOFRAME
+#screen_flags = FULLSCREEN | NOFRAME
+screen_flags = 0
 screen_mode = (800, 600)

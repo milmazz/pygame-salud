@@ -57,8 +57,8 @@ class MenuActivity(Activity):
         
         self.pos = None
         
-    def setup_background(self):
-        self.background = common.load_image(constants.background_filename)
+    #def setup_background(self):
+    #    self.background = pygame.image.load(constants.background_filename)
         
     def handle_events(self):
         event = pygame.event.wait()
