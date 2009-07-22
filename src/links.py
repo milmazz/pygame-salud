@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import sys
+
 import pygame
+from pygame.locals import *
 
 import constants
 import common
@@ -63,15 +65,20 @@ class Shower(Activity):
             self.clock.tick(300)
 
             event = pygame.event.wait()
-            if event.type == pygame.QUIT:
+            if event.type == QUIT:
                 self.quit = True
-                # FIX this should be done by the menu class and this class
+                # FIXME this should be done by the menu class and this class
                 # must use a better pointer
 	            pygame.mouse.set_visible(False)
                 return
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == KEYUP:
+                self.changed = True
+                if event.key == K_ESCAPE:
+                    self.quit = True
+                    return
+            elif event.type == MOUSEBUTTONDOWN:
                 self.endline = self.startline = pygame.mouse.get_pos()
-            elif event.type == pygame.MOUSEMOTION \
+            elif event.type == MOUSEMOTION \
                     and pygame.mouse.get_pressed()[0]:
 
                 if self.startline == None:
@@ -84,7 +91,7 @@ class Shower(Activity):
                                    self.startline, self.endline, 9)
                 self.selection = self.startline, self.endline
             
-            elif event.type == pygame.MOUSEBUTTONUP:
+            elif event.type == MOUSEBUTTONUP:
                 self.validate_selection()
             
             pygame.display.flip()
