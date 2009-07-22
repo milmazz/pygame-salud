@@ -1,3 +1,4 @@
+# vim:ts=4:sts=4:et:nowrap:tw=77
 # -*- coding: utf-8 -*-
 
 import math

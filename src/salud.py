@@ -11,6 +11,7 @@ import constants
 import common
 from menu import MenuItem, MenuActivity
 from reads import PoetryActivity, PoetryActivity2
+from links import Shower
 
 def main():
 	# Mixer pre init
@@ -28,8 +29,9 @@ def main():
 	pygame.mouse.set_visible(False)
 
 	items = [
-        MenuItem(constants.readings_filename , PoetryActivity), 
+        MenuItem(constants.readings_filename, PoetryActivity), 
         MenuItem(constants.associations_filename, PoetryActivity2), 
+        MenuItem(constants.associations_filename, Shower), 
     ]
 
 	MenuActivity(screen, items).run()
