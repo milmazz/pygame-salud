@@ -65,6 +65,9 @@ class Shower(Activity):
             event = pygame.event.wait()
             if event.type == pygame.QUIT:
                 self.quit = True
+                # FIX this should be done by the menu class and this class
+                # must use a better pointer
+	            pygame.mouse.set_visible(False)
                 return
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self.endline = self.startline = pygame.mouse.get_pos()
@@ -78,7 +81,7 @@ class Shower(Activity):
 
                 self.update_screen()
                 pygame.draw.aaline(self.screen, (120, 120, 120), 
-                                   self.startline, self.endline)
+                                   self.startline, self.endline, 9)
                 self.selection = self.startline, self.endline
             
             elif event.type == pygame.MOUSEBUTTONUP:
@@ -91,7 +94,7 @@ class Shower(Activity):
 
         if self.selections:
             for (start, end), color in self.selections:
-                pygame.draw.aaline(self.screen, color, start, end, 0)
+                pygame.draw.aaline(self.screen, color, start, end, 7)
 
 
     def validate_selection(self):
@@ -113,5 +116,3 @@ class Shower(Activity):
                 or self.items_rect['soap'].collidepoint(selection[1]) \
                 and self.items_rect['body'].collidepoint(selection[0]):
                     self.selections.append((selection, (100, 150, 255)))
-        else:
-            self.selections.append((selection, (255, 100, 100)))
