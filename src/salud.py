@@ -15,6 +15,7 @@ from reads import PoetryActivity, PoetryActivity2
 from links import Shower
 from soups import SoupActivity
 from soups2 import Soup2Activity
+from crazyletter import CrazyLetterActivity
 
 def main():
 	# Mixer pre init
@@ -37,6 +38,7 @@ def main():
         MenuItem(constants.associations_filename, Shower), 
         MenuItem(constants.associations_filename, SoupActivity), 
         MenuItem(constants.associations_filename, Soup2Activity), 
+        MenuItem(constants.associations_filename, CrazyLetterActivity), 
     ]
 
 	MenuActivity(screen, items).run()
