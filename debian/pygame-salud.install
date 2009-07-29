@@ -1,0 +1,5 @@
+data usr/share/games/pygame-salud
+src usr/share/games/pygame-salud
+pygame-salud.sh usr/share/games/pygame-salud
+debian/pygame-salud.xpm usr/share/pixmaps
+debian/pygame-salud.desktop usr/share/applications

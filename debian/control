@@ -1,0 +1,14 @@
+Source: pygame-salud
+Section: games
+Priority: optional
+Maintainer: Milton Mazzarri <mazzarrim@pdvsa.com>
+Build-Depends: debhelper (>= 7), python-support (>= 0.6.4)
+Standards-Version: 3.8.1
+Homepage: http://proyectos.canaima.softwarelibre.gob.ve/actividades-salud
+Vcs-Git: git://github.com/milmazz/pygame-salud.git
+
+Package: pygame-salud
+Architecture: all
+Depends: python-pygame (>= 1.7.1), ttf-dejavu-core (>= 2.25), ${python:Depends}, ${misc:Depends}
+Description: Bla bla
+ Bla bla
