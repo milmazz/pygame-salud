@@ -202,15 +202,13 @@ class CrazyLetterActivity(Activity):
                     self.view.screen.blit(self.view.background, (0,0))
                     self.sprites.draw(self.view.screen)
                     pygame.display.update()
-                    print pos
+                    #print pos
 
                 if event.type == MOUSEBUTTONUP and selection:
                     self.button_down = 0
                     letter_in_container = pygame.sprite.spritecollideany(selection, self.contenedor)
                     if letter_in_container:
-                        if selection.letter == letter_in_container.letter:
-                            print "perfecto" 
-                        else:
+                        if selection.letter != letter_in_container.letter:
                             selection.back()
                             selection.update(selection.orig)
                             self.view.screen.blit(self.view.background, (0,0))
