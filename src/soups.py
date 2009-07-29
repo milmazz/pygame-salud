@@ -160,7 +160,7 @@ class SoupActivity(Activity):
         self.lapiz = Lapiz()
         self.puntalapiz = Puntalapiz()
         #ocultamos el puntero del raton 
-        pygame.mouse.set_visible( True )
+        pygame.mouse.set_visible( False )
         #grupos de sprite
         self.sprites  = pygame.sprite.OrderedUpdates()
         self.letras   = pygame.sprite.Group()
