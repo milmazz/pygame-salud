@@ -51,6 +51,10 @@ images_soups = os.path.join(data_folder,"soups")
 # soups2
 illustration_017 = os.path.join(data_folder, "backgrounds", "illustration_017.jpg")
 
+#crazyletter
+illustration_002 = os.path.join(data_folder, "backgrounds", "ilustracion002.png")
+images_cletter = os.path.join(data_folder,"crazyletter")
+
 # sound buffer length
 mixer_buffersize = 3 * 1024
 
