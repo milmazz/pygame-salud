@@ -258,11 +258,11 @@ class SoupActivity2(Activity):
             #suelo
             elif self.tamano_lista == 5 and self.lista_ordenada == [19,20,21,22,23]:
                 self.check = 2
-                palabras.update("gusto")
+                palabras.update("suelo")
             #plantas
             elif self.tamano_lista == 7 and self.lista_ordenada == [1,2,3,4,5,6,7]:
                 self.check = 2
-                palabras.update("tacto")
+                palabras.update("plantas")
             #animales
             elif self.tamano_lista == 8 and self.lista_ordenada == [40,41,42,43,44,45,46,47]:
                 self.check = 2
@@ -324,9 +324,9 @@ class SoupActivity2(Activity):
                 self.letras.add([Letras(self.pos_x + tam_x * j, \
                   pos_y + tam_y * i, letrasM[j + i * 8], j + i * 8)])
            
-        self.palabras.add([Palabras(80, 370, 'vista'), Palabras(87, 400, 'gusto'), \
-          Palabras(88, 430, 'tacto'), Palabras(87, 460, 'oido'), \
-          Palabras(84, 490, 'olfato')])
+        self.palabras.add([Palabras(550, 200, 'plantas'), Palabras(550, 250, 'aire'), \
+          Palabras(550, 300, 'agua'), Palabras(550, 350, 'luz'), \
+          Palabras(550, 400, 'animales'), Palabras(550, 450, 'suelo')])
         
         self.sprites.add([self.letras, self.lapiz, self.puntalapiz, self.palabras])
         self.sprites.update((0,0))
