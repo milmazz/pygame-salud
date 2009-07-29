@@ -44,6 +44,9 @@ illustration_007 = os.path.join(data_folder, "backgrounds", "illustration_007.jp
 poetry = os.path.join(data_folder, "poetries", "poetry.txt")
 poetry2 = os.path.join(data_folder, "poetries", "poetry2.txt")
 
+# soups
+illustration_003 = os.path.join(data_folder, "backgrounds", "illustration_003.jpg")
+images_soups = os.path.join(data_folder,"soups")
 # sound buffer length
 mixer_buffersize = 3 * 1024
 
@@ -51,3 +54,6 @@ mixer_buffersize = 3 * 1024
 #screen_flags = FULLSCREEN | NOFRAME
 screen_flags = 0
 screen_mode = (800, 600)
+
+# Profiling file
+profiling_file = os.path.join(data_folder, "salud.profile")
