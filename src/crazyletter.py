@@ -14,7 +14,7 @@ class Container(Sprite):
        letter correct letter that the container contains"""
     def __init__(self, pos, letter, color):
         Sprite.__init__(self)
-        self.container = 'images/container_'+color+'.png'
+        self.container = '../data/crazyletter/container_'+color+'.png'
         self.image = pygame.image.load(self.container)
         self.rect = self.image.get_rect()
         self.rect.move_ip(pos)
