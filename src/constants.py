@@ -30,9 +30,9 @@ background_filename = os.path.join(data_folder, u"backgrounds", u"background-mai
 process_stop_filename = os.path.join(icons_folder, u"gartoon", u"process-stop.png")
 
 # Activities images
-readings_filename = os.path.join(icons_folder, "gartoon", "readings.png")
+readings_filename = os.path.join(icons_folder, "gartoon", "readings_hover.png")
 readings_hover_filename = os.path.join(icons_folder, "gartoon", "readings_hover.png")
-associations_filename = os.path.join(icons_folder, "gartoon", "associations.png")
+associations_filename = os.path.join(icons_folder, "gartoon", "associations_hover.png")
 associations_hover_filename = os.path.join(icons_folder, "gartoon", "associations_hover.png")
 
 illustration_008 = os.path.join(data_folder, "backgrounds", "illustration_008.jpg")
