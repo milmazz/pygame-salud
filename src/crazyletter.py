@@ -172,8 +172,16 @@ class CrazyLetterActivity(Activity):
         while True:
             for event in [ pygame.event.wait() ] + pygame.event.get():
                 pos = pygame.mouse.get_pos()
+
                 if event.type == QUIT:
-                    exit()
+                    self.quit = True
+                    return
+                elif event.type == KEYUP:
+                    self.changed = False
+                    if event.key == K_ESCAPE:
+                        self.quit = True
+                        return
+
                 if event.type == MOUSEMOTION:
                     self.pencil.update(pos)
                     self.tippen.update(pos)
