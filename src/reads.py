@@ -27,15 +27,25 @@ class PoetryActivity(Activity):
         self.background = pygame.image.load(constants.illustration_008)
 
     def setup(self):
+        messages = common.load_file(constants.poetry)
+        # Title
         font = pygame.font.SysFont("dejavusans", 32)
         font_height = font.get_linesize()
-        messages = common.load_file(constants.poetry)
-        y = font_height
+        y = 20
 
-        for message in messages:
+        title = unicode(messages[0], 'utf-8')
+        text = font.render(title, True, (0, 0, 0))
+        text_pos = (20, 20)
+        self.screen.blit(text, text_pos)
+
+        y = 35 + font_height
+        font = pygame.font.SysFont("dejavusans", 28)
+        font_height = font.get_linesize()
+
+        for message in messages[1:]:
             message = unicode(message, 'utf-8')
             text = font.render(message, True, (102, 102, 102))
-            text_pos = (50, y)
+            text_pos = (20, y)
             y += font_height
             self.screen.blit(text, text_pos)
 
@@ -59,14 +69,25 @@ class PoetryActivity2(Activity):
         self.background = pygame.image.load(constants.illustration_012)
         
     def setup(self):
+        messages = common.load_file(constants.poetry2)
+        
+        # Title
+        font = pygame.font.SysFont("dejavusans", 28)
+        font_height = font.get_linesize()
+        y = 20
+        
+        title = unicode(messages[0], 'utf-8')
+        text = font.render(title, True, (0, 0, 0))
+        text_pos = (20, 20)
+        self.screen.blit(text, text_pos)
+
+        y = 35 + font_height
         font = pygame.font.SysFont("dejavusans", 24)
         font_height = font.get_linesize()
-        messages = common.load_file(constants.poetry2)
-        y = font_height
 
-        for message in messages:
+        for message in messages[1:]:
             message = unicode(message, 'utf-8')
             text = font.render(message, True, (102, 102, 102))
-            text_pos = (50, y)
+            text_pos = (20, y)
             y += font_height
             self.screen.blit(text, text_pos)
