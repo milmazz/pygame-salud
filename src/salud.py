@@ -6,12 +6,14 @@ import math
 
 import pygame
 from pygame.locals import *
+import cProfile as profile
 
 import constants
 import common
 from menu import MenuItem, MenuActivity
 from reads import PoetryActivity, PoetryActivity2
 from links import Shower
+from soups import SoupActivity
 
 def main():
 	# Mixer pre init
@@ -32,6 +34,7 @@ def main():
         MenuItem(constants.readings_filename, PoetryActivity), 
         MenuItem(constants.associations_filename, PoetryActivity2), 
         MenuItem(constants.associations_filename, Shower), 
+        MenuItem(constants.associations_filename, SoupActivity), 
     ]
 
 	MenuActivity(screen, items).run()
