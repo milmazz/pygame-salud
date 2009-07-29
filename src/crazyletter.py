@@ -124,7 +124,7 @@ class View():
 
     def groupLetters(self):
         letters   = pygame.sprite.Group()
-        positions = [(157, 364), (596, 383), (165, 335), \
+        positions = [(140, 364), (596, 383), (165, 335), \
                       (605, 343), (183, 294), (594, 299), \
                       (576, 269), (223, 263), (250, 232), \
                       (562, 245), (540, 222), (293, 205), \
@@ -202,6 +202,7 @@ class CrazyLetterActivity(Activity):
                     self.view.screen.blit(self.view.background, (0,0))
                     self.sprites.draw(self.view.screen)
                     pygame.display.update()
+                    print pos
 
                 if event.type == MOUSEBUTTONUP and selection:
                     self.button_down = 0
