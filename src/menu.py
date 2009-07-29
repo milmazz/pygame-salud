@@ -30,7 +30,7 @@ class Finger(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self) 
         self.image, self.rect = common.load_image(constants.cursor_filename)
-        pygame.mouse.set_pos(100.0, 100.0)
+        pygame.mouse.set_pos(700.0, 550.0)
 
     def update(self):
         pos = pygame.mouse.get_pos()
@@ -43,15 +43,17 @@ class MenuActivity(Activity):
         
         self.activities = pygame.sprite.RenderPlain()
         
-        x = self.screen.get_width() / 2.0
-        #y_center = self.screen.get_height() / 2.0
         # Positions of the activities in the main menu 
         if items:
-            y = 100
+            y = 0
             for i in range(len(items)):
+                if i % 2 == 0:
+                    x = self.screen.get_width() / 2.0 - 130
+                    y += 120
+                else:
+                    x = self.screen.get_width() / 2.0 + 130
                 items[i].place(x, y)
                 self.activities.add(items[i])
-                y += 120
             
         self.finger = Finger()
         self.Cursor = pygame.sprite.RenderPlain((self.finger))
