@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Pygame Salud
+GenericName=pygame-salud
+Comment=Bla Bla
+Comment[es]=Bla Bla
+Icon=pygame-salud
+Exec=pygame-salud
+Terminal=false
+Categories=Game;
