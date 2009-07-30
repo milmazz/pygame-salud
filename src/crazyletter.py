@@ -50,7 +50,7 @@ class Letters(Sprite):
     def __init__(self, pos, letter, id):
         Sprite.__init__(self)
         self.imagen_normal = constants.images_cletter+'/'+letter+'_normal.png'
-        self.imagen_color  = constants.images_cletter+'/'+letter+'_color.png'
+        #self.imagen_color  = constants.images_cletter+'/'+letter+'_color.png'
         self.image = pygame.image.load(self.imagen_normal)
         self.rect = self.image.get_rect()
         self.rect.move_ip(pos)
@@ -62,10 +62,10 @@ class Letters(Sprite):
     def update(self, pos):
         self.rect.x = pos[0]
         self.rect.y = pos[1]
-        if self.color == 1:
-            self.image = pygame.image.load(self.imagen_color)
-        elif self.color == 0:
-            self.image = pygame.image.load(self.imagen_normal)
+        #if self.color == 1:
+        #    self.image = pygame.image.load(self.imagen_color)
+        #elif self.color == 0:
+        #    self.image = pygame.image.load(self.imagen_normal)
 
     def back(self):
         self.rect.x = self.orig[0]
