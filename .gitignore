@@ -1,3 +1,4 @@
 log/* !.gitignore
 src/*.pyc
 *.svg
+*.debhelper
