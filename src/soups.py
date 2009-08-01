@@ -49,14 +49,15 @@ class Letras(Sprite):
 class Lapiz(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image = pygame.image.load(constants.images_soups+"/lapiz.png")
+        #self.image = pygame.image.load(constants.images_soups+"/lapiz.png")
+        self.image = pygame.image.load("../data/cursors/gartoon/draw-freehand.png")
         self.rect = self.image.get_rect()
 
     def update(self, mover):
 	    if mover[0] - 10 >= 0:
             self.rect.x = mover[0] - 10
         if mover[1] - 45 >= 0:
-            self.rect.y = mover[1] - 45
+            self.rect.y = mover[1] - 78
 
 
 class Puntalapiz(Sprite):
