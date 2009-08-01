@@ -1,3 +1,14 @@
+pygame-salud (0.1-4) unstable; urgency=low
+
+  * Ahora el paquete puede ejecutarse desde: Aplicaciones -> Educación.
+  * El nombre genérico fue modificado a: Actividades de salud.
+  * Se agrega python-dev como dependencia de construcción.
+  * Se repara error al escribir Python. Recomendación hecha por Lintian.
+  * Se mejora la documentación presentada en la pagina man.
+  * Se mejora la descripción del fichero .desktop.
+
+ -- Milton R. Mazzarri S. <mazzarrim@gmail.com>  Sat, 01 Aug 2009 05:31:22 -0430
+
 pygame-salud (0.1-3) unstable; urgency=low
 
   * Initial release (Closes: #123)
