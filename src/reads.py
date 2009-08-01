@@ -23,6 +23,7 @@ class PoetryActivity(Activity):
             if event.key == K_ESCAPE:
                 self.quit = True
                 return
+
     def setup_background(self):
         self.background = pygame.image.load(constants.illustration_008)
 
@@ -74,14 +75,14 @@ class PoetryActivity2(Activity):
         # Title
         font = pygame.font.SysFont("dejavusans", 28)
         font_height = font.get_linesize()
-        y = 20
+        y = 10
         
         title = unicode(messages[0], 'utf-8')
         text = font.render(title, True, (0, 0, 0))
         text_pos = (20, 20)
         self.screen.blit(text, text_pos)
 
-        y = 35 + font_height
+        y = 20 + font_height
         font = pygame.font.SysFont("dejavusans", 24)
         font_height = font.get_linesize()
 
