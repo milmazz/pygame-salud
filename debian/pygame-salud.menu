@@ -1,3 +1,3 @@
-?package(pygame-salud):needs="x11" section="Games/Adventure" \
-	title="pygame Salud" command="/usr/games/pygame-salud" \
+?package(pygame-salud):needs="x11" section="Applications/Education" \
+	title="Actividades de Salud" command="/usr/games/pygame-salud" \
 	icon="/usr/share/pixmaps/pygame-salud.xpm"
