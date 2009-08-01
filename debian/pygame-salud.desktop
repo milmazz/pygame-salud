@@ -1,10 +1,11 @@
 [Desktop Entry]
+Encoding=UTF-8
 Type=Application
-Name=Pygame Salud
-GenericName=pygame-salud
-Comment=Bla Bla
-Comment[es]=Bla Bla
+Name=Actividades de Salud
+GenericName=Actividades de Salud
+Comment=Set of kids games about health
+Comment[es]=Conjunto de actividades para niños acerca de la salud
 Icon=pygame-salud
 Exec=pygame-salud
 Terminal=false
-Categories=Game;
+Categories=Education;KidsGame
