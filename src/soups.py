@@ -10,6 +10,7 @@ from pygame.sprite import Sprite
 import constants
 from activity import Activity
 import common
+from icons import Icons
 
 class Letras(Sprite):
     def __init__(self, x, y, letra, id):
@@ -151,6 +152,8 @@ class SoupActivity(Activity):
         self.sprites  = pygame.sprite.OrderedUpdates()
         self.letras   = pygame.sprite.Group()
         self.palabras = pygame.sprite.Group()
+        self.icons    = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
         ### variables generales ###
         self.mouse_down = 0 
         self.final_pos = (0,0)
@@ -171,7 +174,7 @@ class SoupActivity(Activity):
           Palabras(108, 430, 'tacto'), Palabras(117, 460, 'oido'), \
           Palabras(104, 490, 'olfato')])
         
-        self.sprites.add([self.letras, self.lapiz, self.puntalapiz, self.palabras])
+        self.sprites.add([self.icons, self.letras, self.lapiz, self.puntalapiz, self.palabras])
         self.sprites.update((0,0))
         self.sprites.draw(self.screen)
 
@@ -187,6 +190,10 @@ class SoupActivity(Activity):
                        self.quit = True
                        return
                 elif event.type == MOUSEBUTTONDOWN:
+                    if pygame.sprite.spritecollideany\
+                      (self.puntalapiz, self.icons):
+                        self.quit = True
+                        return
                     self.mouse_down = 1 #se presiono el boton del mouse
                 elif event.type == MOUSEMOTION:
                     self.final_pos = pygame.mouse.get_pos() #posicion del puntero del mouse
@@ -297,6 +304,8 @@ class SoupActivity2(Activity):
         self.sprites  = pygame.sprite.OrderedUpdates()
         self.letras   = pygame.sprite.Group()
         self.palabras = pygame.sprite.Group()
+        self.icons    = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
         ### General variable ###
         self.mouse_down = 0 
         self.final_pos = (0,0)
@@ -318,7 +327,7 @@ class SoupActivity2(Activity):
           Palabras(550, 300, 'agua'), Palabras(550, 350, 'luz'), \
           Palabras(550, 400, 'animales'), Palabras(550, 450, 'suelo')])
         
-        self.sprites.add([self.letras, self.lapiz, self.puntalapiz, self.palabras])
+        self.sprites.add([self.icons, self.letras, self.lapiz, self.puntalapiz, self.palabras])
         self.sprites.update((0,0))
         self.sprites.draw(self.screen)
 
@@ -334,6 +343,10 @@ class SoupActivity2(Activity):
                        self.quit = True
                        return
                 elif event.type == MOUSEBUTTONDOWN:
+                    if pygame.sprite.spritecollideany\
+                      (self.puntalapiz, self.icons):
+                        self.quit = True
+                        return
                     self.mouse_down = 1 #se presiono el boton del mouse
                 elif event.type == MOUSEMOTION:
                     self.final_pos = pygame.mouse.get_pos() #posicion del puntero del mouse
