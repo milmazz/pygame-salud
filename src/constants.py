@@ -56,7 +56,7 @@ illustration_002 = os.path.join(data_folder, "backgrounds", "illustration_002.jp
 images_cletter = os.path.join(data_folder,"crazyletter")
 
 #puzzle
-illustration_012 = os.path.join(data_folder, "backgrounds", "illustration_012_b.jpg")
+illustration_puzzle = os.path.join(data_folder, "backgrounds", "illustration_012_b.jpg")
 images_puzzle = os.path.join(data_folder,"puzzle")
 
 # sound buffer length
