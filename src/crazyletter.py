@@ -5,7 +5,7 @@ from pygame.locals import *
 import constants
 from activity import Activity
 import common
-
+from icons import Icons
 
 class Container(Sprite):
 
@@ -36,10 +36,8 @@ class Hand(Sprite):
             self.color = 0
 
     def update(self, mover=(0,0)):
-        if mover[0] - 10 >= 0:
-            self.rect.x = mover[0] -5
-        if mover[1] - 45 >= 0:
-            self.rect.y = mover[1] - 10
+        self.rect.x = mover[0] - self.image.get_width() / 2
+        self.rect.y = mover[1] - self.image.get_height() / 2
         if self.color == 0:
             self.image = pygame.image.load(self.image_normal)
         if self.color == 1:
@@ -71,30 +69,6 @@ class Letters(Sprite):
         self.rect.x = self.orig[0]
         self.rect.y = self.orig[1]
 
-class Pencil(Sprite):
-
-    def __init__(self):
-        Sprite.__init__(self)
-        self.image = pygame.image.load(constants.images_cletter+"/lapiz.png")
-        self.rect = self.image.get_rect()
-
-    def update(self, mover):
-        if mover[0] - 10 >= 0:
-            self.rect.x = mover[0] - 10
-        if mover[1] - 45 >= 0:
-            self.rect.y = mover[1] - 45
-
-class Tippen(Sprite):
-
-    def __init__(self):
-        Sprite.__init__(self)
-        self.image = pygame.image.load(constants.images_cletter+"/puntalapiz.png")
-        self.rect = self.image.get_rect()
-
-    def update(self, mover):
-        self.rect.x = mover[0]
-        self.rect.y = mover[1]
-
 class View():
 
     def __init__(self):
@@ -103,18 +77,6 @@ class View():
        self.screen = pygame.display.set_mode(self.size, 0, 32)
        self.background = pygame.image.load(constants.illustration_002).convert_alpha()
        self.background = pygame.transform.scale(self.background, self.size)
-#       self.letrasFijas()
-
-    #def grupoLetras(self):
-    #    letras   = pygame.sprite.Group()
-    #    letras.add([Letras(223, 263, 'h',1)])
-    #    letras.add([Letras(250, 232, 'i',2)])
-    #    letras.add([Letras(576, 269, 'g',3)])
-    #    letras.add([Letras(327, 177, 'i',4)])
-    #    letras.add([Letras(183, 294, 'e',5)])
-    #    letras.add([Letras(388, 169, 'n',6)])
-    #    letras.add([Letras(605, 223, 'e',7)])
-    #    return letras
 
     def groupContainer(self, positions, word, color):
         containers = pygame.sprite.Group()
@@ -154,15 +116,16 @@ class CrazyLetterActivity(Activity):
         position_yellow = [ (500,500), (550,500), (600,500), \
                     (650,500), (700,500)]
         self.view = View() #cargamos el fondo estatico
-        self.pencil = Hand() #cargamos el lapiz
+        self.hand = Hand() 
+        self.icons = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
         self.letters = self.view.groupLetters()
         container_blue = self.view.groupContainer(position_blue, 'higiene', 'blue')
         container_yellow = self.view.groupContainer(position_yellow, 'salud', 'yellow')
         self.contenedor = pygame.sprite.Group()
         self.contenedor.add([container_blue, container_yellow])
-        self.tippen = Tippen()
         self.sprites = pygame.sprite.OrderedUpdates()
-        self.sprites.add([container_blue, container_yellow, self.letters, self.pencil, self.tippen])
+        self.sprites.add([self.icons, container_blue, container_yellow, self.letters, self.hand])
         pygame.mouse.set_visible( False ) #oculntar el puntero del mouse
         pygame.display.update()
         #mouse button is down
@@ -183,22 +146,24 @@ class CrazyLetterActivity(Activity):
                         return
 
                 if event.type == MOUSEMOTION:
-                    self.pencil.update(pos)
-                    self.tippen.update(pos)
+                    self.hand.update(pos)
                     self.view.screen.blit(self.view.background, (0,0))
                     self.sprites.draw(self.view.screen)
                     pygame.display.update()
                 if event.type == MOUSEMOTION and self.button_down:
                     selection.update(pos)
                 if event.type == MOUSEBUTTONDOWN:
-                    self.pencil.change_hand()
-                    self.pencil.update()
+                    if pygame.sprite.spritecollideany(self.hand, self.icons):
+                        self.quit = True
+                        return
+                    self.hand.change_hand()
+                    self.hand.update(pos)
                     self.view.screen.blit(self.view.background, (0,0))
                     self.sprites.draw(self.view.screen)
                     pygame.display.update()
                 if event.type == MOUSEBUTTONUP:
-                    self.pencil.change_hand()
-                    self.pencil.update()
+                    self.hand.change_hand()
+                    self.hand.update(pos)
                     self.view.screen.blit(self.view.background, (0,0))
                     self.sprites.draw(self.view.screen)
                     pygame.display.update()
@@ -218,7 +183,7 @@ class CrazyLetterActivity(Activity):
                         selection.color = 0
                         selection.update(pos)
                 if event.type == MOUSEBUTTONDOWN:
-                    selection = pygame.sprite.spritecollideany(self.tippen, self.letters)
+                    selection = pygame.sprite.spritecollideany(self.hand, self.letters)
                     if selection:
                         selection.color = 1
                         self.button_down = 1

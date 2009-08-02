@@ -11,6 +11,7 @@ from pygame.sprite import Sprite
 import constants
 from activity import Activity
 import common
+from icons import Icons
 
 class ImagePuzzle(Sprite):
     def __init__(self, x, y, id, numimage):
@@ -43,8 +44,8 @@ class Hand(Sprite):
             self.color = 0
 
     def update(self, mover=(0,0)):
-        self.rect.x = mover[0]
-        self.rect.y = mover[1]
+        self.rect.x = mover[0] - self.image.get_width() / 2
+        self.rect.y = mover[1] - self.image.get_height() / 2
         if self.color == 0:
             self.image = pygame.image.load(self.image_normal)
         if self.color == 1:
@@ -60,7 +61,7 @@ class PuzzleActivity(Activity):
 
     def setup(self):
         """Turn off the mouse pointer"""
-        pygame.mouse.set_visible( True )
+        pygame.mouse.set_visible( False )
         """change the mouse pointer by a hand"""
         self.button_down = 0
         self.selection = 0
@@ -68,6 +69,8 @@ class PuzzleActivity(Activity):
         self.sprites    = pygame.sprite.OrderedUpdates()
         self.pictures   = pygame.sprite.Group() #picture that can be move
         self.transparent= pygame.sprite.Group() #picture that cann't be move
+        self.icons      = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
         self.transparent.add([\
           ImagePuzzle(300,100,1,"5"),\
           ImagePuzzle(500,100,2,"5"),\
@@ -79,7 +82,7 @@ class PuzzleActivity(Activity):
           ImagePuzzle(100,150,2,"2"),\
           ImagePuzzle(100,300,3,"3"),\
           ImagePuzzle(100,450,4,"4")])
-        self.sprites.add([self.transparent, self.pictures, self.hand])
+        self.sprites.add([self.transparent, self.pictures, self.icons, self.hand])
         self.sprites.draw(self.screen)
 
     def handle_events(self):
@@ -93,6 +96,10 @@ class PuzzleActivity(Activity):
                        self.quit = True
                        return
                 elif event.type == MOUSEBUTTONDOWN and self.button_down == 0:
+                    if pygame.sprite.spritecollideany\
+                      (self.hand, self.icons):
+                        self.quit = True
+                        return
                     self.button_down = 1
                     self.selection = pygame.sprite.spritecollideany\
                       (self.hand, self.pictures)

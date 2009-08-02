@@ -16,6 +16,7 @@ from links import Shower
 from soups import SoupActivity, SoupActivity2
 from crazyletter import CrazyLetterActivity
 from puzzle import PuzzleActivity
+from cooking import Cooking
 
 def main():
 	# Mixer pre init
@@ -40,6 +41,7 @@ def main():
         MenuItem(constants.associations_filename, SoupActivity2), 
         MenuItem(constants.associations_filename, CrazyLetterActivity), 
         MenuItem(constants.associations_filename, PuzzleActivity), 
+        MenuItem(constants.associations_filename, Cooking), 
     ]
 
 	MenuActivity(screen, items).run()

@@ -12,6 +12,8 @@ from pygame.locals import *
 import constants
 import common
 from activity import Activity
+from icons import Icons
+
 
 # Activity 7
 class Shower(Activity):
@@ -44,11 +46,17 @@ class Shower(Activity):
 
         self.sprites = pygame.sprite.OrderedUpdates()
         self.items = pygame.sprite.Group()
+        self.icons = pygame.sprite.Group()
+
+        self.icons.add([Icons('stop')])
+
+        self.sprites.add(self.icons)
 
         for i in pos.keys():
             item = Item(i, pos[i])
             self.sprites.add(item)
             self.items.add(item)
+
 
         self.pointer = Pointer()
         self.sprites.add(self.pointer)
@@ -99,6 +107,11 @@ class Shower(Activity):
                 pointer_pos = pygame.mouse.get_pos()
                 self.pointer.update(pointer_pos)
             elif event.type == MOUSEBUTTONDOWN:
+                    """Test if the mouse pointer is over the 
+                       close button"""
+                    if pygame.sprite.spritecollideany(self.pointer, self.icons):
+                        self.quit = True
+                        return
                     selected = sprite.spritecollideany(self.pointer, 
                                                        self.items)
                     if selected:
