@@ -72,6 +72,12 @@ class MenuActivity(Activity):
             if event.key == K_F4 and KMOD_ALT & event.mod:
                 self.quit = True
                 return
+        elif event.type == MOUSEBUTTONUP:
+            for x in pygame.sprite.spritecollide(self.finger, self.activities, False):
+                x.run(self.screen)
+                pygame.mouse.set_pos(100.0, 100.0)
+                break
+
         self.pos = pygame.mouse.get_pos()
         if self.pos != self.mprev:
             self.changed = True
@@ -79,10 +85,10 @@ class MenuActivity(Activity):
     def on_change(self):
         self.Cursor.update()        
 
-        for x in pygame.sprite.spritecollide(self.finger, self.activities, False):
-            x.run(self.screen)
-            pygame.mouse.set_pos(100.0, 100.0)
-            break
+        #for x in pygame.sprite.spritecollide(self.finger, self.activities, False):
+        #    x.run(self.screen)
+        #    pygame.mouse.set_pos(100.0, 100.0)
+        #    break
         self.activities.draw(self.screen)
         self.Cursor.draw(self.screen)
     
