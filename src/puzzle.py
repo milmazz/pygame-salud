@@ -56,7 +56,7 @@ class PuzzleActivity(Activity):
         Activity.__init__(self, screen)
 
     def setup_background(self):
-        self.background = pygame.image.load(constants.illustration_012).convert_alpha()
+        self.background = pygame.image.load(constants.illustration_puzzle).convert_alpha()
 
     def setup(self):
         """Turn off the mouse pointer"""
