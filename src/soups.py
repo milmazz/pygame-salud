@@ -1,20 +1,4 @@
-# vim:ts=4:sts=4:et:nowrap:tw=77
-# -*- coding: utf-8 -*-
-#########################################################################
-##    This library is free software; you can redistribute it and/or
-##    modify it under the terms of the GNU Library General Public
-##    License as published by the Free Software Foundation; either
-##    version 2 of the License, or (at your option) any later version.
-##
-##    This code is distributed in the hope that it will be useful,
-##    but WITHOUT ANY WARRANTY; without even the implied warranty of
-##    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-##    Library General Public License for more details.
-##
-## Desarrollador: Rafael Leon Zamorano
-## Email: leonza99@gmail.com
-##        rleon@ula.ve
-#########################################################################
+
 
 import os
 import time
@@ -37,7 +21,7 @@ class Letras(Sprite):
         self.rect.move_ip(x, y)
         self.color = 0 #0 normal 1 coloreada 2 terminada
         #self.letra = letra
-	    self.id = id
+        self.id = id
 
     def update(self, mover = (0,0)):
         if self.color == 0:
@@ -54,7 +38,7 @@ class Lapiz(Sprite):
         self.rect = self.image.get_rect()
 
     def update(self, mover):
-	    if mover[0] - 10 >= 0:
+        if mover[0] - 10 >= 0:
             self.rect.x = mover[0] - 10
         if mover[1] - 45 >= 0:
             self.rect.y = mover[1] - 78
@@ -74,7 +58,7 @@ class Puntalapiz(Sprite):
 class Palabras(Sprite):
     def __init__(self, x, y, palabra):
         Sprite.__init__(self)
-	    self.imagen_normal = constants.images_soups+'/'+palabra+'.png'
+        self.imagen_normal = constants.images_soups+'/'+palabra+'.png'
         self.imagen_raya  = constants.images_soups+'/'+palabra+'_lista.png'
         self.image = pygame.image.load(self.imagen_normal)
         self.rect = self.image.get_rect()
@@ -82,7 +66,7 @@ class Palabras(Sprite):
         self.palabra = palabra
 
     def update(self, palabra = 'vacio'):
-	    if palabra == self.palabra:
+        if palabra == self.palabra:
             self.image = pygame.image.load(self.imagen_raya)
 
 
@@ -137,12 +121,8 @@ class SoupActivity(Activity):
 
     def __init__(self, screen):
         Activity.__init__(self, screen)
-        
-    def setup_background(self):
-        self.background = pygame.image.load(constants.illustration_003).convert_alpha()
-        self.background = pygame.transform.scale(self.background, (800,600))
 
-    def setup(self):
+    def informative_text(self):
         if pygame.font:
             font = pygame.font.Font(None, 40)
             font.set_bold(True)
@@ -157,7 +137,12 @@ class SoupActivity(Activity):
 
             text = font.render("marca cada palabra", 1,(0, 0, 0))
             self.screen.blit(text, (50, 60))
+ 
+        
+    def setup_background(self):
+        self.background = pygame.image.load(constants.illustration_003).convert_alpha()
 
+    def setup(self):
         self.lapiz = Lapiz()
         self.puntalapiz = Puntalapiz()
         #ocultamos el puntero del raton 
@@ -168,12 +153,13 @@ class SoupActivity(Activity):
         self.palabras = pygame.sprite.Group()
         ### variables generales ###
         self.mouse_down = 0 
+        self.final_pos = (0,0)
         self.pos_x = 320 #posicion inicial de las letras X
         pos_y = 230 #posicion inicial de las letras Y
         tam_x = 45  #tamano de los cuadros ancho
         tam_y = 45  #tamano de los cuadros alto
         self.lista = list() #lista de letras que estan coloreadas
-       
+        self.informative_text() 
         #agregar las letras sprite al grupo
         letrasM = 'ydvgustojjrihrufimlvistadrywttemoidotcxtianacmunonotactoolfatoat'
         for i in range(8):
@@ -225,6 +211,7 @@ class SoupActivity(Activity):
                     self.screen.blit(self.background, (0, 0))
                     self.sprites.update(self.final_pos)
                     self.sprites.draw(self.screen)
+                self.informative_text()
                 pygame.display.update() #actualizar la pantalla
 
 
@@ -281,12 +268,8 @@ class SoupActivity2(Activity):
 
     def __init__(self, screen):
         Activity.__init__(self, screen)
-        
-    def setup_background(self):
-        self.background = pygame.image.load(constants.illustration_017).convert_alpha()
-        self.background = pygame.transform.scale(self.background, (800,600))
 
-    def setup(self):
+    def informative_text(self):
         if pygame.font:
             font = pygame.font.Font(None, 40)
             font.set_bold(True)
@@ -301,24 +284,30 @@ class SoupActivity2(Activity):
 
             text = font.render("marca cada palabra", 1,(0, 0, 0))
             self.screen.blit(text, (50, 60))
+        
+    def setup_background(self):
+        self.background = pygame.image.load(constants.illustration_017).convert_alpha()
 
+    def setup(self):
         self.lapiz = Lapiz()
         self.puntalapiz = Puntalapiz()
-        #ocultamos el puntero del raton 
+        #turn off the mouse pointer
         pygame.mouse.set_visible( False )
-        #grupos de sprite
+        #sprite groups
         self.sprites  = pygame.sprite.OrderedUpdates()
         self.letras   = pygame.sprite.Group()
         self.palabras = pygame.sprite.Group()
-        ### variables generales ###
+        ### General variable ###
         self.mouse_down = 0 
+        self.final_pos = (0,0)
         self.pos_x = 215 #posicion inicial de las letras X
         pos_y = 220 #posicion inicial de las letras Y
         tam_x = 38  #tamano de los cuadros ancho
         tam_y = 37  #tamano de los cuadros alto
         self.lista = list() #lista de letras que estan coloreadas
-       
-        #agregar las letras sprite al grupo
+        #display the informative text in the screen
+        self.informative_text()
+        #Add the letters to the sprite group
         letrasM = 'yplantasairenkefdalsueloouyraiumaguaqeioanimalesqntoaudoaluzatan'
         for i in range(8):
             for j in range(8):
@@ -369,4 +358,5 @@ class SoupActivity2(Activity):
                     self.screen.blit(self.background, (0, 0))
                     self.sprites.update(self.final_pos)
                     self.sprites.draw(self.screen)
+                self.informative_text()
                 pygame.display.update() #actualizar la pantalla
