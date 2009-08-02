@@ -4,6 +4,8 @@
 import sys
 import os
 
+from math import *
+
 import pygame
 from pygame import *
 from pygame.locals import *
@@ -18,13 +20,13 @@ class Shower(Activity):
         Activity.__init__(self, screen)
 
         pos = {
-                'towel': (260, 186),
-                'shampoo': (170, 295),
-                'brush': (285, 385),
-                'soap': (195, 498),
-                'hair': (507, 227),
-                'body': (491, 365),
-                'mouth': (500, 510),
+                'towel': (150, 126),
+                'shampoo': (70, 255),
+                'brush': (125, 365),
+                'soap': (155, 470),
+                'hair': (500, 180),
+                'body': (510, 295),
+                'mouth': (500, 450),
                 }
 #         self.items = {
 #                 'towel': pygame.Rect(260, 186, 102, 100),
@@ -51,6 +53,8 @@ class Shower(Activity):
 
         self.pointer = Pointer()
         self.sprites.add(self.pointer)
+
+        self.arrows = []
 
     def setup_background(self):
         self.background = common.load_image(constants.illustration_007)[0]
@@ -83,14 +87,6 @@ class Shower(Activity):
             
         self.sprites.draw(self.screen)
         
-        if self.couples:
-                for (start, end) in self.couples:
-                    start = start.rect.center
-                    end = end.rect.center
-                    draw.line(self.screen, (120, 120, 120), start, end, 9)
-
-        pygame.display.update()
-
     def handle_events(self):
         for event in [pygame.event.wait()] + pygame.event.get():
             if event.type == QUIT:
@@ -117,20 +113,25 @@ class Shower(Activity):
                     if len(self.couple) == 2:
                         # TODO some feeback? message? sound?
                         if self.are_couple(self.couple):
+                            for i in self.couple:
+                                i.deactivate()
+
                             if not (self.couple in self.couples):
                                 self.couples.append(self.couple.copy())
-                            print "couple %s " % self.couples
-                        else:
-                            print "not couple"
-
+                                a = self.couple.pop().rect.center
+                                b = self.couple.pop().rect.center
+                                self.arrows.append(Arrow(start=b, end=a))
+                        
                         for i in self.couple:
                             i.deactivate()
                             
                         self.couple.clear()
 
             self.setup()
-            #self.screen.blit(self.background, (0,0))
-            #self.sprites.draw(self.screen)
+        #    self.arrows.append(Arrow(start=(100,295), end=(510,295)))
+            for arrow in self.arrows:
+                arrow.draw(self.screen)
+            pygame.display.flip()
 
     def are_couple(self, couple):
         a, b = couple
@@ -155,10 +156,6 @@ class Shower(Activity):
         return False 
 
 
-class Arrow(sprite.Sprite):
-    def __init__(self):
-        pass
-
 class Item(sprite.Sprite):
         def __init__(self, name, position):
             sprite.Sprite.__init__(self)
@@ -171,10 +168,7 @@ class Item(sprite.Sprite):
             self.rect.move_ip(position)
             self.active = False
 
-#            self.rect[0] = self.rect[0] + 0.5
-#            self.rect[1] = 0.5
-            self.rect[2] *= 0.5
-            self.rect[3] *= 0.5
+            self.rect.inflate_ip(-self.rect[2]*0.3, -self.rect[3]*0.3)
 
         def update(self):
             if self.active:
@@ -207,3 +201,50 @@ class Pointer(sprite.Sprite):
         self.rect.midtop = pos
 
 
+class Arrow:
+    angle_factors = ( 
+                      (pi/4,0.5),
+                      (pi/2,0.7),
+                      (3*pi/4,0.5),
+                      (5*pi/8,0.38),
+                      (11*pi/8,0.5),
+                      (13*pi/8,0.5),
+                      (3*pi/8,0.38)
+                    )
+
+    def __init__(self, linewidth = 10, color = (0,0,200), 
+                 start = (0, 0), end = (0, 0)):
+        self.color = color
+        self.linewidth = linewidth
+        self.start = start
+        self.end = end
+        self.rect = None
+        self.height = 0
+        self.update_points(start, end)
+
+    def draw(self, surface, start = None, end = None):
+        if start:
+            self.start = start
+        if end:
+            self.end = end
+
+        if start or end:
+            self.update_points(start, end)
+
+        pygame.draw.aalines(surface, self.color, True, 
+                          self.points, self.linewidth) 
+
+        
+    def update_points(self, start, end):
+        self.width = hypot(start[0] - end[0], start[1] - end[1])
+        r = sqrt((self.height/2)**2 + (self.width/2)**2)
+        rotate = atan2(end[0] - start[0], end[1] - start[1])
+        rotate = degrees(rotate)
+
+        theta = radians(rotate)
+        x, y = start[0], start[1]
+
+        self.points = []
+        for af in self.angle_factors:
+            angle = af[0]-theta
+            self.points.append((x+r*cos(angle)*af[1],y+r*sin(angle)*af[1]))
