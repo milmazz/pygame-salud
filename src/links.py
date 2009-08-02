@@ -84,7 +84,6 @@ class Shower(Activity):
             text_pos = (50, y)
             self.screen.blit(text, text_pos)
             
-        self.sprites.draw(self.screen)
         
     def handle_events(self):
         for event in [pygame.event.wait()] + pygame.event.get():
@@ -119,7 +118,9 @@ class Shower(Activity):
                                 self.couples.append(self.couple.copy())
                                 a = self.couple.pop().rect.center
                                 b = self.couple.pop().rect.center
-                                self.sprites.add(Arrow(start=b, end=a))
+                                self.arrows.append(Arrow(surface=self.screen, 
+                                                       start=b, end=a,
+                                                       width=3))
                         
                         for i in self.couple:
                             i.deactivate()
@@ -127,6 +128,9 @@ class Shower(Activity):
                         self.couple.clear()
 
             self.setup()
+            self.sprites.draw(self.screen)
+            for i in self.arrows:
+                i.update()
             pygame.display.flip()
 
     def are_couple(self, couple):
@@ -134,20 +138,20 @@ class Shower(Activity):
         if a.active and b.active:
             if a.name == 'towel' and b.name == 'body':
                 return True
-#            if a.name == 'body' and b.name == 'towel':
-#                return True
+            if a.name == 'body' and b.name == 'towel':
+                return True
             if a.name == 'shampoo' and b.name == 'hair':
                 return True
-#            if a.name == 'hair' and b.name == 'shampoo':
-#                return True
+            if a.name == 'hair' and b.name == 'shampoo':
+                return True
             if a.name == 'brush' and b.name == 'mouth':
                 return True
-#            if a.name == 'mouth' and b.name == 'brush':
-#                return True
+            if a.name == 'mouth' and b.name == 'brush':
+                return True
             if a.name == 'soap' and b.name == 'body':
                 return True
-#            if a.name == 'body' and b.name == 'soap':
-#                return True
+            if a.name == 'body' and b.name == 'soap':
+                return True
                 
         return False 
 
@@ -197,33 +201,39 @@ class Pointer(sprite.Sprite):
         self.rect.midtop = pos
 
 
-class Arrow(sprite.Sprite):
-    def __init__(self, start=(0, 0), end=(0, 0)):
-        sprite.Sprite.__init__(self)
+class Arrow:
+    def __init__(self, surface, start=(0, 0), end=(0, 0), color=(0,0,0),
+                 width=1):
+        self.surface = surface
         self.start = start
         self.end = end
-        self.points = []
-        self.image, self.rect = common.load_image(constants.arrow)
+        self.color = color
+        self.width = width
+
         self.update()
 
-    def update(self, start = None, end = None):
+        return
+
+    def update(self, start=None, end=None):
         if start:
             self.start = start
         if end:
             self.end = end
 
-        width = math.hypot(self.start[0] - self.end[0],
-                           self.start[1] - self.end[1])
-        height = self.rect[3]
-        rotate = -1*math.atan2(self.end[1] - self.start[1], 
-                            self.end[0] - self.start[0])
-        rotate = math.degrees(rotate) 
+        pygame.draw.line(self.surface, self.color, self.start, self.end,
+                         self.width)
 
-        if rotate > 0:
-            self.start = (self.start[0], self.start[1] - self.rect[2])
+        rotate = math.atan2(self.end[1] - self.start[1], 
+                               self.end[0] - self.start[0])
+        rotate = math.degrees(rotate)
+        h = 20
+        angle1 = math.radians(30 + rotate)
+        angle2 = math.radians(30 - rotate)
 
-        self.image = pygame.transform.scale(self.image, (width, height))
-        self.image = pygame.transform.rotate(self.image, rotate)
-        self.rect.move_ip(self.start)
-
- 
+        x1 = self.end[0] - math.cos(angle1) * h
+        y1 = self.end[1] - math.sin(angle1) * h
+        x2 = self.end[0] - math.cos(angle2) * h
+        y2 = self.end[1] + math.sin(angle2) * h
+        points = [(x1, y1), (x2, y2), (self.end)]
+        pygame.draw.polygon(self.surface, self.color, points) 
+        return
