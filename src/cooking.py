@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import pygame
 from pygame.sprite import Sprite
 from pygame.locals import *
@@ -9,26 +10,19 @@ from pygame.locals import *
 import constants
 from activity import Activity
 import common
-from common import *
 
 class Ingredients(Sprite):
     def __init__(self, pos, ingredient):
         Sprite.__init__(self)
         image_name = os.path.join(constants.data_folder, "cooking",
                                   ingredient  + ".png")
-
         self.image, self.rect = common.load_image(image_name)
         self.rect.move_ip(pos)
         self.name = ingredient
-        self.orig = pos
 		
     def update(self, pos):
         self.rect.x = pos[0]
         self.rect.y = pos[1]
-
-    def back(self):
-        self.rect.x = self.orig[0]
-        self.rect.y = self.orig[1]
 
 
 class Hand(Sprite):
@@ -36,10 +30,10 @@ class Hand(Sprite):
         Sprite.__init__(self)
         self.image_normal = os.path.join(constants.data_folder, 'cursors',
                                     "hand-open.png")
-        self.image_close =  os.path.join(constants.data_folder, 'cursors', 
+        self.image_close = os.path.join(constants.data_folder, 'cursors', 
                                     "hand-close.png")
-        self.normal,  self.rect = common.load_image(self.image_normal)
-        self.close,  self.rect = common.load_image(self.image_close)
+        self.normal, self.rect = common.load_image(self.image_normal)
+        self.close, self.rect = common.load_image(self.image_close)
         self.image = self.normal
         self.color = 0
 
@@ -62,11 +56,8 @@ class Hand(Sprite):
 
 class View():
     def __init__(self):
-       self.pos = 0
-       self.size = (800, 600)
-       self.screen = pygame.display.set_mode(self.size, 0, 32)
-       self.background = pygame.image.load(constants.illustration_024).convert_alpha()
-       self.background = pygame.transform.scale(self.background, self.size)
+        self.screen = pygame.display.set_mode((800, 600), 0, 32)
+        self.background = common.load_image(constants.illustration_024)[0]
 
     def groupIngredients(self, pos_ingredients):
         ingredients = pygame.sprite.Group()
@@ -80,8 +71,9 @@ class Cooking(Activity):
         Activity.__init__(self, screen)
 
     def setup(self):
-        #position of the container
-        pos_ingredients = {'sugar': (400, 300)}
+        self.sprites  = pygame.sprite.OrderedUpdates()
+        pos_ingredients = {'sugar': (400, 300)} # list of all ingredients and
+                                                # positions on the screen
         self.view = View() #load static background
         self.hand = Hand() #load hand
         self.ingredients = self.view.groupIngredients(pos_ingredients)
@@ -131,5 +123,24 @@ class Cooking(Activity):
                         selection.color = 1
                         self.button_down = 1
                 self.view.screen.blit(self.view.background, (0,0))
+                font_title = pygame.font.SysFont("dejavusans", 40)
+                font_instructions = pygame.font.SysFont("dejavusans", 20)
+                title = u"¡A cocinar!"
+                title_width, title_height = font_title.size(title)
+                instructions = [u"Vamos a hacer una torta ...",
+                                u"Observa los ingredientes que se necesitan",
+                                u"y arrástralos hasta la mesa."]
+                y = title_height / 2
+                text = font_title.render(title, True, (102, 102, 102))
+                text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
+                self.screen.blit(text, text_pos)
+                y += title_height
+                line_width, line_height = font_instructions.size(instructions[0])
+                for line in instructions:
+                    text = font_instructions.render(line, True, (102, 102, 102))
+                    y += line_height
+                    text_pos = (50, y)
+                    self.screen.blit(text, text_pos)
                 self.sprites.draw(self.view.screen)
                 pygame.display.update()
+
