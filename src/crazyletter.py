@@ -139,23 +139,25 @@ class CrazyLetterActivity(Activity):
 
     def informative_text(self):
         if pygame.font:
-            font = pygame.font.Font(None, 40)
+            font = pygame.font.SysFont("dejavusans", 40)
             font.set_bold(True)
             text = font.render("Letras locas", 1, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
-            textRect.centery = 15
+            textRect.centery = 20
             self.screen.blit(text, textRect)
 
 
-            font = pygame.font.Font(None, 32)
+            font = pygame.font.SysFont("dejavusans", 20)
             font.set_bold(False)
-            text = font.render("Arrastra las letras para formar las palabras \"HIGIENE\"", \
-              1,(0, 0, 0))
-            self.screen.blit(text, (50, 40))
+            instructions = [u"Arrastra las letras para formar las palabras \"HIGIENE\"",
+                           u"y \"SALUD\" colocandolas en los cuadros de abajo."]
+            y = 40
+            for line in instructions:
+                text = font.render(line, 1,(0, 0, 0))
+                self.screen.blit(text, (50, y))
+                y+=20
 
-            text = font.render("y \"SALUD\" colocandolas en los cuadros de abajo", 1,(0, 0, 0))
-            self.screen.blit(text, (50, 60))
 
     def handle_events(self):
         while True:
