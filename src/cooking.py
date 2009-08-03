@@ -71,6 +71,26 @@ class Cooking(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
 
+    def instruction_text(self):
+        font_title = pygame.font.SysFont("dejavusans", 40)
+        font_instructions = pygame.font.SysFont("dejavusans", 20)
+        title = u"¡A cocinar!"
+        title_width, title_height = font_title.size(title)
+        instructions = [u"Vamos a hacer una torta ...",
+                        u"Observa los ingredientes que se necesitan",
+                        u"y arrástralos hasta la mesa."]
+        y = title_height / 2
+        text = font_title.render(title, True, (102, 102, 102))
+        text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
+        self.screen.blit(text, text_pos)
+        y += title_height
+        line_width, line_height = font_instructions.size(instructions[0])
+        for line in instructions:
+            text = font_instructions.render(line, True, (102, 102, 102))
+            y += line_height
+            text_pos = (50, y)
+            self.screen.blit(text, text_pos)
+
     def setup(self):
         self.sprites  = pygame.sprite.OrderedUpdates()
         pos_ingredients = {'sugar': (400, 300)} # list of all ingredients and
@@ -86,6 +106,10 @@ class Cooking(Activity):
         pygame.mouse.set_visible( False ) #hide pointer
         #mouse button is up
         self.button_down = 0
+        self.view.screen.blit(self.view.background, (0,0))
+        self.sprites.draw(self.view.screen)
+        self.instruction_text()
+        pygame.display.update()
 
     def handle_events(self):
         while True:
@@ -129,24 +153,7 @@ class Cooking(Activity):
                         selection.color = 1
                         self.button_down = 1
                 self.view.screen.blit(self.view.background, (0,0))
-                font_title = pygame.font.SysFont("dejavusans", 40)
-                font_instructions = pygame.font.SysFont("dejavusans", 20)
-                title = u"¡A cocinar!"
-                title_width, title_height = font_title.size(title)
-                instructions = [u"Vamos a hacer una torta ...",
-                                u"Observa los ingredientes que se necesitan",
-                                u"y arrástralos hasta la mesa."]
-                y = title_height / 2
-                text = font_title.render(title, True, (102, 102, 102))
-                text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
-                self.screen.blit(text, text_pos)
-                y += title_height
-                line_width, line_height = font_instructions.size(instructions[0])
-                for line in instructions:
-                    text = font_instructions.render(line, True, (102, 102, 102))
-                    y += line_height
-                    text_pos = (50, y)
-                    self.screen.blit(text, text_pos)
+                self.instruction_text()
                 self.sprites.draw(self.view.screen)
                 pygame.display.update()
 
