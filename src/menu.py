@@ -70,7 +70,7 @@ class MenuActivity(Activity):
             self.quit = True
             return
         elif event.type == KEYUP:
-            if event.key == K_F4 and KMOD_ALT & event.mod:
+            if event.key == K_ESCAPE or event.key == K_F4 and KMOD_ALT & event.mod:
                 self.quit = True
                 return
         elif event.type == MOUSEBUTTONUP:
