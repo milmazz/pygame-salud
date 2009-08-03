@@ -30,7 +30,6 @@ class Finger(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self) 
         self.image, self.rect = common.load_image(constants.cursor_filename)
-        pygame.mouse.set_pos(700.0, 550.0)
 
     def update(self):
         pos = pygame.mouse.get_pos()
@@ -42,25 +41,20 @@ class MenuActivity(Activity):
         Activity.__init__(self, screen)
         
         self.activities = pygame.sprite.RenderPlain()
+
+        self.pos = None
         
         # Positions of the activities in the main menu 
         if items:
-            y1 = 0
-            y2 = 0
-            y3 = 0
+            y = 0
             for i in range(len(items)):
                 if i % 3 == 0:
                     x = self.screen.get_width() / 3.0 - 130
-                    y1 += 120
-                    y = y1
+                    y += 120
                 elif i % 3 == 1:
                     x = self.screen.get_width() / 3.0 + 130
-                    y2 += 120
-                    y = y2
                 else:
                     x = self.screen.get_width() / 3.0 + 390
-                    y3 += 120
-                    y = y3
                 items[i].place(x, y)
                 self.activities.add(items[i])
             
@@ -68,9 +62,6 @@ class MenuActivity(Activity):
         self.Cursor = pygame.sprite.RenderPlain((self.finger))
         
         self.pos = None
-        
-    #def setup_background(self):
-    #    self.background = pygame.image.load(constants.background_filename)
         
     def handle_events(self):
         event = pygame.event.wait()
@@ -81,10 +72,9 @@ class MenuActivity(Activity):
             if event.key == K_F4 and KMOD_ALT & event.mod:
                 self.quit = True
                 return
-        elif event.type == MOUSEBUTTONUP:
+        elif event.type == MOUSEBUTTONDOWN:
             for x in pygame.sprite.spritecollide(self.finger, self.activities, False):
                 x.run(self.screen)
-                pygame.mouse.set_pos(700.0, 500.0)
                 break
 
         self.pos = pygame.mouse.get_pos()
@@ -94,10 +84,6 @@ class MenuActivity(Activity):
     def on_change(self):
         self.Cursor.update()        
 
-        #for x in pygame.sprite.spritecollide(self.finger, self.activities, False):
-        #    x.run(self.screen)
-        #    pygame.mouse.set_pos(100.0, 100.0)
-        #    break
         self.activities.draw(self.screen)
         self.Cursor.draw(self.screen)
     
