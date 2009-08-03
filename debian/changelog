@@ -1,4 +1,11 @@
-pygame-salud (0.1-4) unstable; urgency=low
+pygame-salud (0.1-6) unstable; urgency=low
+
+  * Se agrega la funcionalidad de salida con la tecla escape en 
+    el menu principal
+
+ -- Rafael Leon <leonza99@gmail.com>  Mon, 03 Aug 2009 11:12:02 -0430
+
+pygame-salud (0.1-5) unstable; urgency=low
 
   * Ahora el paquete puede ejecutarse desde: Aplicaciones -> Educación.
   * El nombre genérico fue modificado a: Actividades de salud.
