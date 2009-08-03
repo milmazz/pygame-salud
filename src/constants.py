@@ -42,6 +42,9 @@ illustration_012 = os.path.join(data_folder, "backgrounds", "illustration_012.jp
 illustration_007 = os.path.join(data_folder, "backgrounds", "illustration_007.jpg")
 arrow = os.path.join(data_folder, "links", "arrow.png")
 
+# Cooking
+illustration_024 = os.path.join(data_folder, "backgrounds", "illustration_024.jpg")
+
 poetry = os.path.join(data_folder, "poetries", "poetry.txt")
 poetry2 = os.path.join(data_folder, "poetries", "poetry2.txt")
 
