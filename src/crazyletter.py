@@ -7,6 +7,7 @@ from activity import Activity
 import common
 from icons import Icons
 
+
 class Container(Sprite):
 
     """Define a container to the correct word
@@ -28,6 +29,7 @@ class Hand(Sprite):
         self.image = pygame.image.load(self.image_normal)
         self.color = 0
         self.rect = self.image.get_rect()
+        print self.image.get_rect()
 
     def change_hand(self):
         if self.color == 0:
@@ -36,8 +38,8 @@ class Hand(Sprite):
             self.color = 0
 
     def update(self, mover=(0,0)):
-        self.rect.x = mover[0] - self.image.get_width() / 2
-        self.rect.y = mover[1] - self.image.get_height() / 2
+        self.rect.x = mover[0] 
+        self.rect.y = mover[1] 
         if self.color == 0:
             self.image = pygame.image.load(self.image_normal)
         if self.color == 1:
@@ -107,6 +109,7 @@ class CrazyLetterActivity(Activity):
         Activity.__init__(self, screen)
 
     def setup(self):
+        self.informative_text()
         #position of the blue container
         position_blue = [(20,500), (70,500), (130,500), \
                  (180,500), (230,500), (280,500), \
@@ -127,9 +130,32 @@ class CrazyLetterActivity(Activity):
         self.sprites = pygame.sprite.OrderedUpdates()
         self.sprites.add([self.icons, container_blue, container_yellow, self.letters, self.hand])
         pygame.mouse.set_visible( False ) #oculntar el puntero del mouse
+        self.view.screen.blit(self.view.background, (0,0))
+        self.sprites.draw(self.view.screen)
+        self.informative_text()
         pygame.display.update()
         #mouse button is down
         self.button_down = 0
+
+    def informative_text(self):
+        if pygame.font:
+            font = pygame.font.Font(None, 40)
+            font.set_bold(True)
+            text = font.render("Letras locas", 1, (0, 0, 0))
+            textRect = text.get_rect()
+            textRect.centerx = self.screen.get_rect().centerx
+            textRect.centery = 15
+            self.screen.blit(text, textRect)
+
+
+            font = pygame.font.Font(None, 32)
+            font.set_bold(False)
+            text = font.render("Arrastra las letras para formar las palabras \"HIGIENE\"", \
+              1,(0, 0, 0))
+            self.screen.blit(text, (50, 40))
+
+            text = font.render("y \"SALUD\" colocandolas en los cuadros de abajo", 1,(0, 0, 0))
+            self.screen.blit(text, (50, 60))
 
     def handle_events(self):
         while True:
@@ -149,6 +175,7 @@ class CrazyLetterActivity(Activity):
                     self.hand.update(pos)
                     self.view.screen.blit(self.view.background, (0,0))
                     self.sprites.draw(self.view.screen)
+                    self.informative_text()
                     pygame.display.update()
                 if event.type == MOUSEMOTION and self.button_down:
                     selection.update(pos)
@@ -160,12 +187,14 @@ class CrazyLetterActivity(Activity):
                     self.hand.update(pos)
                     self.view.screen.blit(self.view.background, (0,0))
                     self.sprites.draw(self.view.screen)
+                    self.informative_text()
                     pygame.display.update()
                 if event.type == MOUSEBUTTONUP:
                     self.hand.change_hand()
                     self.hand.update(pos)
                     self.view.screen.blit(self.view.background, (0,0))
                     self.sprites.draw(self.view.screen)
+                    self.informative_text()
                     pygame.display.update()
                     #print pos
 
@@ -178,12 +207,19 @@ class CrazyLetterActivity(Activity):
                             selection.update(selection.orig)
                             self.view.screen.blit(self.view.background, (0,0))
                             self.sprites.draw(self.view.screen)
+                            self.informative_text()
                             pygame.display.update()
                     else:
                         selection.color = 0
                         selection.update(pos)
                 if event.type == MOUSEBUTTONDOWN:
                     selection = pygame.sprite.spritecollideany(self.hand, self.letters)
+                    for list in pygame.sprite.spritecollide(self.hand, self.letters,0):
+                        x = pos[0] + self.hand.rect.width / 2
+                        y = pos[1] + self.hand.rect.height / 2
+                        if list.rect.collidepoint(x,y):
+                            selection = list
+ 
                     if selection:
                         selection.color = 1
                         self.button_down = 1
