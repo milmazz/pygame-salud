@@ -10,6 +10,7 @@ from pygame.locals import *
 import constants
 from activity import Activity
 import common
+from icons import Icons
 
 class Ingredients(Sprite):
     def __init__(self, pos, ingredient):
@@ -76,10 +77,12 @@ class Cooking(Activity):
                                                 # positions on the screen
         self.view = View() #load static background
         self.hand = Hand() #load hand
+        self.icons = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
         self.ingredients = self.view.groupIngredients(pos_ingredients)
         self.container = pygame.Rect(400, 400, 100, 100)
         self.sprites = pygame.sprite.OrderedUpdates()
-        self.sprites.add([self.ingredients, self.hand])
+        self.sprites.add([self.icons, self.ingredients, self.hand])
         pygame.mouse.set_visible( False ) #hide pointer
         #mouse button is up
         self.button_down = 0
@@ -101,6 +104,9 @@ class Cooking(Activity):
                 if event.type == MOUSEMOTION and self.button_down:
                     selection.update(pos)
                 if event.type == MOUSEBUTTONDOWN:
+                    if pygame.sprite.spritecollideany(self.hand, self.icons):
+                        self.quit = True
+                        return
                     self.hand.change_hand()
                     self.hand.update()
                 if event.type == MOUSEBUTTONUP:
