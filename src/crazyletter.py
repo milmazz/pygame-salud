@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pygame
 from pygame.sprite import Sprite
 from pygame.locals import *
@@ -88,16 +89,16 @@ class View():
 
     def groupLetters(self):
         letters   = pygame.sprite.Group()
-        positions = [(388, 90), (596, 333), (165, 285), \
+        positions = [(178, 337), (596, 333), (165, 285), \
                       (605, 294), (183, 244), (580, 255), \
                       (576, 219), (223, 140), (250, 182), \
                       (555, 190), (540, 127), (293, 195), \
                       (317, 177), (523, 192), (269, 138), \
-                      (140, 314), (430, 90), (204, 195), \
+                      (140, 314), (145, 205), (204, 195), \
                       (647, 296), (226, 222), (632, 255), \
-                      (487, 85), (615, 213), (336, 133), \
+                      (650, 345), (615, 213), (336, 133), \
                       (580, 152), (420, 133), (500, 145), \
-                      (380, 127), (466, 121), (328, 90)]
+                      (380, 127), (466, 121), (122, 360)]
         stringLetters = 'bacdefghijklilmnopqrsoetuvxwyz'
         for i in range(len(stringLetters)):
             letters.add([Letters(positions[i], stringLetters[i],i)])
@@ -139,7 +140,7 @@ class CrazyLetterActivity(Activity):
 
     def informative_text(self):
         if pygame.font:
-            font = pygame.font.SysFont("dejavusans", 40)
+            font = pygame.font.SysFont("dejavusans", 32)
             font.set_bold(True)
             text = font.render("Letras locas", 1, (0, 0, 0))
             textRect = text.get_rect()
@@ -150,12 +151,13 @@ class CrazyLetterActivity(Activity):
 
             font = pygame.font.SysFont("dejavusans", 20)
             font.set_bold(False)
-            instructions = [u"Arrastra las letras para formar las palabras \"HIGIENE\"",
-                           u"y \"SALUD\" colocandolas en los cuadros de abajo."]
+            instructions = [u"     Busca entre las letras la palabra \"HIGIENE\" y arrástralas al recuadro.",
+                            u"Pregunta a tu profesora, profesor o a tus papás qué significa esa palabra.",
+                            u"También puedes buscar la palabra \"SALUD\"."]
             y = 40
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
-                self.screen.blit(text, (50, y))
+                self.screen.blit(text, (20, y))
                 y+=20
 
 
@@ -192,6 +194,7 @@ class CrazyLetterActivity(Activity):
                     self.informative_text()
                     pygame.display.update()
                 if event.type == MOUSEBUTTONUP:
+                    print pos
                     self.hand.change_hand()
                     self.hand.update(pos)
                     self.view.screen.blit(self.view.background, (0,0))
