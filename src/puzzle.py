@@ -16,9 +16,9 @@ from icons import Icons
 class ImagePuzzle(Sprite):
     def __init__(self, x, y, id, numimage):
         Sprite.__init__(self)
-        self.imagen_normal = constants.images_puzzle+'/puzzle_p'+numimage+'.png'
-        self.image = pygame.image.load(self.imagen_normal)
-        self.rect = self.image.get_rect()
+        self.imagen_normal = os.path.join(constants.images_puzzle,
+                'puzzle_p'+numimage+'.png')
+        self.image, self.rect = common.load_image(self.imagen_normal)
         self.rect.x = x
         self.rect.y = y
         self.id = id #id to compare between images
@@ -31,11 +31,14 @@ class ImagePuzzle(Sprite):
 class Hand(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image_normal = constants.images_puzzle+"/all-scroll2.png"
-        self.image_close =  constants.images_puzzle+"/grabbing2.png"
-        self.image = pygame.image.load(self.image_normal)
+        self.image_normal = os.path.join(constants.images_puzzle,
+                                         "all-scroll2.png")
+        self.image_close =  os.path.join(constants.images_puzzle,
+                                         "grabbing2.png")
+        self.normal, self.rect = common.load_image(self.image_normal)
+        self.image = self.normal
+        self.close, rect = common.load_image(self.image_close)
         self.color = 0
-        self.rect = self.image.get_rect()
 
     def change_hand(self):
         if self.color == 0:
@@ -47,9 +50,9 @@ class Hand(Sprite):
         self.rect.x = mover[0] - self.image.get_width() / 2
         self.rect.y = mover[1] - self.image.get_height() / 2
         if self.color == 0:
-            self.image = pygame.image.load(self.image_normal)
+            self.image = self.normal
         if self.color == 1:
-            self.image = pygame.image.load(self.image_close)
+            self.image = self.close
 
 
 class PuzzleActivity(Activity):
@@ -57,7 +60,7 @@ class PuzzleActivity(Activity):
         Activity.__init__(self, screen)
 
     def setup_background(self):
-        self.background = pygame.image.load(constants.illustration_puzzle).convert_alpha()
+        self.background, rect = common.load_image(constants.illustration_puzzle)
 
     def informative_text(self):
         if pygame.font:
