@@ -30,7 +30,6 @@ class Hand(Sprite):
         self.image = pygame.image.load(self.image_normal)
         self.color = 0
         self.rect = self.image.get_rect()
-        print self.image.get_rect()
 
     def change_hand(self):
         if self.color == 0:
