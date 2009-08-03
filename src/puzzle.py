@@ -119,13 +119,13 @@ class PuzzleActivity(Activity):
                     """put the picture select and the hand in the
                      front of the queue"""
                     if self.selection and self.selection.fix == 0:
+                        """This is necesary to have ever the selection picture
+                           and the hand in the front"""
                         self.selection.kill()
                         self.hand.kill()
                         self.pictures.add([self.selection])
                         self.sprites.add([self.selection])
                         self.sprites.add([self.hand])
-                        #self.sprites.move_to_front(self.selection)
-                        #self.sprites.move_to_front(self.hand)
                     self.hand.change_hand() #change de open hand by the close hand
                     self.hand.update(pos) 
                     self.screen.blit(self.background, (0,0))
