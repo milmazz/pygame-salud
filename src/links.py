@@ -29,15 +29,6 @@ class Shower(Activity):
                 'body': (510, 295),
                 'mouth': (500, 450),
                 }
-#         self.items = {
-#                 'towel': pygame.Rect(260, 186, 102, 100),
-#                 'shampoo': pygame.Rect(170, 295, 80, 85),
-#                 'brush': pygame.Rect(285, 385, 105, 65),
-#                 'soap': pygame.Rect(195, 498, 90, 65),
-#                 'hair': pygame.Rect(507, 227, 74, 65),
-#                 'body': pygame.Rect(491, 365, 94, 82),
-#                 'mouth': pygame.Rect(500, 510, 73, 42),
-#                 }
   
         self.selections = []
         self.actual_selection = []
