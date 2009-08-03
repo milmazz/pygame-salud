@@ -90,6 +90,11 @@ class PoetryActivity(Activity):
             y += font_height
             self.screen.blit(text, text_pos)
 
+    def setup(self):
+        self.CloseButton.draw(self.screen)
+        self.Cursor.draw(self.screen)
+        self.text()
+
 # Actividad 11
 class PoetryActivity2(Activity):
     def __init__(self, screen):
@@ -156,3 +161,8 @@ class PoetryActivity2(Activity):
             text_pos = (20, y)
             y += font_height
             self.screen.blit(text, text_pos)
+
+    def setup(self):
+        self.CloseButton.draw(self.screen)
+        self.Cursor.draw(self.screen)
+        self.text()

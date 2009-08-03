@@ -75,10 +75,10 @@ class View():
 
     def __init__(self):
        self.pos = 0
-       self.size = (800, 600)
-       self.screen = pygame.display.set_mode(self.size, 0, 32)
+       #self.size = (800, 600)
+       #self.screen = pygame.display.set_mode(self.size, 0, 32)
        self.background = pygame.image.load(constants.illustration_002).convert_alpha()
-       self.background = pygame.transform.scale(self.background, self.size)
+       #self.background = pygame.transform.scale(self.background, self.size)
 
     def groupContainer(self, positions, word, color):
         containers = pygame.sprite.Group()
@@ -130,8 +130,8 @@ class CrazyLetterActivity(Activity):
         self.sprites = pygame.sprite.OrderedUpdates()
         self.sprites.add([self.icons, container_blue, container_yellow, self.letters, self.hand])
         pygame.mouse.set_visible( False ) #oculntar el puntero del mouse
-        self.view.screen.blit(self.view.background, (0,0))
-        self.sprites.draw(self.view.screen)
+        self.screen.blit(self.view.background, (0,0))
+        self.sprites.draw(self.screen)
         self.informative_text()
         pygame.display.update()
         #mouse button is down
@@ -176,8 +176,8 @@ class CrazyLetterActivity(Activity):
 
                 if event.type == MOUSEMOTION:
                     self.hand.update(pos)
-                    self.view.screen.blit(self.view.background, (0,0))
-                    self.sprites.draw(self.view.screen)
+                    self.screen.blit(self.view.background, (0,0))
+                    self.sprites.draw(self.screen)
                     self.informative_text()
                     pygame.display.update()
                 if event.type == MOUSEMOTION and self.button_down:
@@ -188,16 +188,16 @@ class CrazyLetterActivity(Activity):
                         return
                     self.hand.change_hand()
                     self.hand.update(pos)
-                    self.view.screen.blit(self.view.background, (0,0))
-                    self.sprites.draw(self.view.screen)
+                    self.screen.blit(self.view.background, (0,0))
+                    self.sprites.draw(self.screen)
                     self.informative_text()
                     pygame.display.update()
                 if event.type == MOUSEBUTTONUP:
                     print pos
                     self.hand.change_hand()
                     self.hand.update(pos)
-                    self.view.screen.blit(self.view.background, (0,0))
-                    self.sprites.draw(self.view.screen)
+                    self.screen.blit(self.view.background, (0,0))
+                    self.sprites.draw(self.screen)
                     self.informative_text()
                     pygame.display.update()
                     #print pos
@@ -209,8 +209,8 @@ class CrazyLetterActivity(Activity):
                         if selection.letter != letter_in_container.letter:
                             selection.back()
                             selection.update(selection.orig)
-                            self.view.screen.blit(self.view.background, (0,0))
-                            self.sprites.draw(self.view.screen)
+                            self.screen.blit(self.view.background, (0,0))
+                            self.sprites.draw(self.screen)
                             self.informative_text()
                             pygame.display.update()
                     else:
