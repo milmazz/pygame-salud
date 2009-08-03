@@ -45,13 +45,22 @@ class MenuActivity(Activity):
         
         # Positions of the activities in the main menu 
         if items:
-            y = 0
+            y1 = 0
+            y2 = 0
+            y3 = 0
             for i in range(len(items)):
-                if i % 2 == 0:
-                    x = self.screen.get_width() / 2.0 - 130
-                    y += 120
+                if i % 3 == 0:
+                    x = self.screen.get_width() / 3.0 - 130
+                    y1 += 120
+                    y = y1
+                elif i % 3 == 1:
+                    x = self.screen.get_width() / 3.0 + 130
+                    y2 += 120
+                    y = y2
                 else:
-                    x = self.screen.get_width() / 2.0 + 130
+                    x = self.screen.get_width() / 3.0 + 390
+                    y3 += 120
+                    y = y3
                 items[i].place(x, y)
                 self.activities.add(items[i])
             
@@ -75,7 +84,7 @@ class MenuActivity(Activity):
         elif event.type == MOUSEBUTTONUP:
             for x in pygame.sprite.spritecollide(self.finger, self.activities, False):
                 x.run(self.screen)
-                pygame.mouse.set_pos(100.0, 100.0)
+                pygame.mouse.set_pos(700.0, 500.0)
                 break
 
         self.pos = pygame.mouse.get_pos()
