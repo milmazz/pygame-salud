@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 
 import os
 import time
@@ -125,20 +125,25 @@ class SoupActivity(Activity):
 
     def informative_text(self):
         if pygame.font:
-            font = pygame.font.Font(None, 40)
+            font = pygame.font.SysFont('dejavusans', 32)
             font.set_bold(True)
             text = font.render("En busca de los cinco sentidos", 1, (0, 0, 0))
-            self.screen.blit(text, (10, 10))
-            
-            font = pygame.font.Font(None, 32)
-            font.set_bold(False)
-            text = font.render("Busca los cinco sentidos en la sopa de letras y", \
-            1,(0, 0, 0))
-            self.screen.blit(text, (50, 40))
+            textRect = text.get_rect()
+            textRect.centerx = self.screen.get_rect().centerx
+            textRect.centery = 20
+            self.screen.blit(text, textRect)
 
-            text = font.render("marca cada palabra", 1,(0, 0, 0))
-            self.screen.blit(text, (50, 60))
- 
+
+            font = pygame.font.SysFont("dejavusans", 20)
+            font.set_bold(False)
+            instructions = [u"Busca los cinco sentidos en la sopa de letra y marca con",
+                            u"el lápiz cada palabra."]
+            y = 40
+            for line in instructions:
+                text = font.render(line, 1,(0, 0, 0))
+                self.screen.blit(text, (20, y))
+                y+=20
+            
         
     def setup_background(self):
         self.background = pygame.image.load(constants.illustration_003).convert_alpha()
@@ -164,7 +169,7 @@ class SoupActivity(Activity):
         self.lista = list() #lista de letras que estan coloreadas
         self.informative_text() 
         #agregar las letras sprite al grupo
-        letrasM = 'ydvgustojjrihrufimlvistadrywttemoidotcxtianacmunonotactoolfatoat'
+        letrasM = 'ydvgustojjrihrufimlvistadrywttemoIdotcxtianacmunonotactoolfatoat'
         for i in range(8):
             for j in range(8):
                 self.letras.add([Letras(self.pos_x + tam_x * j, \
@@ -278,20 +283,25 @@ class SoupActivity2(Activity):
 
     def informative_text(self):
         if pygame.font:
-            font = pygame.font.Font(None, 40)
+            font = pygame.font.SysFont('dejavusans', 32)
             font.set_bold(True)
-            text = font.render("En busca de los cinco sentidos", 1, (0, 0, 0))
-            self.screen.blit(text, (10, 10))
-            
-            font = pygame.font.Font(None, 32)
-            font.set_bold(False)
-            text = font.render("Busca los cinco sentidos en la sopa de letras y", \
-            1,(0, 0, 0))
-            self.screen.blit(text, (50, 40))
+            text = font.render("Letras escondidas", 1, (0, 0, 0))
+            textRect = text.get_rect()
+            textRect.centerx = self.screen.get_rect().centerx
+            textRect.centery = 20
+            self.screen.blit(text, textRect)
 
-            text = font.render("marca cada palabra", 1,(0, 0, 0))
-            self.screen.blit(text, (50, 60))
-        
+
+            font = pygame.font.SysFont("dejavusans", 20)
+            font.set_bold(False)
+            instructions = [u"     Encuentra en la sopa de letras las palabras relacionadas",
+                            u"con el ambiente que nos rodea. Márcalas con el lápiz."]
+            y = 40
+            for line in instructions:
+                text = font.render(line, 1,(0, 0, 0))
+                self.screen.blit(text, (20, y))
+                y+=20
+ 
     def setup_background(self):
         self.background = pygame.image.load(constants.illustration_017).convert_alpha()
 
