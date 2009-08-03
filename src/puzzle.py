@@ -59,6 +59,17 @@ class PuzzleActivity(Activity):
     def setup_background(self):
         self.background = pygame.image.load(constants.illustration_puzzle).convert_alpha()
 
+    def informative_text(self):
+        if pygame.font:
+            font = pygame.font.SysFont('dejavusans', 32)
+            font.set_bold(True)
+            text = font.render("Arma las piezas del rompecabezas.", 1, (0, 0, 0))
+            textRect = text.get_rect()
+            textRect.centerx = self.screen.get_rect().centerx
+            textRect.centery = 20
+            self.screen.blit(text, textRect)
+
+
     def setup(self):
         """Turn off the mouse pointer"""
         pygame.mouse.set_visible( False )
@@ -78,10 +89,11 @@ class PuzzleActivity(Activity):
           ImagePuzzle(500,250,4,"5")])
         """add the 4 pictures to the sprite groups"""
         self.pictures.add([\
-          ImagePuzzle(100,0,1,"1"),\
-          ImagePuzzle(100,150,2,"2"),\
-          ImagePuzzle(100,300,3,"3"),\
-          ImagePuzzle(100,450,4,"4")])
+          ImagePuzzle(550,450,1,"1"),\
+          ImagePuzzle(300,450,2,"2"),\
+          ImagePuzzle(50,150,3,"3"),\
+          ImagePuzzle(50,350,4,"4")])
+        self.informative_text()
         self.sprites.add([self.transparent, self.pictures, self.icons, self.hand])
         self.sprites.draw(self.screen)
 
@@ -138,5 +150,6 @@ class PuzzleActivity(Activity):
                     self.hand.update(pos)
                     self.screen.blit(self.background, (0,0))
                     self.sprites.draw(self.screen)
+                self.informative_text()
                 """update all the screen"""
                 pygame.display.update()
