@@ -30,6 +30,7 @@ class Finger(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self) 
         self.image, self.rect = common.load_image(constants.cursor_filename)
+        pygame.mouse.set_pos(700.0, 500.0)
 
     def update(self):
         pos = pygame.mouse.get_pos()
@@ -72,9 +73,10 @@ class MenuActivity(Activity):
             if event.key == K_F4 and KMOD_ALT & event.mod:
                 self.quit = True
                 return
-        elif event.type == MOUSEBUTTONDOWN:
+        elif event.type == MOUSEBUTTONUP:
             for x in pygame.sprite.spritecollide(self.finger, self.activities, False):
                 x.run(self.screen)
+                pygame.mouse.set_pos(700.0, 500.0)
                 break
 
         self.pos = pygame.mouse.get_pos()
