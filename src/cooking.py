@@ -57,7 +57,6 @@ class Hand(Sprite):
 
 class View():
     def __init__(self):
-        self.screen = pygame.display.set_mode((800, 600), 0, 32)
         self.background = common.load_image(constants.illustration_024)[0]
 
     def groupIngredients(self, pos_ingredients):
@@ -106,8 +105,8 @@ class Cooking(Activity):
         pygame.mouse.set_visible( False ) #hide pointer
         #mouse button is up
         self.button_down = 0
-        self.view.screen.blit(self.view.background, (0,0))
-        self.sprites.draw(self.view.screen)
+        self.screen.blit(self.view.background, (0,0))
+        self.sprites.draw(self.screen)
         self.instruction_text()
         pygame.display.update()
 
@@ -152,8 +151,8 @@ class Cooking(Activity):
                     if selection:
                         selection.color = 1
                         self.button_down = 1
-                self.view.screen.blit(self.view.background, (0,0))
+                self.screen.blit(self.view.background, (0,0))
                 self.instruction_text()
-                self.sprites.draw(self.view.screen)
+                self.sprites.draw(self.screen)
                 pygame.display.update()
 
