@@ -10,14 +10,13 @@ import cProfile as profile
 
 import constants
 import common
-from menu import MenuItem, MenuActivity
+from menu import MenuItem, MainMenu
 from reads import PoetryActivity, PoetryActivity2
 from links import Shower
 from soups import SoupActivity, SoupActivity2
 from crazyletter import CrazyLetterActivity
 from puzzle import PuzzleActivity
 from cooking import Cooking
-from order import OrderActivity
 
 def main():
 	# Mixer pre init
@@ -35,17 +34,16 @@ def main():
 	pygame.mouse.set_visible(False)
 
 	items = [
-        MenuItem(constants.readings_filename, PoetryActivity), 
-        MenuItem(constants.associations_filename, PoetryActivity2), 
-        MenuItem(constants.associations_filename, Shower), 
-        MenuItem(constants.associations_filename, SoupActivity), 
-        MenuItem(constants.associations_filename, SoupActivity2), 
-        MenuItem(constants.associations_filename, CrazyLetterActivity), 
-        MenuItem(constants.associations_filename, PuzzleActivity), 
-        MenuItem(constants.associations_filename, Cooking), 
-        MenuItem(constants.readings_filename, OrderActivity), 
+        MenuItem('cletter', CrazyLetterActivity, 'dragndrop'), 
+        MenuItem('soup1', SoupActivity, 'soups'), 
+        MenuItem('puzzle', PuzzleActivity, 'puzzle'), 
+        MenuItem('shower', Shower, 'associations'), 
+        MenuItem('poetry1', PoetryActivity, 'readings'), 
+        MenuItem('poetry2', PoetryActivity2, 'readings'), 
+        MenuItem('soup2', SoupActivity2, 'soups'), 
+        MenuItem('cooking', Cooking, 'dragndrop'), 
     ]
 
-	MenuActivity(screen, items).run()
+	MainMenu(screen, items).run()
 
 if __name__ == '__main__': main()
