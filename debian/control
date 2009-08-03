@@ -10,7 +10,7 @@ Vcs-Git: git://github.com/milmazz/pygame-salud.git
 
 Package: pygame-salud
 Architecture: all
-Depends: python-pygame (>= 1.7.1), ttf-dejavu-core (>= 2.25), ${python:Depends}, ${misc:Depends}
+Depends: python-pygame (>= 1.7.1), ttf-dejavu-core (>= 2.25), python-support (>= 0.6.4)
 Description: Set of kids games developed using Python
  Pygame-salud is a set of kids games and educational software
  developed using Python. Between the games we have: word search puzzle, 
