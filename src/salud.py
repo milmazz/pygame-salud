@@ -17,6 +17,7 @@ from soups import SoupActivity, SoupActivity2
 from crazyletter import CrazyLetterActivity
 from puzzle import PuzzleActivity
 from cooking import Cooking
+from healthy import Healthy
 
 def main():
 	# Mixer pre init
@@ -42,6 +43,7 @@ def main():
         MenuItem('poetry2', PoetryActivity2, 'readings'), 
         MenuItem('soup2', SoupActivity2, 'soups'), 
         MenuItem('cooking', Cooking, 'dragndrop'), 
+        MenuItem('healthy', Healthy, 'dragndrop'), 
     ]
 
 	MainMenu(screen, items).run()

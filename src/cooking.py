@@ -156,4 +156,3 @@ class Cooking(Activity):
                 self.instruction_text()
                 self.sprites.draw(self.screen)
                 pygame.display.update()
-
