@@ -111,6 +111,7 @@ class Cooking(Activity):
         pygame.display.update()
 
     def handle_events(self):
+        pygame.event.clear()
         while True:
             for event in [ pygame.event.wait() ] + pygame.event.get():
                 pos = pygame.mouse.get_pos()

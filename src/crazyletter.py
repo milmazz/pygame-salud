@@ -1,3 +1,4 @@
+# vim:ts=4:sts=4:et:nowrap:tw=77
 # -*- coding: utf-8 -*-
 import pygame
 from pygame.sprite import Sprite
@@ -161,6 +162,7 @@ class CrazyLetterActivity(Activity):
 
 
     def handle_events(self):
+        pygame.event.clear()
         while True:
             for event in [ pygame.event.wait() ] + pygame.event.get():
                 pos = pygame.mouse.get_pos()
