@@ -159,7 +159,7 @@ class Healthy(Activity):
                 pygame.Rect(285, 280, 250, 40), pygame.Rect(500, 535, 250, 40)]
         self.containers = self.containers1
         self.sprites = pygame.sprite.OrderedUpdates()
-        self.sprites.add([self.icons, self.textlines, self.hand, self.change])
+        self.sprites.add([self.icons, self.textlines, self.change, self.hand])
         pygame.mouse.set_visible( False ) #hide pointer
         self.button_down = 0
         self.screen.blit(self.view.background, (0,0))
@@ -199,11 +199,11 @@ class Healthy(Activity):
                             self.pos_textlines = self.pos_textlines1
                             self.correctlines = self.correctlines1
                             self.containers = self.containers1
-                        self.sprites.remove([self.textlines, self.correct])
+                        self.sprites.remove([self.textlines, self.correct, \
+                                self.hand])
                         self.correct.empty()
-                        self.sprites.remove([self.textlines])
                         self.textlines = self.view.grouptextlines(self.pos_textlines)
-                        self.sprites.add([self.textlines])
+                        self.sprites.add([self.textlines, self.hand])
                     self.hand.change_hand()
                     self.hand.update()
                 if event.type == MOUSEBUTTONUP:
@@ -223,7 +223,8 @@ class Healthy(Activity):
                                     selection.size_y)/2, 0, 0)
                                     self.correct.add([correct((left + (width \
                                             /2) - 25, top - 150))])
-                                    self.sprites.add([self.correct])
+                                    self.sprites.remove([self.hand])
+                                    self.sprites.add([self.correct, self.hand])
                         else:
                             pass
                     else:
