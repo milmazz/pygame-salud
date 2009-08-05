@@ -19,6 +19,7 @@ from puzzle import PuzzleActivity
 from cooking import Cooking
 from healthy import Healthy
 from order import OrderActivity, OrderActivity2
+from shopping import Shopping
 
 def main():
 	# Mixer pre init
@@ -47,6 +48,7 @@ def main():
         MenuItem('healthy', Healthy, 'dragndrop'), 
         MenuItem('order', OrderActivity, 'dragndrop'),
         MenuItem('order', OrderActivity2, 'dragndrop'),
+        MenuItem('shopping', Shopping, 'dragndrop'),
     ]
 
 	MainMenu(screen, items).run()
