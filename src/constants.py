@@ -77,6 +77,11 @@ images_cletter = os.path.join(data_folder,"crazyletter")
 illustration_puzzle = os.path.join(data_folder, "backgrounds", "illustration_012_b.jpg")
 images_puzzle = os.path.join(data_folder,"puzzle")
 
+## labyrinth ##
+illustration_010 = os.path.join(data_folder, "backgrounds",
+                                "illustration_010.png")
+images_labyrinth = os.path.join(data_folder,"labyrinth")
+
 # sound buffer length
 mixer_buffersize = 3 * 1024
 
