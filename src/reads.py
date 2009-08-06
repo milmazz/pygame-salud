@@ -1,3 +1,4 @@
+# vim:ts=4:sts=4:et:nowrap:tw=77
 # -*- coding: utf-8 -*-
 
 import pygame
@@ -6,6 +7,7 @@ from pygame.locals import *
 import constants
 from activity import Activity
 from menu import MenuItem, MenuActivity
+from icons import Icons
 import common
 
 class Finger(pygame.sprite.Sprite):
@@ -17,22 +19,12 @@ class Finger(pygame.sprite.Sprite):
         pos = pygame.mouse.get_pos()
         self.rect.midtop = pos
 
-class Close(pygame.sprite.Sprite):
-   def __init__(self):
-       pygame.sprite.Sprite.__init__(self)
-       self.image, self.rect = common.load_image(constants.icons_folder+'/gartoon/process-stop.png')
-       x = constants.screen_mode[0] - self.image.get_width()
-       y = 0
-       self.rect.topleft = [x,y]
 
 # Actividad 7
 class PoetryActivity(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
- 
-        self.close_button = Close()
-        self.CloseButton = pygame.sprite.RenderUpdates((self.close_button))
-
+        self.CloseButton = pygame.sprite.RenderUpdates(([Icons('stop')]))
         self.finger = Finger()
         self.Cursor = pygame.sprite.RenderUpdates((self.finger))
         self.pos = None
@@ -48,10 +40,10 @@ class PoetryActivity(Activity):
                     self.quit = True
                     return
             elif event.type == MOUSEBUTTONDOWN:
-                if pygame.sprite.collide_rect(self.finger, self.close_button):
+                if pygame.sprite.spritecollideany(self.finger, \
+                        self.CloseButton):
                     self.quit = True
                     return
-
         self.pos = pygame.mouse.get_pos()
         if self.pos != self.mprev:
             self.changed = True
@@ -59,9 +51,8 @@ class PoetryActivity(Activity):
     def on_change(self):
         self.Cursor.update()
         self.CloseButton.draw(self.screen)
-        self.Cursor.draw(self.screen)
         self.text()
- 
+        self.Cursor.draw(self.screen)
         self.mprev = self.pos
 
     def setup_background(self):
@@ -95,14 +86,12 @@ class PoetryActivity(Activity):
         self.Cursor.draw(self.screen)
         self.text()
 
+
 # Actividad 11
 class PoetryActivity2(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
-
-        self.close_button = Close()
-        self.CloseButton = pygame.sprite.RenderUpdates((self.close_button))
-
+        self.CloseButton = pygame.sprite.RenderUpdates(([Icons('stop')]))
         self.finger = Finger()
         self.Cursor = pygame.sprite.RenderUpdates((self.finger))
         self.pos = None
@@ -118,10 +107,10 @@ class PoetryActivity2(Activity):
                     self.quit = True
                     return
             elif event.type == MOUSEBUTTONDOWN:
-                if pygame.sprite.collide_rect(self.finger, self.close_button):
+                if pygame.sprite.spritecollideany(self.finger, \
+                        self.CloseButton):
                     self.quit = True
                     return
- 
         self.pos = pygame.mouse.get_pos()
         if self.pos != self.mprev:
             self.changed = True
@@ -129,11 +118,9 @@ class PoetryActivity2(Activity):
     def on_change(self):
         self.Cursor.update()
         self.CloseButton.draw(self.screen)
-        self.Cursor.draw(self.screen)
         self.text()
-
+        self.Cursor.draw(self.screen)
         self.mprev = self.pos
-
 
     def setup_background(self):
         self.background = pygame.image.load(constants.illustration_012)
@@ -164,5 +151,5 @@ class PoetryActivity2(Activity):
 
     def setup(self):
         self.CloseButton.draw(self.screen)
-        self.Cursor.draw(self.screen)
         self.text()
+        self.Cursor.draw(self.screen)
