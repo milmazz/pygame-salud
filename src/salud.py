@@ -20,6 +20,8 @@ from cooking import Cooking
 from healthy import Healthy
 from order import OrderActivity, OrderActivity2
 from shopping import Shopping
+from missing import Missing
+
 
 def main():
 	# Mixer pre init
@@ -49,6 +51,7 @@ def main():
         MenuItem('order', OrderActivity, 'dragndrop'),
         MenuItem('order', OrderActivity2, 'dragndrop'),
         MenuItem('shopping', Shopping, 'dragndrop'),
+        MenuItem('missing', Missing, 'dragndrop'),
     ]
 
 	MainMenu(screen, items).run()
