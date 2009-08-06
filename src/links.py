@@ -83,7 +83,14 @@ class Shower(Activity):
             y += line_height
             text_pos = (50, y)
             self.screen.blit(text, text_pos)
-            
+
+        self.sprites.draw(self.screen)
+        if self.arrow:
+            self.arrow.update()
+        for i in self.arrows:
+            i.update()
+        pygame.display.flip()
+        
         
     def handle_events(self):
         pygame.event.clear()
@@ -108,35 +115,31 @@ class Shower(Activity):
 
                 selected = sprite.spritecollideany(self.pointer, 
                                                    self.items)
+
                 if selected:
                     selected.activate()
                     self.couple.add(selected)
 
-                if len(self.couple) < 2:
-                    start = pygame.mouse.get_pos()
+                if len(self.couple) == 1:
+                    start = selected.rect.center
                     self.arrow = Arrow(surface=self.screen, start=start,
-                                  end=start, width=3)
-                
-                if len(self.couple) == 2: 
+                                       end=start, width=3)
+                elif len(self.couple) == 2:
                     if self.are_couple(self.couple):
                     # TODO some feeback? message? sound?
-                        for i in self.couple:
-                            i.select()
-
                         if not (self.couple in self.couples):
                             self.couples.append(self.couple.copy())
-                                       
                             end = self.couple.pop().rect.center
                             start = self.couple.pop().rect.center
                             self.arrow.update(start=start, end=end)
                             self.arrows.append(self.arrow)
-                        self.arrow = None
                     else:
-                        self.arrow = None
                         for i in self.couple:
                             i.deactivate()
-                       
-                        self.couple.clear()
+                   
+                    self.arrow = None
+                    self.couple.clear()
+
             if event.type == MOUSEMOTION:
                 if self.arrow:
                     end = pygame.mouse.get_pos()
@@ -185,7 +188,7 @@ class Item(sprite.Sprite):
             self.rect.move_ip(position)
             self.active = False
 
-            self.rect.inflate_ip(-self.rect[2]*0.3, -self.rect[3]*0.3)
+#            self.rect.inflate_ip(-self.rect[2]*0.3, -self.rect[3]*0.3)
 
         def update(self):
             if self.active:
