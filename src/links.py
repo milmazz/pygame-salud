@@ -53,6 +53,7 @@ class Shower(Activity):
         self.sprites.add(self.pointer)
 
         self.arrows = []
+        self.arrow = None
 
     def setup_background(self):
         self.background = common.load_image(constants.illustration_007)[0]
@@ -85,6 +86,7 @@ class Shower(Activity):
             
         
     def handle_events(self):
+        pygame.event.clear()
         for event in [pygame.event.wait()] + pygame.event.get():
             if event.type == QUIT:
                 self.quit = True
@@ -98,41 +100,52 @@ class Shower(Activity):
                 pointer_pos = pygame.mouse.get_pos()
                 self.pointer.update(pointer_pos)
             elif event.type == MOUSEBUTTONDOWN:
-                    """Test if the mouse pointer is over the 
-                       close button"""
-                    if pygame.sprite.spritecollideany(self.pointer, self.icons):
-                        self.quit = True
-                        return
-                    selected = sprite.spritecollideany(self.pointer, 
-                                                       self.items)
-                    if selected:
-                        selected.update()
-                        if selected.active:
-                            self.couple.add(selected)
-                        elif selected in self.couple:
-                                self.couple.remove(selected)
+                """Test if the mouse pointer is over the 
+                   close button"""
+                if pygame.sprite.spritecollideany(self.pointer, self.icons):
+                    self.quit = True
+                    return
 
-                    if len(self.couple) == 2:
-                        # TODO some feeback? message? sound?
-                        if self.are_couple(self.couple):
-                            for i in self.couple:
-                                i.deactivate()
+                selected = sprite.spritecollideany(self.pointer, 
+                                                   self.items)
+                if selected:
+                    selected.activate()
+                    self.couple.add(selected)
 
-                            if not (self.couple in self.couples):
-                                self.couples.append(self.couple.copy())
-                                a = self.couple.pop().rect.center
-                                b = self.couple.pop().rect.center
-                                self.arrows.append(Arrow(surface=self.screen, 
-                                                       start=b, end=a,
-                                                       width=3))
-                        
+                if len(self.couple) < 2:
+                    start = pygame.mouse.get_pos()
+                    self.arrow = Arrow(surface=self.screen, start=start,
+                                  end=start, width=3)
+                
+                if len(self.couple) == 2: 
+                    if self.are_couple(self.couple):
+                    # TODO some feeback? message? sound?
+                        for i in self.couple:
+                            i.select()
+
+                        if not (self.couple in self.couples):
+                            self.couples.append(self.couple.copy())
+                                       
+                            end = self.couple.pop().rect.center
+                            start = self.couple.pop().rect.center
+                            self.arrow.update(start=start, end=end)
+                            self.arrows.append(self.arrow)
+                        self.arrow = None
+                    else:
+                        self.arrow = None
                         for i in self.couple:
                             i.deactivate()
-                            
+                       
                         self.couple.clear()
+            if event.type == MOUSEMOTION:
+                if self.arrow:
+                    end = pygame.mouse.get_pos()
+                    self.arrow.update(end=end)
 
             self.setup()
             self.sprites.draw(self.screen)
+            if self.arrow:
+                self.arrow.update()
             for i in self.arrows:
                 i.update()
             pygame.display.flip()
@@ -183,6 +196,8 @@ class Item(sprite.Sprite):
         def activate(self):
             self.active = True
             self.image = self.over
+
+        select = activate
 
         def deactivate(self):
             self.active = False
