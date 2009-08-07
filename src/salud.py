@@ -48,12 +48,12 @@ def main():
         MenuItem('puzzle', PuzzleActivity, 'puzzle'), # Act 4-16
         MenuItem('shower', Shower, 'associations'), # Act 5
         MenuItem('healthy', Healthy, 'dragndrop'), # Act 6
-        MenuItem('poetry1', PoetryActivity, 'readings'), # Act 7
-        MenuItem('order', OrderActivity, 'dragndrop'), # Act 8
+        MenuItem('readings2', PoetryActivity, 'readings'), # Act 7
+        MenuItem('order1', OrderActivity, 'order'), # Act 8
         MenuItem('health', Labyrinth, 'labyrinth'), # Act 9
         # TODO Act 10
-        MenuItem('poetry2', PoetryActivity2, 'readings'), # Act 11
-        MenuItem('order', OrderActivity2, 'dragndrop'), # Act 12
+        MenuItem('readings1', PoetryActivity2, 'readings'), # Act 11
+        MenuItem('order2', OrderActivity2, 'order'), # Act 12
         # TODO Act 13
         MenuItem('environment', SoupActivity2, 'soups'), # Act 14
         # TODO Act 15
