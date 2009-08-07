@@ -59,7 +59,6 @@ class Ball(Sprite):
         Sprite.__init__(self)
         path = os.path.join(constants.images_labyrinth, "ball.png")
         self.image, self.rect = common.load_image(path)
-        self.rect = self.image.get_rect()
         self.rect.move_ip((50,120))
         self.pos = (0,0)
         self.move_ball = 10
@@ -230,10 +229,6 @@ class Labyrinth(Activity):
                                 selection.update()
                                 self.ball.update(selection.exit_pos)
 
-                self.screen.blit(self.background, (0,0))
-                self.GroupSprite.draw(self.screen)
-                pygame.display.update()
-        
             self.screen.blit(self.background, (0,0))
             self.informative_text()
             self.GroupSprite.draw(self.screen)
