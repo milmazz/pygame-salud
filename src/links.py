@@ -76,6 +76,7 @@ class Shower(Activity):
         self.screen.blit(self.background, (0,0))
         self.screen.blit(text, text_pos)
 
+        self.sprites.draw(self.screen)
         y += title_height
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
@@ -84,7 +85,6 @@ class Shower(Activity):
             text_pos = (50, y)
             self.screen.blit(text, text_pos)
 
-        self.sprites.draw(self.screen)
         if self.arrow:
             self.arrow.update()
         for i in self.arrows:
@@ -120,25 +120,25 @@ class Shower(Activity):
                     selected.activate()
                     self.couple.add(selected)
 
-                if len(self.couple) == 1:
-                    start = selected.rect.center
-                    self.arrow = Arrow(surface=self.screen, start=start,
-                                       end=start, width=3)
-                elif len(self.couple) == 2:
-                    if self.are_couple(self.couple):
-                    # TODO some feeback? message? sound?
-                        if not (self.couple in self.couples):
-                            self.couples.append(self.couple.copy())
-                            end = self.couple.pop().rect.center
-                            start = self.couple.pop().rect.center
-                            self.arrow.update(start=start, end=end)
-                            self.arrows.append(self.arrow)
-                    else:
-                        for i in self.couple:
-                            i.deactivate()
-                   
-                    self.arrow = None
-                    self.couple.clear()
+                    if len(self.couple) == 1:
+                        start = selected.rect.center
+                        self.arrow = Arrow(surface=self.screen, start=start,
+                                           end=start, width=3)
+                    elif len(self.couple) == 2:
+                        if self.are_couple(self.couple):
+                        # TODO some feeback? message? sound?
+                            if not (self.couple in self.couples):
+                                self.couples.append(self.couple.copy())
+                                end = self.couple.pop().rect.center
+                                start = self.couple.pop().rect.center
+                                self.arrow.update(start=start, end=end)
+                                self.arrows.append(self.arrow)
+                        else:
+                            for i in self.couple:
+                                i.deactivate()
+                       
+                        self.arrow = None
+                        self.couple.clear()
 
             if event.type == MOUSEMOTION:
                 if self.arrow:
@@ -146,7 +146,6 @@ class Shower(Activity):
                     self.arrow.update(end=end)
 
             self.setup()
-            self.sprites.draw(self.screen)
             if self.arrow:
                 self.arrow.update()
             for i in self.arrows:

@@ -118,7 +118,7 @@ class Menu:
 
 class MenuActivity(Menu):
     def add(self, item):
-        sep = 5
+        sep = 3 
         width = item.rect[2]
         hight = item.rect[3]
         if len(self.content) % 2 != 0:
@@ -140,11 +140,10 @@ class MainMenu(Activity):
         self.screen = screen
         
         # Position of the categories menu
-        #self.cat_pos = (680, 50)
-        self.cat_pos = (675, 65)
+        self.cat_pos = (675, 60)
         
         # Position of the activities menu
-        self.act_pos = (250, 70)
+        self.act_pos = (270, 85)
 
         # items holds the categories
         self.menu = Menu(self.cat_pos, 125, 60)
