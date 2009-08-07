@@ -14,7 +14,6 @@ import common
 from activity import Activity
 from icons import Icons
 
-
 class Riddle(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
@@ -58,9 +57,11 @@ class Riddle(Activity):
         self.text = (((title,), title_pos), (instructions_, instruction_pos),
 					 (riddle_, riddle_pos))
 
+        self.icons      = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
         self.pointer = Pointer()
         self.sprites = sprite.RenderUpdates()
-        self.sprites.add(self.pointer)
+        self.sprites.add([self.pointer, self.icons])
         self.lines = []
 
         points = (
@@ -144,6 +145,9 @@ class Riddle(Activity):
                     self.quit = True                        
                     return
             elif event.type == MOUSEBUTTONDOWN:
+                if pygame.sprite.spritecollideany(self.pointer, self.icons):
+                    self.quit = True
+                    return
                 for i in range(0, len(self.points)):
                     if self.points[i].collidepoint(mouse_pos):
                         self.couple.append(i)
