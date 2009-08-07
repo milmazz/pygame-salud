@@ -50,8 +50,11 @@ class Room(Activity):
             instructions_.append(line)
         self.text = (((title,), title_pos), (instructions_, instruction_pos))
 
+        self.icons = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
+
         self.pointer_ = Xs()
-        self.pointer = sprite.RenderUpdates(self.pointer_)
+        self.pointer = sprite.RenderUpdates([self.pointer_, self.icons])
         self.xs = sprite.RenderUpdates()
 
         self.xs.draw(self.screen)
@@ -75,6 +78,9 @@ class Room(Activity):
                     self.quit = True                        
                     return
             elif event.type == MOUSEBUTTONDOWN:
+                if pygame.sprite.spritecollideany(self.pointer_, self.icons):
+                    self.quit = True
+                    return
                 self.xs.add(Xs(mouse_pos))
 
         self.screen.blit(self.background, (0, 0))
