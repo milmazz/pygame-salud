@@ -26,11 +26,14 @@ class Finger(sprite.Sprite):
 class ItemBase(sprite.Sprite):
     def __init__(self, name, pos=(0,0)):
         sprite.Sprite.__init__(self)
-        path = os.path.join(constants.data_folder, 'menu', name)
+        path = os.path.join(constants.data_folder, 'menu', name + ".png")
         if os.path.exists(path):
-            self.normal, self.rect = common.load_image(path + ".png")
-            self.hover, self.rect = common.load_image(path + "_hover.png")
-            self.active, self.rect = common.load_image(path + "_hover.png")
+            #self.normal, self.rect = common.load_image(path + ".png")
+            self.normal, self.rect = common.load_image(path)
+            self.hover = self.normal
+            self.active = self.normal
+            #self.hover, self.rect = common.load_image(path + "_hover.png")
+            #self.active, self.rect = common.load_image(path + "_hover.png")
         else:
             path = os.path.join(constants.data_folder, 'menu', 'noimage.png')
             self.normal, self.rect = common.load_image(path)
@@ -136,7 +139,8 @@ class MainMenu(Activity):
         self.screen = screen
         
         # Position of the categories menu
-        self.cat_pos = (680, 50)
+        #self.cat_pos = (680, 50)
+        self.cat_pos = (675, 50)
         
         # Position of the activities menu
         self.act_pos = (250, 70)
