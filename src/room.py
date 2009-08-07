@@ -63,17 +63,17 @@ class Room(Activity):
 
     def setup(self):
         self.draw_text()
+        self.pointer.draw(self.screen)
 
     def handle_events(self):
         pygame.event.clear()
-
         for event in [pygame.event.wait()] + pygame.event.get():
             mouse_pos = pygame.mouse.get_pos()
             if event.type == QUIT:
                 self.quit = True
                 return
             elif event.type == KEYUP:
-                self.changed = True
+                self.changed = False
                 if event.key == K_ESCAPE:
                     self.quit = True                        
                     return

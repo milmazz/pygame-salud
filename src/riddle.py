@@ -140,7 +140,7 @@ class Riddle(Activity):
                 self.quit = True
                 return
             elif event.type == KEYUP:
-                self.changed = True
+                self.changed = False
                 if event.key == K_ESCAPE:
                     self.quit = True                        
                     return
