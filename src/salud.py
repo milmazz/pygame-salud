@@ -22,6 +22,7 @@ from order import OrderActivity, OrderActivity2
 from shopping import Shopping
 from missing import Missing
 from room import Room
+from labyrinth import Labyrinth
 
 
 def main():
@@ -40,20 +41,36 @@ def main():
 	pygame.mouse.set_visible(False)
 
 	items = [
-        MenuItem('cletter', CrazyLetterActivity, 'dragndrop'), 
-        MenuItem('soup1', SoupActivity, 'soups'), 
-        MenuItem('puzzle', PuzzleActivity, 'puzzle'), 
-        MenuItem('shower', Shower, 'associations'), 
-        MenuItem('poetry1', PoetryActivity, 'readings'), 
-        MenuItem('poetry2', PoetryActivity2, 'readings'), 
-        MenuItem('soup2', SoupActivity2, 'soups'), 
-        MenuItem('cooking', Cooking, 'dragndrop'), 
-        MenuItem('healthy', Healthy, 'dragndrop'), 
-        MenuItem('order', OrderActivity, 'dragndrop'),
-        MenuItem('order', OrderActivity2, 'dragndrop'),
-        MenuItem('shopping', Shopping, 'dragndrop'),
-        MenuItem('missing', Missing, 'dragndrop'),
-        MenuItem('room', Room, 'select'),
+        MenuItem('missing', Missing, 'dragndrop'), # Act 1
+        MenuItem('crazyletter', CrazyLetterActivity, 'dragndrop'),  # Act 2
+        MenuItem('fivesenses', SoupActivity, 'soups'), # Act 3
+        MenuItem('puzzle', PuzzleActivity, 'puzzle'), # Act 4-16
+        MenuItem('shower', Shower, 'associations'), # Act 5
+        MenuItem('healthy', Healthy, 'dragndrop'), # Act 6
+        MenuItem('poetry1', PoetryActivity, 'readings'), # Act 7
+        MenuItem('order', OrderActivity, 'dragndrop'), # Act 8
+        MenuItem('health', Labyrinth, 'labyrinth'), # Act 9
+        # TODO Act 10
+        MenuItem('poetry2', PoetryActivity2, 'readings'), # Act 11
+        MenuItem('order', OrderActivity2, 'dragndrop'), # Act 12
+        # TODO Act 13
+        MenuItem('environment', SoupActivity2, 'soups'), # Act 14
+        # TODO Act 15
+        # TODO Act 16
+        MenuItem('room', Room, 'select'), # Act 17
+        # TODO Act 18
+        # TODO Act 19
+        # TODO Act 20
+        MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
+        # TODO Act 22
+        # TODO Act 23
+        # TODO Act 24-1
+        # TODO Act 24-2
+        # TODO Act 24-3
+        # TODO Act 24-4
+        # TODO Act 25
+        MenuItem('cooking', Cooking, 'dragndrop'), # Act 26
+        # TODO Act 27
     ]
 
 	MainMenu(screen, items).run()

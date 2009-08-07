@@ -136,13 +136,13 @@ class MainMenu(Activity):
         self.screen = screen
         
         # Position of the categories menu
-        self.cat_pos = (550, 50)
+        self.cat_pos = (680, 50)
         
         # Position of the activities menu
-        self.act_pos = (50, 50)
+        self.act_pos = (250, 70)
 
         # items holds the categories
-        self.menu = Menu(self.cat_pos, 200, 100)
+        self.menu = Menu(self.cat_pos, 125, 60)
 
         # submenus holds the different activities separated by category
         self.submenus = {}
