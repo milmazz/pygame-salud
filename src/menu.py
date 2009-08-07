@@ -141,7 +141,7 @@ class MainMenu(Activity):
         
         # Position of the categories menu
         #self.cat_pos = (680, 50)
-        self.cat_pos = (675, 50)
+        self.cat_pos = (675, 65)
         
         # Position of the activities menu
         self.act_pos = (250, 70)
