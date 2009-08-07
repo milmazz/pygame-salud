@@ -22,7 +22,7 @@ from order import OrderActivity, OrderActivity2
 from shopping import Shopping
 from missing import Missing
 from room import Room
-
+from labyrinth import LabyrinthActivity
 
 def main():
 	# Mixer pre init
@@ -43,6 +43,7 @@ def main():
         MenuItem('cletter', CrazyLetterActivity, 'dragndrop'), 
         MenuItem('soup1', SoupActivity, 'soups'), 
         MenuItem('puzzle', PuzzleActivity, 'puzzle'), 
+        MenuItem('labyrinth', LabyrinthActivity, 'puzzle'),
         MenuItem('shower', Shower, 'associations'), 
         MenuItem('poetry1', PoetryActivity, 'readings'), 
         MenuItem('poetry2', PoetryActivity2, 'readings'), 
