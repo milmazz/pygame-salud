@@ -23,6 +23,7 @@ from shopping import Shopping
 from missing import Missing
 from room import Room
 from labyrinth import Labyrinth
+from riddle import Riddle
 
 
 def main():
@@ -68,7 +69,7 @@ def main():
         # TODO Act 24-2
         # TODO Act 24-3
         # TODO Act 24-4
-        # TODO Act 25
+        MenuItem('riddle', Riddle, 'complete'), # Act 25
         MenuItem('cooking', Cooking, 'dragndrop'), # Act 26
         # TODO Act 27
     ]
