@@ -1,3 +1,10 @@
+pygame-salud (0.1-7) unstable; urgency=low
+
+  * Se agrega funcionalidad de salida del juego por medio de botones.
+  * Se agregan nuevas imágenes al menu y sub-menu.
+
+ -- Milton R. Mazzarri S. <milmazz@gmail.com>  Fri, 07 Aug 2009 10:21:37 -0430
+
 pygame-salud (0.1-6) unstable; urgency=low
 
   * Se agrega la funcionalidad de salida con la tecla escape en 
