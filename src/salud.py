@@ -45,7 +45,7 @@ def main():
         MenuItem('missing', Missing, 'dragndrop'), # Act 1
         MenuItem('crazyletter', CrazyLetterActivity, 'dragndrop'),  # Act 2
         MenuItem('fivesenses', SoupActivity, 'soups'), # Act 3
-        MenuItem('puzzle', PuzzleActivity, 'puzzle'), # Act 4-16
+        MenuItem('puzzle1', PuzzleActivity, 'puzzle'), # Act 4-16
         MenuItem('shower', Shower, 'associations'), # Act 5
         MenuItem('healthy', Healthy, 'dragndrop'), # Act 6
         MenuItem('readings2', PoetryActivity, 'readings'), # Act 7
