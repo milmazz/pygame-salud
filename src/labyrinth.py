@@ -219,6 +219,7 @@ class Labyrinth(Activity):
                         self.ball.left_key()
                     elif event.key == K_RIGHT:
                         self.ball.right_key()
+                    self.hand.update((0,0))
 
                 selection = pygame.sprite.spritecollideany(self.ball,
                                 self.Girls)
