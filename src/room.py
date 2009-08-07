@@ -50,9 +50,13 @@ class Room(Activity):
             instructions_.append(line)
         self.text = (((title,), title_pos), (instructions_, instruction_pos))
 
-        self.pointer = sprite.RenderUpdates()
-        self.pointer.add(Xs())
+        self.pointer_ = Xs()
+        self.pointer = sprite.RenderUpdates(self.pointer_)
         self.xs = sprite.RenderUpdates()
+
+        self.xs.draw(self.screen)
+        self.pointer.draw(self.screen)
+        pygame.display.update()
 
     def setup(self):
         self.draw_text()
@@ -73,11 +77,12 @@ class Room(Activity):
             elif event.type == MOUSEBUTTONDOWN:
                 self.xs.add(Xs(mouse_pos))
 
+        self.screen.blit(self.background, (0, 0))
         self.draw_text()
         self.xs.draw(self.screen)
-        self.pointer.sprites()[0].update(mouse_pos)
+        self.pointer_.update(mouse_pos)
         self.pointer.draw(self.screen)
-        pygame.display.update()
+        pygame.display.flip()
 
     def draw_text(self):
         x, y = 0, 0
@@ -103,9 +108,8 @@ class Xs(sprite.Sprite):
         self.update(pos)
 
     def update(self, pos):
-        pos = pos[0] - self.rect[2] / 2.0, pos[1] - self.rect[3] / 2.0
-        self.rect.move_ip(pos)
-        print pos
+        pos = pos[0], pos[1] - self.rect[3] / 2.0
+        self.rect.midtop = pos
 
 
 if __name__ == "__main__":
