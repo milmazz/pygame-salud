@@ -10,6 +10,7 @@ from pygame.locals import *
 import constants
 import common
 from activity import Activity
+from icons import Icons
 
 class Finger(sprite.Sprite):
     """This class define the mouse sprite"""
@@ -165,7 +166,10 @@ class MainMenu(Activity):
                 self.menu.add(ItemCategory(item, self.cat_pos))
 
         self.finger = Finger()
-        self.cursor = sprite.RenderPlain((self.finger))
+        self.sprites = pygame.sprite.Group()
+        self.icons = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
+        self.sprites.add((self.finger, self.icons))
         
         self.pos = None
         return
@@ -180,6 +184,9 @@ class MainMenu(Activity):
                 self.quit = True
                 return
         elif event.type == MOUSEBUTTONDOWN:
+            if pygame.sprite.spritecollideany(self.finger, self.icons):
+                self.quit = True
+                return
             menu_sel = sprite.spritecollideany(self.finger, self.menu.content)
             if menu_sel:
                 menu_sel.activate()
@@ -199,10 +206,10 @@ class MainMenu(Activity):
         return
 
     def on_change(self):
-        self.cursor.update()        
+        self.sprites.update()        
 
         self.menu.draw(self.screen)
         if self.active:
             self.active.draw(self.screen)
-        self.cursor.draw(self.screen)
+        self.sprites.draw(self.screen)
         self.mprev = self.pos
