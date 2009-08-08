@@ -14,10 +14,10 @@ import common
 from icons import Icons
 
 class ImagePuzzle(Sprite):
-    def __init__(self, x, y, id, numimage):
+    def __init__(self, x, y, id, numimage, numpuzzle=''):
         Sprite.__init__(self)
         self.imagen_normal = os.path.join(constants.images_puzzle,
-                'puzzle_p'+numimage+'.png')
+                'puzzle'+numpuzzle+'_p'+numimage+'.png')
         self.image, self.rect = common.load_image(self.imagen_normal)
         self.rect.x = x
         self.rect.y = y
@@ -58,7 +58,7 @@ class Hand(Sprite):
 class PuzzleActivity(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
-
+    
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_puzzle)
 
@@ -71,7 +71,6 @@ class PuzzleActivity(Activity):
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
             self.screen.blit(text, textRect)
-
 
     def setup(self):
         """Turn off the mouse pointer"""
@@ -92,10 +91,10 @@ class PuzzleActivity(Activity):
           ImagePuzzle(500,250,4,"5")])
         """add the 4 pictures to the sprite groups"""
         self.pictures.add([\
-          ImagePuzzle(550,450,1,"1"),\
-          ImagePuzzle(300,450,2,"2"),\
-          ImagePuzzle(50,150,3,"3"),\
-          ImagePuzzle(50,350,4,"4")])
+          ImagePuzzle(550,450,1,"1", ''),\
+          ImagePuzzle(300,450,2,"2", ''),\
+          ImagePuzzle(50,150,3,"3",  ''),\
+          ImagePuzzle(50,350,4,"4",  '')])
         self.informative_text()
         self.sprites.add([self.transparent, self.pictures, self.icons, self.hand])
         self.sprites.draw(self.screen)
@@ -156,3 +155,310 @@ class PuzzleActivity(Activity):
                 self.informative_text()
                 """update all the screen"""
                 pygame.display.update()
+
+class Puzzle2Activity(Activity):
+    def __init__(self, screen):
+        Activity.__init__(self, screen)
+
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.illustration_puzzle)
+
+    def informative_text(self):
+        if pygame.font:
+            font = pygame.font.SysFont('dejavusans', 32)
+            font.set_bold(True)
+            text = font.render("Arma las piezas del rompecabezas.", 1, (0, 0, 0))
+            textRect = text.get_rect()
+            textRect.centerx = self.screen.get_rect().centerx
+            textRect.centery = 20
+            self.screen.blit(text, textRect)
+
+
+    def setup(self):
+        """Turn off the mouse pointer"""
+        pygame.mouse.set_visible( False )
+        """change the mouse pointer by a hand"""
+        self.button_down = 0
+        self.selection = 0
+        self.hand = Hand()
+        self.sprites    = pygame.sprite.OrderedUpdates()
+        self.pictures   = pygame.sprite.Group() #picture that can be move
+        self.transparent= pygame.sprite.Group() #picture that cann't be move
+        self.icons      = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
+        self.transparent.add([\
+          ImagePuzzle(300,102,1,"5"),\
+          ImagePuzzle(500,102,2,"5"),\
+          ImagePuzzle(300,250,3,"5"),\
+          ImagePuzzle(500,250,4,"5")])
+        """add the 4 pictures to the sprite groups"""
+        self.pictures.add([\
+          ImagePuzzle(550,450,1,"1","2"),\
+          ImagePuzzle(300,450,2,"2","2"),\
+          ImagePuzzle(50,150,3,"3","2"),\
+          ImagePuzzle(50,350,4,"4","2")])
+        self.informative_text()
+        self.sprites.add([self.transparent, self.pictures, self.icons, self.hand])
+        self.sprites.draw(self.screen)
+
+    def handle_events(self):
+            for event in [ pygame.event.wait() ] + pygame.event.get():
+                pos = pygame.mouse.get_pos()
+                if event.type == QUIT:
+                    self.quit = True
+                    return
+                elif event.type == KEYUP:
+                   if event.key == K_ESCAPE:
+                       self.quit = True
+                       return
+                elif event.type == MOUSEBUTTONDOWN and self.button_down == 0:
+                    if pygame.sprite.spritecollideany\
+                      (self.hand, self.icons):
+                        self.quit = True
+                        return
+                    self.button_down = 1
+                    self.selection = pygame.sprite.spritecollideany\
+                      (self.hand, self.pictures)
+                    #print self.selection
+                    """put the picture select and the hand in the
+                     front of the queue"""
+                    if self.selection and self.selection.fix == 0:
+                        """This is necesary to have ever the selection picture
+                           and the hand in the front"""
+                        self.selection.kill()
+                        self.hand.kill()
+                        self.pictures.add([self.selection])
+                        self.sprites.add([self.selection])
+                        self.sprites.add([self.hand])
+                    self.hand.change_hand() #change de open hand by the close hand
+                    self.hand.update(pos) 
+                    self.screen.blit(self.background, (0,0))
+                    self.sprites.draw(self.screen)
+                elif event.type == MOUSEBUTTONUP and self.button_down == 1:
+                    if self.selection:
+                        verify_correct = pygame.sprite.spritecollideany\
+                          (self.selection, self.transparent)
+                        if verify_correct and verify_correct.id == self.selection.id:
+                            self.selection.fix = 1
+                            self.selection.rect = verify_correct.rect
+                    self.button_down = 0
+                    self.selection = 0
+                    self.hand.change_hand() #change the close hand by the open hand
+                    self.hand.update(pos)
+                    self.screen.blit(self.background, (0,0))
+                    self.sprites.draw(self.screen)
+                elif event.type == MOUSEMOTION:
+                    if self.selection and self.selection.fix == 0\
+                      and self.button_down == 1:   
+                        self.selection.update(pos)
+                    self.hand.update(pos)
+                    self.screen.blit(self.background, (0,0))
+                    self.sprites.draw(self.screen)
+                self.informative_text()
+                """update all the screen"""
+                pygame.display.update()
+
+class Puzzle3Activity(Activity):
+    def __init__(self, screen):
+        Activity.__init__(self, screen)
+
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.illustration_puzzle)
+
+    def informative_text(self):
+        if pygame.font:
+            font = pygame.font.SysFont('dejavusans', 32)
+            font.set_bold(True)
+            text = font.render("Arma las piezas del rompecabezas.", 1, (0, 0, 0))
+            textRect = text.get_rect()
+            textRect.centerx = self.screen.get_rect().centerx
+            textRect.centery = 20
+            self.screen.blit(text, textRect)
+
+
+    def setup(self):
+        """Turn off the mouse pointer"""
+        pygame.mouse.set_visible( False )
+        """change the mouse pointer by a hand"""
+        self.button_down = 0
+        self.selection = 0
+        self.hand = Hand()
+        self.sprites    = pygame.sprite.OrderedUpdates()
+        self.pictures   = pygame.sprite.Group() #picture that can be move
+        self.transparent= pygame.sprite.Group() #picture that cann't be move
+        self.icons      = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
+        self.transparent.add([\
+          ImagePuzzle(300,102,1,"5"),\
+          ImagePuzzle(500,102,2,"5"),\
+          ImagePuzzle(300,250,3,"5"),\
+          ImagePuzzle(500,250,4,"5")])
+        """add the 4 pictures to the sprite groups"""
+        self.pictures.add([\
+          ImagePuzzle(550,450,1,"1","3"),\
+          ImagePuzzle(300,450,2,"2","3"),\
+          ImagePuzzle(50,150,3,"3","3"),\
+          ImagePuzzle(50,350,4,"4","3")])
+        self.informative_text()
+        self.sprites.add([self.transparent, self.pictures, self.icons, self.hand])
+        self.sprites.draw(self.screen)
+
+    def handle_events(self):
+            for event in [ pygame.event.wait() ] + pygame.event.get():
+                pos = pygame.mouse.get_pos()
+                if event.type == QUIT:
+                    self.quit = True
+                    return
+                elif event.type == KEYUP:
+                   if event.key == K_ESCAPE:
+                       self.quit = True
+                       return
+                elif event.type == MOUSEBUTTONDOWN and self.button_down == 0:
+                    if pygame.sprite.spritecollideany\
+                      (self.hand, self.icons):
+                        self.quit = True
+                        return
+                    self.button_down = 1
+                    self.selection = pygame.sprite.spritecollideany\
+                      (self.hand, self.pictures)
+                    #print self.selection
+                    """put the picture select and the hand in the
+                     front of the queue"""
+                    if self.selection and self.selection.fix == 0:
+                        """This is necesary to have ever the selection picture
+                           and the hand in the front"""
+                        self.selection.kill()
+                        self.hand.kill()
+                        self.pictures.add([self.selection])
+                        self.sprites.add([self.selection])
+                        self.sprites.add([self.hand])
+                    self.hand.change_hand() #change de open hand by the close hand
+                    self.hand.update(pos) 
+                    self.screen.blit(self.background, (0,0))
+                    self.sprites.draw(self.screen)
+                elif event.type == MOUSEBUTTONUP and self.button_down == 1:
+                    if self.selection:
+                        verify_correct = pygame.sprite.spritecollideany\
+                          (self.selection, self.transparent)
+                        if verify_correct and verify_correct.id == self.selection.id:
+                            self.selection.fix = 1
+                            self.selection.rect = verify_correct.rect
+                    self.button_down = 0
+                    self.selection = 0
+                    self.hand.change_hand() #change the close hand by the open hand
+                    self.hand.update(pos)
+                    self.screen.blit(self.background, (0,0))
+                    self.sprites.draw(self.screen)
+                elif event.type == MOUSEMOTION:
+                    if self.selection and self.selection.fix == 0\
+                      and self.button_down == 1:   
+                        self.selection.update(pos)
+                    self.hand.update(pos)
+                    self.screen.blit(self.background, (0,0))
+                    self.sprites.draw(self.screen)
+                self.informative_text()
+                """update all the screen"""
+                pygame.display.update()
+
+class Puzzle4Activity(Activity):
+    def __init__(self, screen):
+        Activity.__init__(self, screen)
+
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.illustration_puzzle)
+
+    def informative_text(self):
+        if pygame.font:
+            font = pygame.font.SysFont('dejavusans', 32)
+            font.set_bold(True)
+            text = font.render("Arma las piezas del rompecabezas.", 1, (0, 0, 0))
+            textRect = text.get_rect()
+            textRect.centerx = self.screen.get_rect().centerx
+            textRect.centery = 20
+            self.screen.blit(text, textRect)
+
+
+    def setup(self):
+        """Turn off the mouse pointer"""
+        pygame.mouse.set_visible( False )
+        """change the mouse pointer by a hand"""
+        self.button_down = 0
+        self.selection = 0
+        self.hand = Hand()
+        self.sprites    = pygame.sprite.OrderedUpdates()
+        self.pictures   = pygame.sprite.Group() #picture that can be move
+        self.transparent= pygame.sprite.Group() #picture that cann't be move
+        self.icons      = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
+        self.transparent.add([\
+          ImagePuzzle(302,102,1,"5"),\
+          ImagePuzzle(500,102,2,"5"),\
+          ImagePuzzle(302,250,3,"5"),\
+          ImagePuzzle(500,250,4,"5")])
+        """add the 4 pictures to the sprite groups"""
+        self.pictures.add([\
+          ImagePuzzle(550,450,1,"1","4"),\
+          ImagePuzzle(300,450,2,"2","4"),\
+          ImagePuzzle(50,150,3,"3","4"),\
+          ImagePuzzle(50,350,4,"4","4")])
+        self.informative_text()
+        self.sprites.add([self.transparent, self.pictures, self.icons, self.hand])
+        self.sprites.draw(self.screen)
+
+    def handle_events(self):
+            for event in [ pygame.event.wait() ] + pygame.event.get():
+                pos = pygame.mouse.get_pos()
+                if event.type == QUIT:
+                    self.quit = True
+                    return
+                elif event.type == KEYUP:
+                   if event.key == K_ESCAPE:
+                       self.quit = True
+                       return
+                elif event.type == MOUSEBUTTONDOWN and self.button_down == 0:
+                    if pygame.sprite.spritecollideany\
+                      (self.hand, self.icons):
+                        self.quit = True
+                        return
+                    self.button_down = 1
+                    self.selection = pygame.sprite.spritecollideany\
+                      (self.hand, self.pictures)
+                    #print self.selection
+                    """put the picture select and the hand in the
+                     front of the queue"""
+                    if self.selection and self.selection.fix == 0:
+                        """This is necesary to have ever the selection picture
+                           and the hand in the front"""
+                        self.selection.kill()
+                        self.hand.kill()
+                        self.pictures.add([self.selection])
+                        self.sprites.add([self.selection])
+                        self.sprites.add([self.hand])
+                    self.hand.change_hand() #change de open hand by the close hand
+                    self.hand.update(pos) 
+                    self.screen.blit(self.background, (0,0))
+                    self.sprites.draw(self.screen)
+                elif event.type == MOUSEBUTTONUP and self.button_down == 1:
+                    if self.selection:
+                        verify_correct = pygame.sprite.spritecollideany\
+                          (self.selection, self.transparent)
+                        if verify_correct and verify_correct.id == self.selection.id:
+                            self.selection.fix = 1
+                            self.selection.rect = verify_correct.rect
+                    self.button_down = 0
+                    self.selection = 0
+                    self.hand.change_hand() #change the close hand by the open hand
+                    self.hand.update(pos)
+                    self.screen.blit(self.background, (0,0))
+                    self.sprites.draw(self.screen)
+                elif event.type == MOUSEMOTION:
+                    if self.selection and self.selection.fix == 0\
+                      and self.button_down == 1:   
+                        self.selection.update(pos)
+                    self.hand.update(pos)
+                    self.screen.blit(self.background, (0,0))
+                    self.sprites.draw(self.screen)
+                self.informative_text()
+                """update all the screen"""
+                pygame.display.update()
+
