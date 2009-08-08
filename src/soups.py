@@ -330,7 +330,6 @@ class SoupActivity2(Activity):
             aux = sorted(lista_coloreadas, self.comparar)
             for i in range(self.tamano_lista):
                 self.lista_ordenada.append(aux[i].id)
-            print self.lista_ordenada
             #luz
             if self.tamano_lista == 3 and self.lista_ordenada == self.luzPos:
                 self.check = 2
