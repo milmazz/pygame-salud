@@ -112,13 +112,13 @@ class CrazyLetterActivity(Activity):
     def setup(self):
         self.informative_text()
         #position of the blue container
-        position_blue = [(20,500), (70,500), (130,500), \
-                 (180,500), (230,500), (280,500), \
-                 (330, 500)]
+        position_blue = [(20,560), (70,560), (130,560), \
+                 (180,560), (230,560), (280,560), \
+                 (330, 560)]
 
         #position of the yellow container
-        position_yellow = [ (500,500), (550,500), (600,500), \
-                    (650,500), (700,500)]
+        position_yellow = [ (500,560), (550,560), (600,560), \
+                    (650,560), (700,560)]
         self.view = View() #cargamos el fondo estatico
         self.hand = Hand() 
         self.icons = pygame.sprite.Group()
