@@ -15,7 +15,8 @@ from reads import PoetryActivity, PoetryActivity2
 from links import Shower
 from soups import SoupActivity, SoupActivity2
 from crazyletter import CrazyLetterActivity
-from puzzle import PuzzleActivity
+from puzzle import PuzzleActivity, Puzzle2Activity,\
+        Puzzle3Activity, Puzzle4Activity
 from cooking import Cooking
 from healthy import Healthy
 from order import OrderActivity, OrderActivity2
@@ -46,6 +47,9 @@ def main():
         MenuItem('crazyletter', CrazyLetterActivity, 'dragndrop'),  # Act 2
         MenuItem('fivesenses', SoupActivity, 'soups'), # Act 3
         MenuItem('puzzle1', PuzzleActivity, 'puzzle'), # Act 4-16
+        MenuItem('puzzle2', Puzzle2Activity, 'puzzle'), # Act 4-16
+        MenuItem('puzzle3', Puzzle3Activity, 'puzzle'), # Act 4-16
+        MenuItem('puzzle4', Puzzle4Activity, 'puzzle'), # Act 4-16
         MenuItem('shower', Shower, 'associations'), # Act 5
         MenuItem('healthy', Healthy, 'dragndrop'), # Act 6
         MenuItem('readings2', PoetryActivity, 'readings'), # Act 7
