@@ -85,9 +85,9 @@ class PuzzleActivity(Activity):
         self.icons      = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
         self.transparent.add([\
-          ImagePuzzle(300,100,1,"5"),\
+          ImagePuzzle(302,100,1,"5"),\
           ImagePuzzle(500,100,2,"5"),\
-          ImagePuzzle(300,250,3,"5"),\
+          ImagePuzzle(302,250,3,"5"),\
           ImagePuzzle(500,250,4,"5")])
         """add the 4 pictures to the sprite groups"""
         self.pictures.add([\
