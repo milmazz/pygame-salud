@@ -126,6 +126,7 @@ class Missing(Activity):
         self.sprites.draw(self.screen)
         self.instruction_text()
         pygame.display.update()
+        pygame.event.clear()
 
     def handle_events(self):
         for event in self.get_event():
