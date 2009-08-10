@@ -228,9 +228,9 @@ class OrderActivity2(Activity):
         self.icons      = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
         self.transparent.add([\
-          ImagePuzzle(685,542,1,"7"),\
-          ImagePuzzle(214,270,2,"7"),\
-          ImagePuzzle(518,254,3,"7"),\
+          ImagePuzzle(690,547,1,"7"),\
+          ImagePuzzle(204,285,2,"7"),\
+          ImagePuzzle(613,284,3,"7"),\
           ImagePuzzle(385,542,4,"7")])
         """add the 4 pictures to the sprite groups"""
         self.pictures.add([\
