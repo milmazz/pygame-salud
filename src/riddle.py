@@ -132,9 +132,8 @@ class Riddle(Activity):
         self.sprites.draw(self.screen)
 
     def handle_events(self):
-        pygame.event.clear()
-
-        for event in [pygame.event.wait()] + pygame.event.get():
+        mouse_pos = pygame.mouse.get_pos()
+        for event in self.get_event():
             mouse_pos = pygame.mouse.get_pos()
             if event.type == QUIT:
                 self.quit = True
@@ -164,12 +163,6 @@ class Riddle(Activity):
                                     end = self.points[self.couple[1]].center
                                     self.lines.append(Line(surface=self.screen, 
                                                       start=start, end=end, width=3))
-                                    if len(self.lines) == 40:
-                                        self.finish.append(self.check)
-                            else:
-                                for i in self.couple:
-    #                                i.desactivate()
-                                    pass
 
                             self.line = None
                             self.couple = []
@@ -178,9 +171,13 @@ class Riddle(Activity):
                     end = pygame.mouse.get_pos()
                     self.line.update(end=end)
 
-        self.screen.blit(self.background, (0, 0))
+                self.screen.blit(self.background, (0, 0))
 #        for i in self.points:
 #            pygame.draw.rect(self.screen, (100, 100, 100), i)
+
+        if len(self.lines) == 40:
+            self.finished_ = True
+
         self.draw_text()
         if self.line:
             self.line.update()

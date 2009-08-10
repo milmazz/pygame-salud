@@ -73,6 +73,7 @@ class correct(Sprite):
                 'missing', "correct.png")
         self.image, self.rect = common.load_image(self.path_correct)
         self.rect.move_ip(pos)
+        self.selection = None
 
 
 class Missing(Activity):
@@ -127,68 +128,66 @@ class Missing(Activity):
         pygame.display.update()
 
     def handle_events(self):
-        pygame.event.clear()
-        while True:
-            for event in [ pygame.event.wait() ] + pygame.event.get():
-                pos = pygame.mouse.get_pos()
-                self.hand.update(pos)
-                if event.type == QUIT:
+        for event in self.get_event():
+            pos = pygame.mouse.get_pos()
+            self.hand.update(pos)
+            if event.type == QUIT:
+                self.quit = True
+                return
+            elif event.type == KEYUP:
+                self.changed = False
+                if event.key == K_ESCAPE:
                     self.quit = True
                     return
-                elif event.type == KEYUP:
-                    self.changed = False
-                    if event.key == K_ESCAPE:
-                        self.quit = True
-                        return
-                if event.type == MOUSEMOTION:
-                    self.hand.update(pos)
-                if event.type == MOUSEMOTION and self.button_down:
-                    selection.update(pos)
-                if event.type == MOUSEBUTTONDOWN:
-                    if pygame.sprite.spritecollideany(self.hand, self.icons):
-                        self.quit = True
-                        return
-                    self.hand.change_hand()
-                    self.hand.update(pos)
-                if event.type == MOUSEBUTTONUP:
-                    self.hand.change_hand()
-                    self.hand.update(pos)
-                if event.type == MOUSEBUTTONUP and selection:
-                    self.button_down = 0
-                    bodypart_in_container = \
-                            selection.rect.collidelistall(self.containers)
-                    if bodypart_in_container:
-                        if selection.name == \
-                                self.correctbodyparts[bodypart_in_container[0]]:
-                                    left, top, width, height = self.containers[bodypart_in_container[0]]
-                                    selection.kill()
-                                    selection.add(self.sprites)
-                                    selection.rect = \
-                                            pygame.Rect(left + (width - \
-                                            selection.size_x)/2, top + (height - \
-                                            selection.size_y)/2, 0, 0)
-                                    self.correct.add([correct((left + ((width
-                                        - 76) / 2), top))])
-                                    self.sprites.remove([self.hand])
-                                    self.sprites.add([self.correct, self.hand])
-                        else:
-                            selection.change_size()
-                            selection.update((selection.orig_x, selection.orig_y))
+            if event.type == MOUSEMOTION:
+                self.hand.update(pos)
+            if event.type == MOUSEMOTION and self.button_down:
+                self.selection.update(pos)
+            if event.type == MOUSEBUTTONDOWN:
+                if pygame.sprite.spritecollideany(self.hand, self.icons):
+                    self.quit = True
+                    return
+                self.hand.change_hand()
+                self.hand.update(pos)
+            if event.type == MOUSEBUTTONUP:
+                self.hand.change_hand()
+                self.hand.update(pos)
+            if event.type == MOUSEBUTTONUP and self.selection:
+                self.button_down = 0
+                bodypart_in_container = \
+                        self.selection.rect.collidelistall(self.containers)
+                if bodypart_in_container:
+                    if self.selection.name == \
+                            self.correctbodyparts[bodypart_in_container[0]]:
+                                left, top, width, height = self.containers[bodypart_in_container[0]]
+                                self.selection.kill()
+                                self.selection.add(self.sprites)
+                                self.selection.rect = \
+                                        pygame.Rect(left + (width - \
+                                        self.selection.size_x)/2, top + (height - \
+                                        self.selection.size_y)/2, 0, 0)
+                                self.correct.add([correct((left + ((width
+                                    - 76) / 2), top))])
+                                self.sprites.remove([self.hand])
+                                self.sprites.add([self.correct, self.hand])
                     else:
-                        selection.change_size()
-                        selection.update((selection.orig_x, selection.orig_y))
-                        selection.color = 0
-                if event.type == MOUSEBUTTONDOWN:
-                    selection = pygame.sprite.spritecollideany(self.hand, \
-                            self.bodyparts)
-                    if selection:
-                        self.button_down = 1
-                        selection.change_size()
-                        selection.remove(self.sprites)
-                        selection.add(self.sprites)
-                self.hand.remove(self.sprites)
-                self.hand.add(self.sprites)
-                self.screen.blit(self.background, (0,0))
-                self.instruction_text()
-                self.sprites.draw(self.screen)
-                pygame.display.update()
+                        self.selection.change_size()
+                        self.selection.update((self.selection.orig_x, self.selection.orig_y))
+                else:
+                    self.selection.change_size()
+                    self.selection.update((self.selection.orig_x, self.selection.orig_y))
+                    self.selection.color = 0
+            if event.type == MOUSEBUTTONDOWN:
+                self.selection = pygame.sprite.spritecollideany(self.hand, \
+                        self.bodyparts)
+                if self.selection:
+                    self.button_down = 1
+                    self.selection.change_size()
+                    self.selection.remove(self.sprites)
+                    self.selection.add(self.sprites)
+            self.hand.remove(self.sprites)
+            self.hand.add(self.sprites)
+            self.screen.blit(self.background, (0,0))
+            self.instruction_text()
+            self.sprites.draw(self.screen)
+            pygame.display.update()
