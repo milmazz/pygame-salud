@@ -73,23 +73,23 @@ class Shopping(Activity):
         return food
 
     def instruction_text(self):
-        font_title = pygame.font.SysFont("dejavusans", 40)
+        font_title = pygame.font.SysFont("dejavusans", 32)
         font_instructions = pygame.font.SysFont("dejavusans", 20)
         title = u"¡De compras!"
         title_width, title_height = font_title.size(title)
         instructions = [u"Coloca en cada carrito de mercado los"\
-                u"alimentos que corresponden.", u"Arrastra el" \
-                u"alimento al carrito respectivo"]
-        y = title_height / 2
+                u" alimentos que corresponden.", u"Arrastra el" \
+                u" alimento al carrito respectivo"]
+        y = 5
         text = font_title.render(title, True, (102, 102, 102))
         text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
         self.screen.blit(text, text_pos)
-        y += title_height
+        y = 20
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
             text = font_instructions.render(line, True, (102, 102, 102))
             y += line_height
-            text_pos = (50, y)
+            text_pos = (35, y)
             self.screen.blit(text, text_pos)
 
     def setup(self):
