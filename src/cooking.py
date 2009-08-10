@@ -69,6 +69,7 @@ class View():
 class Cooking(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.selection = None
 
     def instruction_text(self):
         font_title = pygame.font.SysFont("dejavusans", 40)
@@ -111,48 +112,46 @@ class Cooking(Activity):
         pygame.display.update()
 
     def handle_events(self):
-        pygame.event.clear()
-        while True:
-            for event in [ pygame.event.wait() ] + pygame.event.get():
-                pos = pygame.mouse.get_pos()
-                if event.type == QUIT:
+        for event in self.get_event():
+            pos = pygame.mouse.get_pos()
+            if event.type == QUIT:
+                self.quit = True
+                return
+            elif event.type == KEYUP:
+                self.changed = False
+                if event.key == K_ESCAPE:
                     self.quit = True
                     return
-                elif event.type == KEYUP:
-                    self.changed = False
-                    if event.key == K_ESCAPE:
-                        self.quit = True
-                        return
-                if event.type == MOUSEMOTION:
-                    self.hand.update(pos)
-                if event.type == MOUSEMOTION and self.button_down:
-                    selection.update(pos)
-                if event.type == MOUSEBUTTONDOWN:
-                    if pygame.sprite.spritecollideany(self.hand, self.icons):
-                        self.quit = True
-                        return
-                    self.hand.change_hand()
-                    self.hand.update()
-                if event.type == MOUSEBUTTONUP:
-                    self.hand.change_hand()
-                    self.hand.update()
-                if event.type == MOUSEBUTTONUP and selection:
-                    self.button_down = 0
-                    ingredients_in_container = \
-                            self.container.colliderect(selection.rect)
-                    if ingredients_in_container:
+            if event.type == MOUSEMOTION:
+                self.hand.update(pos)
+            if event.type == MOUSEMOTION and self.button_down:
+                self.selection.update(pos)
+            if event.type == MOUSEBUTTONDOWN:
+                if pygame.sprite.spritecollideany(self.hand, self.icons):
+                    self.quit = True
+                    return
+                self.hand.change_hand()
+                self.hand.update()
+            if event.type == MOUSEBUTTONUP:
+                self.hand.change_hand()
+                self.hand.update()
+            if event.type == MOUSEBUTTONUP and self.selection:
+                self.button_down = 0
+                ingredients_in_container = \
+                        self.container.colliderect(self.selection.rect)
+                if ingredients_in_container:
 #                        print "Ingrediente: " + selection.name + " esta adentro"
-                        pass
-                    else:
-                        selection.color = 0
-                        selection.update(pos)
-                if event.type == MOUSEBUTTONDOWN:
-                    selection = pygame.sprite.spritecollideany(self.hand, \
-                            self.ingredients)
-                    if selection:
-                        selection.color = 1
-                        self.button_down = 1
-                self.screen.blit(self.view.background, (0,0))
-                self.instruction_text()
-                self.sprites.draw(self.screen)
-                pygame.display.update()
+                    pass
+                else:
+                    self.selection.color = 0
+                    self.selection.update(pos)
+            if event.type == MOUSEBUTTONDOWN:
+                self.selection = pygame.sprite.spritecollideany(self.hand, \
+                        self.ingredients)
+                if self.selection:
+                    self.selection.color = 1
+                    self.button_down = 1
+            self.screen.blit(self.view.background, (0,0))
+            self.instruction_text()
+            self.sprites.draw(self.screen)
+            pygame.display.update()
