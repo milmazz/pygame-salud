@@ -72,18 +72,18 @@ class Cooking(Activity):
         self.selection = None
 
     def instruction_text(self):
-        font_title = pygame.font.SysFont("dejavusans", 40)
+        font_title = pygame.font.SysFont("dejavusans", 32)
         font_instructions = pygame.font.SysFont("dejavusans", 20)
         title = u"¡A cocinar!"
         title_width, title_height = font_title.size(title)
         instructions = [u"Vamos a hacer una torta ...",
                         u"Observa los ingredientes que se necesitan",
                         u"y arrástralos hasta la mesa."]
-        y = title_height / 2
+        y = 5
         text = font_title.render(title, True, (102, 102, 102))
         text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
         self.screen.blit(text, text_pos)
-        y += title_height
+        y = 20
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
             text = font_instructions.render(line, True, (102, 102, 102))
