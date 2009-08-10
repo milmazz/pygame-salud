@@ -113,8 +113,8 @@ class Healthy(Activity):
         title = u"Para estar sano debo..."
         title_width, title_height = font_title.size(title)
         instructions = [u"Todas estas actividades sirven para que"\
-                u"tengas buena salud.", u"¿Qué hace cada niño?"\
-                u"Arrastra la palabra que falta debajo del dibujo"]
+                u" tengas buena salud.", u" ¿Qué hace cada niño?."\
+                u" Arrastra la palabra que falta debajo del dibujo"]
         y = title_height / 2
         text = font_title.render(title, True, (102, 102, 102))
         text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
@@ -131,10 +131,10 @@ class Healthy(Activity):
         self.cont = None
         self.selection = None
         self.sprites  = pygame.sprite.OrderedUpdates()
-        self.pos_textlines1 = {'study': (50, 90), 'eat': (50, 140), \
-                'sports': (50, 115)}
-        self.pos_textlines2 = {'teeth': (50,90), 'hands': (50, 115), \
-                'body': (50,140)}
+        self.pos_textlines1 = {'study': (50, 190), 'eat': (50, 150), \
+                'sports': (50, 230)}
+        self.pos_textlines2 = {'teeth': (150,155), 'hands': (250, 160), \
+                'body': (50,160)}
         self.pos_textlines = self.pos_textlines1
         # list of all textlines and positions on the screen
         self.correctlines1 = ['study', 'eat', 'sports']
@@ -153,10 +153,10 @@ class Healthy(Activity):
         self.textlines = pygame.sprite.Group()
         for name in self.pos_textlines:
             self.textlines.add([textLine(name, self.pos_textlines[name])])
-        self.containers1 = [pygame.Rect(146, 562, 95, 25), \
-                pygame.Rect(307, 288, 78, 25), pygame.Rect(640, 525, 101, 25)]
-        self.containers2 = [pygame.Rect(214, 503, 84, 25), \
-                pygame.Rect(441, 292, 73, 25), pygame.Rect(652, 550, 79, 25)]
+        self.containers1 = [pygame.Rect(115, 562, 95, 25), \
+                pygame.Rect(371, 457, 78, 25), pygame.Rect(675, 525, 101, 25)]
+        self.containers2 = [pygame.Rect(181, 503, 84, 25), \
+                pygame.Rect(448, 464, 73, 25), pygame.Rect(697, 550, 79, 25)]
         self.containers = self.containers1
         self.sprites = pygame.sprite.OrderedUpdates()
         self.sprites.add([self.icons, self.textlines, self.change, self.hand])
