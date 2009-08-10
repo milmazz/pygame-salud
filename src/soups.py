@@ -18,8 +18,7 @@ class Letras(Sprite):
         Sprite.__init__(self)
         self.imagen_normal = constants.images_soups+'/'+letra+'_normal.png'
         self.imagen_color  = constants.images_soups+'/'+letra+'_color.png'
-        self.image = pygame.image.load(self.imagen_normal)
-        self.rect = self.image.get_rect()
+        self.image, self.rect = common.load_image(self.imagen_normal)
         self.rect.move_ip(x, y)
         self.color = 0 #0 normal 1 coloreada 2 terminada
         #self.letra = letra
@@ -35,22 +34,19 @@ class Letras(Sprite):
 class Lapiz(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        #self.image = pygame.image.load(constants.images_soups+"/lapiz.png")
-        self.image = pygame.image.load("../data/cursors/gartoon/draw-freehand.png")
-        self.rect = self.image.get_rect()
+        path = os.path.join(constants.data_folder, "cursors",\
+          "gartoon", "draw-freehand.png")
+        self.image, self.rect = common.load_image(path)
 
     def update(self, mover):
-        if mover[0] - 10 >= 0:
-            self.rect.x = mover[0] - 10
-        if mover[1] - 45 >= 0:
-            self.rect.y = mover[1] - 78
+        self.rect.x = mover[0] - 10
+        self.rect.y = mover[1] - 78
 
 
 class Puntalapiz(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image = pygame.image.load(constants.images_soups+"/puntalapiz.png")
-        self.rect = self.image.get_rect()
+        self.image, self.rect = common.load_image(constants.images_soups+"/puntalapiz.png")
 
     def update(self, mover):
         self.rect.x = mover[0]
@@ -62,8 +58,7 @@ class Palabras(Sprite):
         Sprite.__init__(self)
         self.imagen_normal = constants.images_soups+'/'+palabra+'.png'
         self.imagen_raya  = constants.images_soups+'/'+palabra+'_lista.png'
-        self.image = pygame.image.load(self.imagen_normal)
-        self.rect = self.image.get_rect()
+        self.image, self.rect = common.load_image(self.imagen_normal)
         self.rect.move_ip(x, y)
         self.palabra = palabra
 
@@ -379,15 +374,16 @@ class SoupActivity2(Activity):
             font.set_bold(True)
             text = font.render("Letras escondidas", 1, (0, 0, 0))
             textRect = text.get_rect()
-            textRect.centerx = self.screen.get_rect().centerx
+            textRect.centerx = self.screen.get_rect().centerx - 120
             textRect.centery = 20
             self.screen.blit(text, textRect)
 
 
             font = pygame.font.SysFont("dejavusans", 20)
             font.set_bold(False)
-            instructions = [u"     Encuentra en la sopa de letras las palabras relacionadas",
-                            u"con el ambiente que nos rodea. Márcalas con el lápiz."]
+            instructions = [u"     Encuentra en la sopa de letras las",
+                            u"palabras relacionadas con el ambiente",
+                            u"que nos rodea. Márcalas con el lápiz."]
             y = 40
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
