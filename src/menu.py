@@ -174,34 +174,35 @@ class MainMenu(Activity):
         return
         
     def handle_events(self):
-        event = pygame.event.wait()
-        if event.type == QUIT:
-            self.quit = True
-            return
-        elif event.type == KEYUP:
-            if event.key == K_F4 and KMOD_ALT & event.mod:
+#        event = pygame.event.wait()
+        for event in self.get_event():
+            if event.type == QUIT:
                 self.quit = True
                 return
-        elif event.type == MOUSEBUTTONDOWN:
-            if pygame.sprite.spritecollideany(self.finger, self.icons):
-                self.quit = True
-                return
-            menu_sel = sprite.spritecollideany(self.finger, self.menu.content)
-            if menu_sel:
-                menu_sel.activate()
-                self.active = self.submenus[menu_sel.name]
+            elif event.type == KEYUP:
+                if event.key == K_F4 and KMOD_ALT & event.mod:
+                    self.quit = True
+                    return
+            elif event.type == MOUSEBUTTONDOWN:
+                if pygame.sprite.spritecollideany(self.finger, self.icons):
+                    self.quit = True
+                    return
+                menu_sel = sprite.spritecollideany(self.finger, self.menu.content)
+                if menu_sel:
+                    menu_sel.activate()
+                    self.active = self.submenus[menu_sel.name]
 
-            if self.active:
-                submenu_sel = sprite.spritecollideany(self.finger, 
-                                                      self.active.get_content())
+                if self.active:
+                    submenu_sel = sprite.spritecollideany(self.finger, 
+                                                          self.active.get_content())
 
-                if submenu_sel:
-                    submenu_sel.activate(self.screen)
+                    if submenu_sel:
+                        submenu_sel.activate(self.screen)
 
-        self.pos = mouse.get_pos()
-        if self.pos != self.mprev:
-            self.changed = True
-            
+            self.pos = mouse.get_pos()
+            if self.pos != self.mprev:
+                self.changed = True
+                
         return
 
     def on_change(self):
