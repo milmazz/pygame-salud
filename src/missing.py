@@ -37,8 +37,7 @@ class bodyPart(Sprite):
             self.small = 1
 	
     def update(self, pos):
-        self.rect.x = pos[0]
-        self.rect.y = pos[1]
+        self.rect.x, self.rect.y = pos
 
 
 class Hand(Sprite):
@@ -60,10 +59,7 @@ class Hand(Sprite):
             self.color = 0
 
     def update(self, mover=(0,0)):
-        if mover[0] - 10 >= 0:
-            self.rect.x = mover[0]
-        if mover[1] - 15 >= 0:
-            self.rect.y = mover[1]
+        self.rect.x, self.rect.y = mover
         if self.color == 0:
             self.image = self.normal
         if self.color == 1:
@@ -91,26 +87,26 @@ class Missing(Activity):
         return bodyparts
 
     def instruction_text(self):
-        font_title = pygame.font.SysFont("dejavusans", 35)
-        font_instructions = pygame.font.SysFont("dejavusans", 20)
+        font_title = pygame.font.SysFont("dejavusans", 24)
+        font_instructions = pygame.font.SysFont("dejavusans", 17)
         title = u"¿Qué le falta a Kiko en cada figura?"
         instructions = [u"A Kiko le desaparecieron algunas partes de"\
                 u" su cuerpo.", u"¿Puedes unirlas?"]
         text = font_title.render(title, True, (102, 102, 102))
-        text_pos = (290, 25)
+        text_pos = (169, 28)
         self.screen.blit(text, text_pos)
-        y = 45
+        y = 43
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
             text = font_instructions.render(line, True, (102, 102, 102))
             y += line_height
-            text_pos = (300, y)
+            text_pos = (172, y)
             self.screen.blit(text, text_pos)
 
     def setup(self):
         self.sprites  = pygame.sprite.OrderedUpdates()
-        self.pos_bodyparts = {'legs': (325, 150), 'arms': (350, 220), \
-                'chest': (380, 270), 'head': (380, 320)}
+        self.pos_bodyparts = {'legs': (367, 200), 'arms': (380, 270), \
+                'chest': (400, 320), 'head': (396, 370)}
         # list of all bodyparts and positions on the screen
         self.correctbodyparts = ['legs', 'arms', 'chest', 'head']
         self.hand = Hand() #load hand
@@ -118,9 +114,9 @@ class Missing(Activity):
         self.icons.add([Icons('stop')])
         self.correct = pygame.sprite.Group()
         self.bodyparts = self.groupbodyparts(self.pos_bodyparts)
-        self.containers = [pygame.Rect(46, 239, 316, 104), \
-                pygame.Rect(459, 194, 237, 71), pygame.Rect(152, 429, \
-                97, 82), pygame.Rect(489, 369, 115, 74)]
+        self.containers = [pygame.Rect(145, 257, 185, 103), \
+                pygame.Rect(557, 182, 145, 79), pygame.Rect(195, 431, \
+                58, 77), pygame.Rect(575, 349, 73, 81)]
         self.sprites = pygame.sprite.OrderedUpdates()
         self.sprites.add([self.icons, self.bodyparts, self.hand])
         pygame.mouse.set_visible( False ) #hide pointer
@@ -135,6 +131,7 @@ class Missing(Activity):
         while True:
             for event in [ pygame.event.wait() ] + pygame.event.get():
                 pos = pygame.mouse.get_pos()
+                self.hand.update(pos)
                 if event.type == QUIT:
                     self.quit = True
                     return
@@ -152,10 +149,10 @@ class Missing(Activity):
                         self.quit = True
                         return
                     self.hand.change_hand()
-                    self.hand.update()
+                    self.hand.update(pos)
                 if event.type == MOUSEBUTTONUP:
                     self.hand.change_hand()
-                    self.hand.update()
+                    self.hand.update(pos)
                 if event.type == MOUSEBUTTONUP and selection:
                     self.button_down = 0
                     bodypart_in_container = \
@@ -164,6 +161,8 @@ class Missing(Activity):
                         if selection.name == \
                                 self.correctbodyparts[bodypart_in_container[0]]:
                                     left, top, width, height = self.containers[bodypart_in_container[0]]
+                                    selection.kill()
+                                    selection.add(self.sprites)
                                     selection.rect = \
                                             pygame.Rect(left + (width - \
                                             selection.size_x)/2, top + (height - \
