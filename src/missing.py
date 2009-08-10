@@ -66,12 +66,12 @@ class Hand(Sprite):
             self.image = self.close
 
 
-class correct(Sprite):
+class check(Sprite):
     def __init__(self, pos=(0,0)):
         Sprite.__init__(self)
-        self.path_correct = os.path.join(constants.data_folder, \
-                'missing', "correct.png")
-        self.image, self.rect = common.load_image(self.path_correct)
+        self.path_check = os.path.join(constants.data_folder, \
+                'missing', "check.png")
+        self.image, self.rect = common.load_image(self.path_check)
         self.rect.move_ip(pos)
 
 
@@ -79,7 +79,6 @@ class Missing(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
         self.background = common.load_image(constants.illustration_001)[0]
-        self.selection = None
 
     def groupbodyparts(self, pos_bodyparts):
         bodyparts = pygame.sprite.Group()
@@ -105,15 +104,18 @@ class Missing(Activity):
             self.screen.blit(text, text_pos)
 
     def setup(self):
+        self.cont = None
+        self.selection = None
         self.sprites  = pygame.sprite.OrderedUpdates()
         self.pos_bodyparts = {'legs': (367, 200), 'arms': (380, 270), \
                 'chest': (400, 320), 'head': (396, 370)}
         # list of all bodyparts and positions on the screen
         self.correctbodyparts = ['legs', 'arms', 'chest', 'head']
+        self.correct = [0, 0, 0, 0]
         self.hand = Hand() #load hand
         self.icons = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
-        self.correct = pygame.sprite.Group()
+        self.checked = pygame.sprite.Group()
         self.bodyparts = self.groupbodyparts(self.pos_bodyparts)
         self.containers = [pygame.Rect(145, 257, 185, 103), \
                 pygame.Rect(557, 182, 145, 79), pygame.Rect(195, 431, \
@@ -167,10 +169,10 @@ class Missing(Activity):
                                         pygame.Rect(left + (width - \
                                         self.selection.size_x)/2, top + (height - \
                                         self.selection.size_y)/2, 0, 0)
-                                self.correct.add([correct((left + ((width
+                                self.correct[bodypart_in_container[0]] = 1
+                                self.checked.add([check((left + ((width
                                     - 76) / 2), top))])
-                                self.sprites.remove([self.hand])
-                                self.sprites.add([self.correct, self.hand])
+                                self.sprites.add([self.checked])
                     else:
                         self.selection.change_size()
                         self.selection.update((self.selection.orig_x, self.selection.orig_y))
@@ -186,6 +188,14 @@ class Missing(Activity):
                     self.selection.change_size()
                     self.selection.remove(self.sprites)
                     self.selection.add(self.sprites)
+            if self.cont != 4:
+                self.cont = 0
+            if self.cont == 0:
+                for i in range(0,4):
+                    if self.correct[i] == 1:
+                        self.cont = self.cont + 1
+            if self.cont == 4:
+                self.finished_ = True
             self.hand.remove(self.sprites)
             self.hand.add(self.sprites)
             self.screen.blit(self.background, (0,0))
