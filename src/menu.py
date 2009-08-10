@@ -104,8 +104,37 @@ class Menu:
         return self.content.sprites()
     
     def add(self, item):
-        x = self.pos[0]
-        y = self.pos[1] + len(self.content) * self.hight_item
+        #FIXME: Define a mathematical circle function for this 
+        if 0 <= len(self.content) <= 1:
+            y = 20
+            if len(self.content) == 0:
+                x = 124
+            else:
+                x = 559
+        elif 2 <= len(self.content) <= 3:
+            y = 90
+            if len(self.content) == 2:
+                x = 62
+            else:
+                x = 615
+        elif 4 <= len(self.content) <= 5:
+            y = 160
+            if len(self.content) == 4:
+                x = 30
+            else:
+                x = 635
+        elif 6 <= len(self.content) <= 7:
+            y = 230
+            if len(self.content) == 6:
+                x = 35
+            else:
+                x = 630
+        elif 8 <= len(self.content) <= 9:
+            y = 300
+            if len(self.content) == 8:
+                x = 55
+            else:
+                x = 580
 
         item.place((x, y))
         self.content.add(item)
