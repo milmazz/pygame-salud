@@ -135,6 +135,10 @@ class Shower(Activity):
                         else:
                             for i in self.couple:
                                 i.deactivate()
+
+                        for i, j in self.couples:
+                            i.activate()
+                            j.activate()
                        
                         self.arrow = None
                         self.couple.clear()
