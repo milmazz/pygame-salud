@@ -92,3 +92,6 @@ screen_mode = (800, 600)
 
 # Profiling file
 profiling_file = os.path.join(data_folder, "salud.profile")
+
+snd_click = os.path.join(data_folder, "snd", "click.ogg")
+snd_congratulation = os.path.join(data_folder, "snd", "congratulation.ogg")

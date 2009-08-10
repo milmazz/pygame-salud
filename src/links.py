@@ -93,8 +93,7 @@ class Shower(Activity):
         
         
     def handle_events(self):
-        pygame.event.clear()
-        for event in [pygame.event.wait()] + pygame.event.get():
+        for event in self.get_event():
             if event.type == QUIT:
                 self.quit = True
                 return
@@ -144,6 +143,9 @@ class Shower(Activity):
                 if self.arrow:
                     end = pygame.mouse.get_pos()
                     self.arrow.update(end=end)
+
+            if len(self.couples) == 4:
+                self.finished_ = True
 
             self.setup()
             if self.arrow:
