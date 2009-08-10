@@ -108,6 +108,7 @@ class View():
 class CrazyLetterActivity(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.selection = None
 
     def setup(self):
         self.informative_text()
@@ -162,71 +163,67 @@ class CrazyLetterActivity(Activity):
 
 
     def handle_events(self):
-        pygame.event.clear()
-        while True:
-            for event in [ pygame.event.wait() ] + pygame.event.get():
-                pos = pygame.mouse.get_pos()
+        for event in self.get_event():
+            pos = pygame.mouse.get_pos()
 
-                if event.type == QUIT:
+            if event.type == QUIT:
+                self.quit = True
+                return
+            elif event.type == KEYUP:
+                self.changed = False
+                if event.key == K_ESCAPE:
                     self.quit = True
                     return
-                elif event.type == KEYUP:
-                    self.changed = False
-                    if event.key == K_ESCAPE:
-                        self.quit = True
-                        return
 
-                if event.type == MOUSEMOTION:
-                    self.hand.update(pos)
-                    self.screen.blit(self.view.background, (0,0))
-                    self.sprites.draw(self.screen)
-                    self.informative_text()
-                    pygame.display.update()
-                if event.type == MOUSEMOTION and self.button_down:
-                    selection.update(pos)
-                if event.type == MOUSEBUTTONDOWN:
-                    if pygame.sprite.spritecollideany(self.hand, self.icons):
-                        self.quit = True
-                        return
-                    self.hand.change_hand()
-                    self.hand.update(pos)
-                    self.screen.blit(self.view.background, (0,0))
-                    self.sprites.draw(self.screen)
-                    self.informative_text()
-                    pygame.display.update()
-                if event.type == MOUSEBUTTONUP:
-                    print pos
-                    self.hand.change_hand()
-                    self.hand.update(pos)
-                    self.screen.blit(self.view.background, (0,0))
-                    self.sprites.draw(self.screen)
-                    self.informative_text()
-                    pygame.display.update()
-                    #print pos
+            if event.type == MOUSEMOTION:
+                self.hand.update(pos)
+                self.screen.blit(self.view.background, (0,0))
+                self.sprites.draw(self.screen)
+                self.informative_text()
+                pygame.display.update()
+            if event.type == MOUSEMOTION and self.button_down:
+                self.selection.update(pos)
+            if event.type == MOUSEBUTTONDOWN:
+                if pygame.sprite.spritecollideany(self.hand, self.icons):
+                    self.quit = True
+                    return
+                self.hand.change_hand()
+                self.hand.update(pos)
+                self.screen.blit(self.view.background, (0,0))
+                self.sprites.draw(self.screen)
+                self.informative_text()
+                pygame.display.update()
+            if event.type == MOUSEBUTTONUP:
+                self.hand.change_hand()
+                self.hand.update(pos)
+                self.screen.blit(self.view.background, (0,0))
+                self.sprites.draw(self.screen)
+                self.informative_text()
+                pygame.display.update()
 
-                if event.type == MOUSEBUTTONUP and selection:
-                    self.button_down = 0
-                    letter_in_container = pygame.sprite.spritecollideany(selection, self.contenedor)
-                    if letter_in_container:
-                        if selection.letter != letter_in_container.letter:
-                            selection.back()
-                            selection.update(selection.orig)
-                            self.screen.blit(self.view.background, (0,0))
-                            self.sprites.draw(self.screen)
-                            self.informative_text()
-                            pygame.display.update()
-                    else:
-                        selection.color = 0
-                        selection.update(pos)
-                if event.type == MOUSEBUTTONDOWN:
-                    selection = pygame.sprite.spritecollideany(self.hand, self.letters)
-                    for list in pygame.sprite.spritecollide(self.hand, self.letters,0):
-                        x = pos[0] + self.hand.rect.width / 2
-                        y = pos[1] + self.hand.rect.height / 2
-                        if list.rect.collidepoint(x,y):
-                            selection = list
- 
-                    if selection:
-                        selection.color = 1
-                        self.button_down = 1
-        
+            if event.type == MOUSEBUTTONUP and self.selection:
+                self.button_down = 0
+                letter_in_container = pygame.sprite.spritecollideany(self.selection, self.contenedor)
+                if letter_in_container:
+                    if self.selection.letter != letter_in_container.letter:
+                        self.selection.back()
+                        self.selection.update(self.selection.orig)
+                        self.screen.blit(self.view.background, (0,0))
+                        self.sprites.draw(self.screen)
+                        self.informative_text()
+                        pygame.display.update()
+                else:
+                    self.selection.color = 0
+                    self.selection.update(pos)
+            if event.type == MOUSEBUTTONDOWN:
+                self.selection = pygame.sprite.spritecollideany(self.hand, self.letters)
+                for list in pygame.sprite.spritecollide(self.hand, self.letters,0):
+                    x = pos[0] + self.hand.rect.width / 2
+                    y = pos[1] + self.hand.rect.height / 2
+                    if list.rect.collidepoint(x,y):
+                        self.selection = list
+
+                if self.selection:
+                    self.selection.color = 1
+                    self.button_down = 1
+    

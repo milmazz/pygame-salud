@@ -136,6 +136,7 @@ class Ball(Sprite):
 class Labyrinth(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.correct = set()
 
     def setup_background(self):
         self.background = pygame.image.load(constants.illustration_010)
@@ -193,44 +194,46 @@ class Labyrinth(Activity):
         pygame.key.set_repeat(200, 100)
 
     def handle_events(self): 
-        pygame.event.clear()
-        while True:
-            for event in [ pygame.event.wait() ] +  pygame.event.get():
-                pos = pygame.mouse.get_pos()
-                if event.type == QUIT:
+        for event in self.get_event():
+            pos = pygame.mouse.get_pos()
+            if event.type == QUIT:
+                self.quit = True
+                return
+            elif event.type == MOUSEMOTION:
+                self.hand.update(pos)
+            elif event.type == MOUSEBUTTONDOWN:
+              if pygame.sprite.spritecollideany(self.hand,\
+                    self.icons):
+                  self.quit = True
+                  return
+            elif event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
                     self.quit = True
                     return
-                elif event.type == MOUSEMOTION:
-                    self.hand.update(pos)
-                elif event.type == MOUSEBUTTONDOWN:
-                  if pygame.sprite.spritecollideany(self.hand,\
-                        self.icons):
-                      self.quit = True
-                      return
-                elif event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        self.quit = True
-                        return
-                    elif event.key == K_UP:
-                        self.ball.up_key()
-                    elif event.key == K_DOWN:
-                        self.ball.down_key()
-                    elif event.key == K_LEFT:
-                        self.ball.left_key()
-                    elif event.key == K_RIGHT:
-                        self.ball.right_key()
-                    self.hand.update((0,0))
+                elif event.key == K_UP:
+                    self.ball.up_key()
+                elif event.key == K_DOWN:
+                    self.ball.down_key()
+                elif event.key == K_LEFT:
+                    self.ball.left_key()
+                elif event.key == K_RIGHT:
+                    self.ball.right_key()
+                self.hand.update((0,0))
 
-                selection = pygame.sprite.spritecollideany(self.ball,
-                                self.Girls)
-                if selection:
-                        if selection.id == self.ball.counter:
-                                self.ball.counter += 1
-                                selection.img = 1
-                                selection.update()
-                                self.ball.update(selection.exit_pos)
+            selection = pygame.sprite.spritecollideany(self.ball,
+                            self.Girls)
+            if selection:
+                    if selection.id == self.ball.counter:
+                            self.ball.counter += 1
+                            selection.img = 1
+                            selection.update()
+                            self.ball.update(selection.exit_pos)
+                            self.correct.add(selection)
 
-            self.screen.blit(self.background, (0,0))
-            self.informative_text()
-            self.GroupSprite.draw(self.screen)
-            pygame.display.update()
+        if len(self.correct) == 5:
+            self.finished_ = True
+
+        self.screen.blit(self.background, (0,0))
+        self.GroupSprite.draw(self.screen)
+        self.informative_text()
+        pygame.display.update()

@@ -58,6 +58,7 @@ class Hand(Sprite):
 class OrderActivity(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.correct = set()
 
     def setup_background(self):
         self.background, rect = common.load_image('../data/backgrounds/illustration_009.jpg')
@@ -117,64 +118,70 @@ class OrderActivity(Activity):
         self.sprites.draw(self.screen)
 
     def handle_events(self):
-            for event in [ pygame.event.wait() ] + pygame.event.get():
-                pos = pygame.mouse.get_pos()
-                if event.type == QUIT:
+        for event in self.get_event():
+            pos = pygame.mouse.get_pos()
+            if event.type == QUIT:
+                self.quit = True
+                return
+            elif event.type == KEYUP:
+               if event.key == K_ESCAPE:
+                   self.quit = True
+                   return
+            elif event.type == MOUSEBUTTONDOWN and self.button_down == 0:
+                if pygame.sprite.spritecollideany(self.hand, self.icons):
                     self.quit = True
                     return
-                elif event.type == KEYUP:
-                   if event.key == K_ESCAPE:
-                       self.quit = True
-                       return
-                elif event.type == MOUSEBUTTONDOWN and self.button_down == 0:
-                    if pygame.sprite.spritecollideany(self.hand, self.icons):
-                        self.quit = True
-                        return
-                    self.button_down = 1
-                    self.selection = pygame.sprite.spritecollideany\
-                      (self.hand, self.pictures)
-                    #print self.selection
-                    """put the picture select and the hand in the
-                     front of the queue"""
-                    if self.selection and self.selection.fix == 0:
-                        """This is necesary to have ever the selection picture
-                           and the hand in the front"""
-                        self.selection.kill()
-                        self.hand.kill()
-                        self.pictures.add([self.selection])
-                        self.sprites.add([self.selection])
-                        self.sprites.add([self.hand])
-                    self.hand.change_hand() #change de open hand by the close hand
-                    self.hand.update(pos) 
-                    self.screen.blit(self.background, (0,0))
-                    self.sprites.draw(self.screen)
-                elif event.type == MOUSEBUTTONUP and self.button_down == 1:
-                    if self.selection:
-                        verify_correct = pygame.sprite.spritecollideany\
-                          (self.selection, self.transparent)
-                        if verify_correct and verify_correct.id == self.selection.id:
-                            self.selection.fix = 1
-                            self.selection.rect = verify_correct.rect
-                    self.button_down = 0
-                    self.selection = 0
-                    self.hand.change_hand() #change the close hand by the open hand
-                    self.hand.update(pos)
-                    self.screen.blit(self.background, (0,0))
-                    self.sprites.draw(self.screen)
-                elif event.type == MOUSEMOTION:
-                    if self.selection and self.selection.fix == 0\
-                      and self.button_down == 1:   
-                        self.selection.update(pos)
-                    self.hand.update(pos)
-                    self.screen.blit(self.background, (0,0))
-                    self.sprites.draw(self.screen)
-                self.informative_text()
-                """update all the screen"""
-                pygame.display.update()
+                self.button_down = 1
+                self.selection = pygame.sprite.spritecollideany\
+                  (self.hand, self.pictures)
+                #print self.selection
+                """put the picture select and the hand in the
+                 front of the queue"""
+                if self.selection and self.selection.fix == 0:
+                    """This is necesary to have ever the selection picture
+                       and the hand in the front"""
+                    self.selection.kill()
+                    self.hand.kill()
+                    self.pictures.add([self.selection])
+                    self.sprites.add([self.selection])
+                    self.sprites.add([self.hand])
+                self.hand.change_hand() #change de open hand by the close hand
+                self.hand.update(pos) 
+                self.screen.blit(self.background, (0,0))
+                self.sprites.draw(self.screen)
+            elif event.type == MOUSEBUTTONUP and self.button_down == 1:
+                if self.selection:
+                    verify_correct = pygame.sprite.spritecollideany\
+                      (self.selection, self.transparent)
+                    if verify_correct and verify_correct.id == self.selection.id:
+                        self.selection.fix = 1
+                        self.selection.rect = verify_correct.rect
+                        self.correct.add(self.selection)
+                self.button_down = 0
+                self.selection = 0
+                self.hand.change_hand() #change the close hand by the open hand
+                self.hand.update(pos)
+                self.screen.blit(self.background, (0,0))
+                self.sprites.draw(self.screen)
+            elif event.type == MOUSEMOTION:
+                if self.selection and self.selection.fix == 0\
+                  and self.button_down == 1:   
+                    self.selection.update(pos)
+                self.hand.update(pos)
+                self.screen.blit(self.background, (0,0))
+                self.sprites.draw(self.screen)
+            self.informative_text()
+            """update all the screen"""
+            pygame.display.update()
+
+            if len(self.correct) == 5:
+                self.finished_ = True
+
 
 class OrderActivity2(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.correct = set()
 
     def setup_background(self):
         self.background, rect = common.load_image('../data/backgrounds/illustration_013.jpg')
@@ -243,7 +250,7 @@ class OrderActivity2(Activity):
         self.sprites.draw(self.screen)
 
     def handle_events(self):
-            for event in [ pygame.event.wait() ] + pygame.event.get():
+            for event in self.get_event():
                 pos = pygame.mouse.get_pos()
                 if event.type == QUIT:
                     self.quit = True
@@ -281,6 +288,7 @@ class OrderActivity2(Activity):
                         if verify_correct and verify_correct.id == self.selection.id:
                             self.selection.fix = 1
                             self.selection.rect = verify_correct.rect
+                            self.correct.add(self.selection)
                     self.button_down = 0
                     self.selection = 0
                     self.hand.change_hand() #change the close hand by the open hand
@@ -297,3 +305,6 @@ class OrderActivity2(Activity):
                 self.informative_text()
                 """update all the screen"""
                 pygame.display.update()
+
+            if len(self.correct) == 4:
+                self.finished_ = True

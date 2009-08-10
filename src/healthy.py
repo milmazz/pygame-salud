@@ -113,6 +113,7 @@ class View():
 class Healthy(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.selection = None
 
     def instruction_text(self):
         font_title = pygame.font.SysFont("dejavusans", 40)
@@ -168,75 +169,73 @@ class Healthy(Activity):
         pygame.display.update()
 
     def handle_events(self):
-        pygame.event.clear()
-        while True:
-            for event in [ pygame.event.wait() ] + pygame.event.get():
-                pos = pygame.mouse.get_pos()
-                if event.type == QUIT:
+        for event in self.get_event():
+            pos = pygame.mouse.get_pos()
+            if event.type == QUIT:
+                self.quit = True
+                return
+            elif event.type == KEYUP:
+                self.changed = False
+                if event.key == K_ESCAPE:
                     self.quit = True
                     return
-                elif event.type == KEYUP:
-                    self.changed = False
-                    if event.key == K_ESCAPE:
-                        self.quit = True
-                        return
-                if event.type == MOUSEMOTION:
-                    self.hand.update(pos)
-                if event.type == MOUSEMOTION and self.button_down:
-                    selection.update(pos)
-                if event.type == MOUSEBUTTONDOWN:
-                    if pygame.sprite.spritecollideany(self.hand, self.icons):
-                        self.quit = True
-                        return
-                    if pygame.sprite.spritecollideany(self.hand, self.change):
-                        self.view.update()
-                        self.change.update()
-                        if self.correctlines == self.correctlines1:
-                            self.pos_textlines = self.pos_textlines2
-                            self.correctlines = self.correctlines2
-                            self.containers = self.containers2
-                        else:
-                            self.pos_textlines = self.pos_textlines1
-                            self.correctlines = self.correctlines1
-                            self.containers = self.containers1
-                        self.sprites.remove([self.textlines, self.correct, \
-                                self.hand])
-                        self.correct.empty()
-                        self.textlines = self.view.grouptextlines(self.pos_textlines)
-                        self.sprites.add([self.textlines, self.hand])
-                    self.hand.change_hand()
-                    self.hand.update()
-                if event.type == MOUSEBUTTONUP:
-                    self.hand.change_hand()
-                    self.hand.update()
-                if event.type == MOUSEBUTTONUP and selection:
-                    self.button_down = 0
-                    textline_in_container = \
-                            selection.rect.collidelistall(self.containers)
-                    if textline_in_container:
-                        if selection.name == \
-                                self.correctlines[textline_in_container[0]]:
-                                    left, top, width, height = self.containers[textline_in_container[0]]
-                                    selection.rect = \
-                                    pygame.Rect(left + (width - \
-                                    selection.size_x)/2, top + (height - \
-                                    selection.size_y)/2, 0, 0)
-                                    self.correct.add([correct((left + (width \
-                                            /2) - 25, top - 150))])
-                                    self.sprites.remove([self.hand])
-                                    self.sprites.add([self.correct, self.hand])
-                        else:
-                            pass
+            if event.type == MOUSEMOTION:
+                self.hand.update(pos)
+            if event.type == MOUSEMOTION and self.button_down:
+                self.selection.update(pos)
+            if event.type == MOUSEBUTTONDOWN:
+                if pygame.sprite.spritecollideany(self.hand, self.icons):
+                    self.quit = True
+                    return
+                if pygame.sprite.spritecollideany(self.hand, self.change):
+                    self.view.update()
+                    self.change.update()
+                    if self.correctlines == self.correctlines1:
+                        self.pos_textlines = self.pos_textlines2
+                        self.correctlines = self.correctlines2
+                        self.containers = self.containers2
                     else:
-                        selection.color = 0
-                        selection.update(pos)
-                if event.type == MOUSEBUTTONDOWN:
-                    selection = pygame.sprite.spritecollideany(self.hand, \
-                            self.textlines)
-                    if selection:
-                        selection.color = 1
-                        self.button_down = 1
-                self.screen.blit(self.view.background, (0,0))
-                self.instruction_text()
-                self.sprites.draw(self.screen)
-                pygame.display.update()
+                        self.pos_textlines = self.pos_textlines1
+                        self.correctlines = self.correctlines1
+                        self.containers = self.containers1
+                    self.sprites.remove([self.textlines, self.correct, \
+                            self.hand])
+                    self.correct.empty()
+                    self.textlines = self.view.grouptextlines(self.pos_textlines)
+                    self.sprites.add([self.textlines, self.hand])
+                self.hand.change_hand()
+                self.hand.update()
+            if event.type == MOUSEBUTTONUP:
+                self.hand.change_hand()
+                self.hand.update()
+            if event.type == MOUSEBUTTONUP and self.selection:
+                self.button_down = 0
+                textline_in_container = \
+                        self.selection.rect.collidelistall(self.containers)
+                if textline_in_container:
+                    if self.selection.name == \
+                            self.correctlines[textline_in_container[0]]:
+                                left, top, width, height = self.containers[textline_in_container[0]]
+                                self.selection.rect = \
+                                pygame.Rect(left + (width - \
+                                self.selection.size_x)/2, top + (height - \
+                                self.selection.size_y)/2, 0, 0)
+                                self.correct.add([correct((left + (width \
+                                        /2) - 25, top - 150))])
+                                self.sprites.remove([self.hand])
+                                self.sprites.add([self.correct, self.hand])
+                    else:
+                        pass
+                else:
+                    self.selection.color = 0
+                    self.selection.update(pos)
+            if event.type == MOUSEBUTTONDOWN:
+                self.selection = pygame.sprite.spritecollideany(self.hand, \
+                        self.textlines)
+                if self.selection:
+                    self.selection.color = 1
+                    self.button_down = 1
+            self.screen.blit(self.view.background, (0,0))
+            self.instruction_text()
+            self.sprites.draw(self.screen)
+            pygame.display.update()
