@@ -20,11 +20,11 @@ class textLine(Sprite):
         self.image, self.rect = common.load_image(image_name)
         self.size_x, self.size_y = self.image.get_size()
         self.rect.move_ip(pos)
+        self.orig_x, self.orig_y = pos
         self.name = textline
 		
     def update(self, pos):
-        self.rect.x = pos[0]
-        self.rect.y = pos[1]
+        self.rect.x, self.rect.y = pos
 
 
 class Hand(Sprite):
@@ -46,22 +46,19 @@ class Hand(Sprite):
             self.color = 0
 
     def update(self, mover=(0,0)):
-        if mover[0] - 10 >= 0:
-            self.rect.x = mover[0]
-        if mover[1] - 15 >= 0:
-            self.rect.y = mover[1]
+        self.rect.x, self.rect.y = mover
         if self.color == 0:
             self.image = self.normal
         if self.color == 1:
             self.image = self.close
 
 
-class correct(Sprite):
+class check(Sprite):
     def __init__(self, pos=(0,0)):
         Sprite.__init__(self)
-        self.path_correct = os.path.join(constants.data_folder, \
-                'healthy', "correct.png")
-        self.image, self.rect = common.load_image(self.path_correct)
+        self.path_check = os.path.join(constants.data_folder, \
+                'healthy', "check.png")
+        self.image, self.rect = common.load_image(self.path_check)
         self.rect.move_ip(pos)
 
 
@@ -103,17 +100,12 @@ class View():
         else:
             self.background = self.back1
 
-    def grouptextlines(self, pos_textlines):
-        textlines = pygame.sprite.Group()
-        for name in pos_textlines:
-            textlines.add([textLine(name, pos_textlines[name])])
-        return textlines
+
 
 
 class Healthy(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
-        self.selection = None
 
     def instruction_text(self):
         font_title = pygame.font.SysFont("dejavusans", 40)
@@ -136,15 +128,20 @@ class Healthy(Activity):
             self.screen.blit(text, text_pos)
 
     def setup(self):
+        self.cont = None
+        self.selection = None
         self.sprites  = pygame.sprite.OrderedUpdates()
         self.pos_textlines1 = {'study': (50, 90), 'eat': (50, 140), \
-                'sport': (50, 115)}
-        self.pos_textlines2 = {'brush': (50,90), 'wash': (50, 115), \
-                'shower': (50,140)}
+                'sports': (50, 115)}
+        self.pos_textlines2 = {'teeth': (50,90), 'hands': (50, 115), \
+                'body': (50,140)}
         self.pos_textlines = self.pos_textlines1
         # list of all textlines and positions on the screen
-        self.correctlines1 = ['study', 'eat', 'sport']
-        self.correctlines2 = ['brush', 'wash', 'shower']
+        self.correctlines1 = ['study', 'eat', 'sports']
+        self.correctlines2 = ['teeth', 'hands', 'body']
+        self.correct1 = [0, 0, 0]
+        self.correct2 = [0, 0, 0]
+        self.correct = self.correct1
         self.correctlines = self.correctlines1
         self.view = View() #load static background
         self.hand = Hand() #load hand
@@ -152,12 +149,14 @@ class Healthy(Activity):
         self.change.add([changeButtons()]) #load next and prev buttons
         self.icons = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
-        self.correct = pygame.sprite.Group()
-        self.textlines = self.view.grouptextlines(self.pos_textlines1)
-        self.containers1 = [pygame.Rect(70, 555, 250, 40), \
-                pygame.Rect(240, 285, 250, 40), pygame.Rect(510, 515, 250, 40)]
-        self.containers2 = [pygame.Rect(50, 495, 250, 40), \
-                pygame.Rect(285, 280, 250, 40), pygame.Rect(500, 535, 250, 40)]
+        self.checked = pygame.sprite.Group()
+        self.textlines = pygame.sprite.Group()
+        for name in self.pos_textlines:
+            self.textlines.add([textLine(name, self.pos_textlines[name])])
+        self.containers1 = [pygame.Rect(146, 562, 95, 25), \
+                pygame.Rect(307, 288, 78, 25), pygame.Rect(640, 525, 101, 25)]
+        self.containers2 = [pygame.Rect(214, 503, 84, 25), \
+                pygame.Rect(441, 292, 73, 25), pygame.Rect(652, 550, 79, 25)]
         self.containers = self.containers1
         self.sprites = pygame.sprite.OrderedUpdates()
         self.sprites.add([self.icons, self.textlines, self.change, self.hand])
@@ -167,10 +166,12 @@ class Healthy(Activity):
         self.sprites.draw(self.screen)
         self.instruction_text()
         pygame.display.update()
+        pygame.event.clear()
 
     def handle_events(self):
         for event in self.get_event():
             pos = pygame.mouse.get_pos()
+            self.hand.update(pos)
             if event.type == QUIT:
                 self.quit = True
                 return
@@ -188,26 +189,39 @@ class Healthy(Activity):
                     self.quit = True
                     return
                 if pygame.sprite.spritecollideany(self.hand, self.change):
+                    self.sprites.empty()
+                    self.sprites.add([self.icons, self.change])
                     self.view.update()
                     self.change.update()
+                    self.checked.empty()
+                    self.textlines.empty()
                     if self.correctlines == self.correctlines1:
                         self.pos_textlines = self.pos_textlines2
                         self.correctlines = self.correctlines2
                         self.containers = self.containers2
+                        self.correct = self.correct2
                     else:
                         self.pos_textlines = self.pos_textlines1
                         self.correctlines = self.correctlines1
                         self.containers = self.containers1
-                    self.sprites.remove([self.textlines, self.correct, \
-                            self.hand])
-                    self.correct.empty()
-                    self.textlines = self.view.grouptextlines(self.pos_textlines)
-                    self.sprites.add([self.textlines, self.hand])
+                        self.correct = self.correct1
+                    for i in range(0,3):
+                        if self.correct[i] == 1:
+                            left, top, width, height = self.containers[i]
+                            self.auxtextline = textLine(self.correctlines[i], \
+                                    (left, top))
+                            self.checked.add([check((left + (width \
+                                    /2) - 25, top - 150))])
+                            self.textlines.add([self.auxtextline])
+                        if self.correct[i] == 0:
+                            self.textlines.add([textLine(self.correctlines[i], \
+                                    self.pos_textlines[self.correctlines[i]])])
+                    self.sprites.add([self.textlines, self.checked])
                 self.hand.change_hand()
-                self.hand.update()
+                self.hand.update(pos)
             if event.type == MOUSEBUTTONUP:
                 self.hand.change_hand()
-                self.hand.update()
+                self.hand.update(pos)
             if event.type == MOUSEBUTTONUP and self.selection:
                 self.button_down = 0
                 textline_in_container = \
@@ -215,26 +229,43 @@ class Healthy(Activity):
                 if textline_in_container:
                     if self.selection.name == \
                             self.correctlines[textline_in_container[0]]:
-                                left, top, width, height = self.containers[textline_in_container[0]]
+                                left, top, width, height = \
+                                        self.containers[textline_in_container[0]]
+                                self.selection.kill()
+                                self.selection.add(self.sprites)
                                 self.selection.rect = \
-                                pygame.Rect(left + (width - \
-                                self.selection.size_x)/2, top + (height - \
-                                self.selection.size_y)/2, 0, 0)
-                                self.correct.add([correct((left + (width \
+                                        pygame.Rect(left + (width - \
+                                        self.selection.size_x)/2, top + (height - \
+                                        self.selection.size_y)/2, 0, 0)
+                                self.correct[textline_in_container[0]] = 1
+                                self.checked.add([check((left + (width \
                                         /2) - 25, top - 150))])
-                                self.sprites.remove([self.hand])
-                                self.sprites.add([self.correct, self.hand])
+                                self.sprites.add([self.checked])
                     else:
-                        pass
+                        self.selection.update((self.selection.orig_x, self.selection.orig_y))
                 else:
+                    self.selection.update((self.selection.orig_x, self.selection.orig_y))
                     self.selection.color = 0
-                    self.selection.update(pos)
             if event.type == MOUSEBUTTONDOWN:
                 self.selection = pygame.sprite.spritecollideany(self.hand, \
                         self.textlines)
                 if self.selection:
                     self.selection.color = 1
                     self.button_down = 1
+                    self.selection.remove(self.sprites)
+                    self.selection.add(self.sprites)
+            if self.cont != 6:
+                self.cont = 0
+            if self.cont == 0:
+                for i in range(0,3):
+                    if self.correct1[i] == 1:
+                        self.cont = self.cont + 1
+                    if self.correct2[i] == 1:
+                        self.cont = self.cont + 1
+            if self.cont == 6:
+                self.finished_ = True
+            self.hand.remove(self.sprites)
+            self.hand.add(self.sprites)
             self.screen.blit(self.view.background, (0,0))
             self.instruction_text()
             self.sprites.draw(self.screen)

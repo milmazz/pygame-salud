@@ -73,13 +73,13 @@ class correct(Sprite):
                 'missing', "correct.png")
         self.image, self.rect = common.load_image(self.path_correct)
         self.rect.move_ip(pos)
-        self.selection = None
 
 
 class Missing(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
         self.background = common.load_image(constants.illustration_001)[0]
+        self.selection = None
 
     def groupbodyparts(self, pos_bodyparts):
         bodyparts = pygame.sprite.Group()
