@@ -87,21 +87,21 @@ class Missing(Activity):
         return bodyparts
 
     def instruction_text(self):
-        font_title = pygame.font.SysFont("dejavusans", 18)
+        font_title = pygame.font.SysFont("dejavusans", 14)
         font_title.set_bold(True)
-        font_instructions = pygame.font.SysFont("dejavusans", 15)
+        font_instructions = pygame.font.SysFont("dejavusans", 12)
         title = u"¿Qué le falta a Kiko en cada figura?"
-        instructions = [u"A Kiko le desaparecieron algunas partes de su" \
-                , u"cuerpo ¿Puedes unirlas arrastrando las partes?"]
+        instructions = [u"A Kiko le desaparecieron algunas", 
+                  "partes de su cuerpo ¿Puedes unirlas", "arrastrando las partes?"]
         text = font_title.render(title, True, (102, 102, 102))
-        text_pos = (185, 35)
+        text_pos = (172, 35)
         self.screen.blit(text, text_pos)
         y = 45
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
             text = font_instructions.render(line, True, (102, 102, 102))
             y += line_height
-            text_pos = (188, y)
+            text_pos = (185, y)
             self.screen.blit(text, text_pos)
 
     def setup(self):
