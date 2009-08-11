@@ -147,7 +147,7 @@ class Menu:
 
 class MenuActivity(Menu):
     def add(self, item):
-        sep = 3 
+        sep = 10
         width = item.rect[2]
         hight = item.rect[3]
         if len(self.content) % 2 != 0:
@@ -156,6 +156,9 @@ class MenuActivity(Menu):
         else:
             x = self.pos[0]
             y = self.pos[1] + sep + len(self.content)/2 * hight
+
+        if len(self.content) >= 2:
+            y += 10 
 
         item.place((x, y))
         self.content.add(item)
