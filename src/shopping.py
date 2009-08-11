@@ -71,11 +71,7 @@ class check(Sprite):
         self.path_check = os.path.join(constants.data_folder, \
                 'shopping', "check.png")
         self.image, self.rect = common.load_image(self.path_check)
-#        self.size_x, self.size_y = self.image.get_size()
         self.rect.move_ip(pos)
-#        self.image_small = pygame.transform.scale(self.image,
-#                (self.size_x/2, self.size_y/2))
-#        self.image = self.image_small
 
 
 class Shopping(Activity):
@@ -196,49 +192,34 @@ class Shopping(Activity):
                     if self.correct_container == 0:
                         self.checked_vegetables = self.checked_vegetables + 1
                         if self.checked_vegetables >= 4:
-                            self.checked.add([check((self.containers[self.correct_container][0], \
-                                    self.containers[self.correct_container][1]))])
+                            self.checked.add([check((self.containers[self.correct_container][0] \
+                                    + 60, self.containers[self.correct_container][1] \
+                                    + 12))])
                             self.checked_vegetables = -1
                     if self.correct_container == 1:
                         self.checked_fruits = self.checked_fruits + 1
                         if self.checked_fruits >= 6:
-                            self.checked.add([check((self.containers[self.correct_container][0], \
-                                    self.containers[self.correct_container][1]))])
+                            self.checked.add([check((self.containers[self.correct_container][0] \
+                                    + 60, self.containers[self.correct_container][1] \
+                                    + 12))])
                             self.checked_fruits = -1
                     if self.correct_container == 2:
                         self.checked_meats = self.checked_meats + 1
                         if self.checked_meats >= 3:
-                            self.checked.add([check((self.containers[self.correct_container][0], \
-                                    self.containers[self.correct_container][1]))])
+                            self.checked.add([check((self.containers[self.correct_container][0] \
+                                    + 60, self.containers[self.correct_container][1] \
+                                    + 12))])
                             self.checked_meats = -1
                     if self.correct_container == 3:
                         self.checked_milks = self.checked_milks + 1
                         if self.checked_milks >= 4:
-                            self.checked.add([check((self.containers[self.correct_container][0], \
-                                    self.containers[self.correct_container][1]))])
+                            self.checked.add([check((self.containers[self.correct_container][0] \
+                                    + 60, self.containers[self.correct_container][1] \
+                                    + 12))])
                             self.checked_milks = -1
                     self.selection.rect = ((pos), (0, 0))
                     self.selection.kill()
                     self.selection.add(self.sprites)
-                    """if self.checked_vegetables == 4:
-                        self.checked.add([check((self.containers[0][0], \
-                                self.containers[0][1]))])
-                    if self.checked_fruits == 6:
-                        self.checked.add([check((self.containers[1][0], \
-                                self.containers[1][1]))])
-                    if self.checked_meats == 3:
-                        self.checked.add([check((self.containers[2][0], \
-                                self.containers[2][1]))])
-                    if self.checked_milks == 4:
-                        self.checked.add([check((self.containers[3][0], \
-                                self.containers[3][1]))])"""
-#                    self.selection.rect = ((self.selection.orig_x, \
-#                            self.selection.orig_y), (0, 0))
-#                    self.checked.add([check((self.selection.orig_x + \
-#                            (self.selection.size_x - 76)/2, \
-#                            self.selection.orig_y + (self.selection.size_y - \
-#                            70)/2))])
-#                    self.checked.add([check((pos))])
                     self.sprites.add([self.checked])
                 else:
                     self.selection.change_size()
