@@ -17,11 +17,14 @@ class Finger(sprite.Sprite):
     def __init__(self):
         sprite.Sprite.__init__(self) 
         self.image, self.rect = common.load_image(constants.cursor_filename)
-        mouse.set_pos(700.0, 550.0)
+        pos = constants.screen_mode[0] / 2.0, constants.screen_mode[1] / 2.0
+        self.rect.width = 1
+        self.rect.height = 1
+        mouse.set_pos(pos)
 
     def update(self):
         pos = mouse.get_pos()
-        self.rect.midtop = pos
+        self.rect.topleft = pos
 
 
 class ItemBase(sprite.Sprite):
@@ -90,10 +93,8 @@ MenuItem = ItemActivity
 
 
 class Menu:
-    def __init__(self, pos, width_item, hight_item, content=[]):
+    def __init__(self, pos, content=[]):
         self.pos = pos
-        self.width_item = width_item
-        self.hight_item = hight_item
         self.content = sprite.OrderedUpdates()
         for item in content:
             self.add(item)
@@ -152,13 +153,10 @@ class MenuActivity(Menu):
         hight = item.rect[3]
         if len(self.content) % 2 != 0:
             x = self.pos[0] + width + sep
-            y = self.pos[1] + sep + len(self.content)/2 * hight
+            y = self.pos[1] + sep + (len(self.content) / 2) * hight
         else:
             x = self.pos[0]
-            y = self.pos[1] + sep + len(self.content)/2 * hight
-
-        if len(self.content) >= 2:
-            y += 10 
+            y = self.pos[1] + sep + (len(self.content) / 2) * hight
 
         item.place((x, y))
         self.content.add(item)
@@ -178,7 +176,7 @@ class MainMenu(Activity):
         self.act_pos = (270, 85)
 
         # items holds the categories
-        self.menu = Menu(self.cat_pos, 125, 60)
+        self.menu = Menu(self.cat_pos)
 
         # submenus holds the different activities separated by category
         self.submenus = {}
@@ -189,7 +187,7 @@ class MainMenu(Activity):
         if items:
             for item in items:
                 if not self.submenus.has_key(item.category):
-                    submenu = MenuActivity(self.act_pos, 50, 50)
+                    submenu = MenuActivity(self.act_pos)
                     self.submenus[item.category] = submenu
                 self.submenus[item.category].add(item)
 

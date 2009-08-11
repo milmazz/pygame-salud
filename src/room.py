@@ -18,11 +18,34 @@ from icons import Icons
 class Room(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
-        self.wrong_pos = (
-                (446, 322, 481, 330),
-                (493, 273, 507, 293),
-                (523, 278, 574, 308),
+        wrong_pos = (
+                (498, 277, 509, 298),
+                (522, 282, 577, 318),
+                (587, 292, 605, 310),
+                (605, 322, 618, 356),
+                (445, 318, 480, 330),
+                (443, 362, 462, 377),
+                (468, 374, 490, 420),
+                (510, 372, 584, 400),
+#                (633, 368, 631, 412),
+                (521, 426, 576, 474),
+                (513, 475, 539, 505),
+                (470, 506, 498, 526),
+#                (548, 518, 563, 542),
+                (642, 448, 680, 477),
+                (740, 329, 765, 360),
+                (660, 199, 675, 217),
+                (726, 181, 736, 193),
+                (733, 211, 742, 223),
+#                (590, 288, 602, 307),
+                (630, 368, 636, 419),
+                (540, 518, 569, 542),
                 )
+        self.wrong_pos = []
+        for i in wrong_pos:
+            rect = (i[0], i[1], i[2] - i[0], i[3] - i[1])
+            self.wrong_pos.append(Rect(rect))
+
         self.screen = screen
         path = os.path.join(constants.data_folder, "room", 'room.png')
         self.background, rect = common.load_image(path)
@@ -59,6 +82,10 @@ class Room(Activity):
 
         self.xs.draw(self.screen)
         self.pointer.draw(self.screen)
+
+        self.check = sprite.RenderUpdates()
+        
+        self.room = Rect(403, 129, 393, 467)
         pygame.display.update()
 
     def setup(self):
@@ -66,8 +93,8 @@ class Room(Activity):
         self.pointer.draw(self.screen)
 
     def handle_events(self):
-        pygame.event.clear()
-        for event in [pygame.event.wait()] + pygame.event.get():
+        mouse_pos = pygame.mouse.get_pos()
+        for event in self.get_event():
             mouse_pos = pygame.mouse.get_pos()
             if event.type == QUIT:
                 self.quit = True
@@ -81,11 +108,21 @@ class Room(Activity):
                 if pygame.sprite.spritecollideany(self.pointer_, self.icons):
                     self.quit = True
                     return
-                self.xs.add(Xs(mouse_pos))
+                if self.room.collidepoint(mouse_pos):
+                    self.xs.add(Xs(mouse_pos))
+                    for i in range(len(self.wrong_pos)):
+                        if self.wrong_pos[i].collidepoint(mouse_pos):
+                            self.check.add(Check(mouse_pos))
+                            del(self.wrong_pos[i])
+                            break
+
+        if not self.wrong_pos:
+            self.finished_ = True
 
         self.screen.blit(self.background, (0, 0))
         self.draw_text()
         self.xs.draw(self.screen)
+        self.check.draw(self.screen)
         self.pointer_.update(mouse_pos)
         self.pointer.draw(self.screen)
         pygame.display.flip()
@@ -117,6 +154,20 @@ class Xs(sprite.Sprite):
         pos = pos[0], pos[1] - self.rect[3] / 2.0
         self.rect.midtop = pos
 
+
+class Check(Xs):
+    def __init__(self, pos = None):
+        sprite.Sprite.__init__(self) 
+        path = os.path.join(constants.data_folder, "room", "check.png")
+        self.image, self.rect = common.load_image(path)
+        self.image = pygame.transform.scale(self.image, (20, 20))
+        self.rect = self.image.get_rect()
+
+        if not pos:
+            pos = map(lambda x: x/2.0, constants.screen_mode)
+        
+        pygame.mouse.set_pos(pos)
+        self.update(pos)
 
 if __name__ == "__main__":
 	pygame.init()
