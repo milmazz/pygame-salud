@@ -167,11 +167,10 @@ class PuzzleActivity(Activity):
                     self.screen.blit(self.background, (0,0))
                     self.sprites.draw(self.screen)
                 self.informative_text()
-                """update all the screen"""
-                pygame.display.update()
-
                 if self.count == 4:
                     self.finished_ = True
+                """update all the screen"""
+                pygame.display.update()
 
 class Puzzle2Activity(Activity):
     def __init__(self, screen):
@@ -285,10 +284,10 @@ class Puzzle2Activity(Activity):
                     self.screen.blit(self.background, (0,0))
                     self.sprites.draw(self.screen)
                 self.informative_text()
-                """update all the screen"""
-                pygame.display.update()
                 if self.count == 4:
                     self.finished_ = True
+                """update all the screen"""
+                pygame.display.update()
 
 class Puzzle3Activity(Activity):
     def __init__(self, screen):
@@ -402,10 +401,10 @@ class Puzzle3Activity(Activity):
                     self.screen.blit(self.background, (0,0))
                     self.sprites.draw(self.screen)
                 self.informative_text()
-                """update all the screen"""
-                pygame.display.update()
                 if self.count == 4:
                     self.finished_ = True
+                """update all the screen"""
+                pygame.display.update()
 
 class Puzzle4Activity(Activity):
     def __init__(self, screen):
@@ -518,8 +517,8 @@ class Puzzle4Activity(Activity):
                     self.screen.blit(self.background, (0,0))
                     self.sprites.draw(self.screen)
                 self.informative_text()
-                """update all the screen"""
-                pygame.display.update()
                 if self.count == 4:
                     self.finished_ = True
+                """update all the screen"""
+                pygame.display.update()
 
