@@ -35,22 +35,23 @@ class Shower(Activity):
         self.couple = set()
         self.couples = []
 
-        self.sprites = pygame.sprite.OrderedUpdates()
+        self.sprites0 = pygame.sprite.OrderedUpdates()
+        self.sprites1 = pygame.sprite.OrderedUpdates()
+        self.pointer_ = pygame.sprite.OrderedUpdates()
         self.items = pygame.sprite.Group()
         self.icons = pygame.sprite.Group()
 
         self.icons.add([Icons('stop')])
 
-        self.sprites.add(self.icons)
+        self.sprites0.add(self.icons)
 
         for i in pos.keys():
             item = Item(i, pos[i])
-            self.sprites.add(item)
+            self.sprites0.add(item)
             self.items.add(item)
 
-
         self.pointer = Pointer()
-        self.sprites.add(self.pointer)
+        self.pointer_.add(self.pointer)
 
         self.arrows = []
         self.arrow = None
@@ -59,38 +60,32 @@ class Shower(Activity):
         self.background = common.load_image(constants.illustration_007)[0]
 
     def setup(self):
-        font_title = pygame.font.SysFont("dejavusans", 40)
-        font_instructions = pygame.font.SysFont("dejavusans", 20)
-
         title = u"¡A la ducha!"
-        title_width, title_height = font_title.size(title)
 
-        instructions = [u"Une con una flecha lo que necesitas para", 
-                        u"asear cada parte de tu cuerpo."]
+        instructions = (u"Une con una flecha lo que necesitas para", 
+                        u"asear cada parte de tu cuerpo.")
 
-        y = title_height / 2
+        font_title = pygame.font.SysFont(constants.font_title[0],
+                                         constants.font_title[1])
+        font_default = pygame.font.SysFont(constants.font_default[0],
+                                           constants.font_default[1])
 
-        text = font_title.render(title, True, (102, 102, 102))
-        text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
+        tsize = font_title.size(title)
+        isize = font_default.size(instructions[0])[1]
 
-        self.screen.blit(self.background, (0,0))
-        self.screen.blit(text, text_pos)
-
-        self.sprites.draw(self.screen)
-        y += title_height
-        line_width, line_height = font_instructions.size(instructions[0])
-        for line in instructions:
-            text = font_instructions.render(line, True, (102, 102, 102))
-            y += line_height
-            text_pos = (50, y)
-            self.screen.blit(text, text_pos)
-
-        if self.arrow:
-            self.arrow.update()
-        for i in self.arrows:
-            i.update()
-        pygame.display.flip()
+        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
+        instruction_pos = (10, title_pos[1] + tsize[1])
+        title = font_title.render(title, True, (102, 102, 102))
         
+        instructions_ = []
+        for i in instructions:
+            line = font_default.render(i, True, (102, 102, 102))
+            instructions_.append(line)
+        self.text = (((title,), title_pos), (instructions_, instruction_pos))
+
+        self.draw_text()
+
+        pygame.display.update()
         
     def handle_events(self):
         for event in self.get_event():
@@ -132,6 +127,9 @@ class Shower(Activity):
                                 start = self.couple.pop().rect.center
                                 self.arrow.update(start=start, end=end)
                                 self.arrows.append(self.arrow)
+                                pos = ((start[0] + end[0]) / 2.0, 
+                                             (start[1] + end[1]) / 2.0)
+                                self.sprites1.add(Check(pos))
                         else:
                             for i in self.couple:
                                 i.deactivate()
@@ -151,11 +149,16 @@ class Shower(Activity):
             if len(self.couples) == 4:
                 self.finished_ = True
 
-            self.setup()
+            self.screen.blit(self.background, (0,0))
+            self.draw_text()
+            self.sprites0.draw(self.screen)
             if self.arrow:
                 self.arrow.update()
             for i in self.arrows:
                 i.update()
+
+            self.sprites1.draw(self.screen)
+            self.pointer_.draw(self.screen)
             pygame.display.flip()
 
     def are_couple(self, couple):
@@ -179,6 +182,17 @@ class Shower(Activity):
                 return True
                 
         return False 
+
+    def draw_text(self):
+        x, y = 0, 0
+        for i in self.text:
+            x = i[1][0]
+            y = i[1][1]
+            surfaces = i[0]
+            for surface in surfaces:
+                pos = (x, y)
+                self.screen.blit(surface, pos)
+                y = y + surface.get_height()
 
 
 class Item(sprite.Sprite):
@@ -225,7 +239,19 @@ class Pointer(sprite.Sprite):
         self.update(pos)
 
     def update(self, pos):
-        self.rect.midtop = pos
+        self.rect.topleft = pos
+
+
+class Check(sprite.Sprite):
+    def __init__(self, pos=(0,0)):
+        sprite.Sprite.__init__(self)
+        self.path_check = os.path.join(constants.data_folder, \
+                'missing', "check.png")
+        self.image, self.rect = common.load_image(self.path_check)
+        size = self.rect[2] * 0.5, self.rect[3] * 0.5
+        self.image = pygame.transform.scale(self.image, size)
+        self.rect.centerx = pos[0]
+        self.rect.centery = pos[1]
 
 
 class Arrow:

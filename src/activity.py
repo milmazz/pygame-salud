@@ -88,9 +88,9 @@ class Activity:
         font = pygame.font.SysFont("dejavusans", 64)
         size = font.size(self.finished_text) 
         pos = self.center[0] - size[0] / 2.0, self.center[1] - size[1] / 2.0
-        text = font.render(self.finished_text, True, (102, 10, 12))
-        rect = self.screen.blit(text, pos)
-        pygame.display.update(rect)
+        #text = font.render(self.finished_text, True, (102, 10, 12))
+        #rect = self.screen.blit(text, pos)
+        #pygame.display.update(rect)
 
         if not self.done:
            self.snd_congratulation.play()
