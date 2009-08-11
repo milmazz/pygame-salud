@@ -370,7 +370,7 @@ class SoupActivity2(Activity):
 
     def informative_text(self):
         if pygame.font:
-            font = pygame.font.SysFont('dejavusans', 32)
+            font = pygame.font.SysFont('dejavusans', 26)
             font.set_bold(True)
             text = font.render("Letras escondidas", 1, (0, 0, 0))
             textRect = text.get_rect()
