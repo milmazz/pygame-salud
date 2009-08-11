@@ -62,7 +62,9 @@ class Activity:
 
             if self.finished_:
                 self.finished()
-            
+            else:  
+            #    self.handle_events()
+                pass
             self.handle_events()
 
             if self.quit:
@@ -86,7 +88,7 @@ class Activity:
         font = pygame.font.SysFont("dejavusans", 64)
         size = font.size(self.finished_text) 
         pos = self.center[0] - size[0] / 2.0, self.center[1] - size[1] / 2.0
-        text = font.render(self.finished_text, True, (102, 102, 102))
+        text = font.render(self.finished_text, True, (102, 10, 12))
         rect = self.screen.blit(text, pos)
         pygame.display.update(rect)
 

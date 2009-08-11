@@ -94,14 +94,14 @@ class Missing(Activity):
         instructions = [u"A Kiko le desaparecieron algunas partes de su" \
                 , u"cuerpo ¿Puedes unirlas arrastrando las partes?"]
         text = font_title.render(title, True, (102, 102, 102))
-        text_pos = (185, 35)
+        text_pos = (183, 35)
         self.screen.blit(text, text_pos)
         y = 45
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
             text = font_instructions.render(line, True, (102, 102, 102))
             y += line_height
-            text_pos = (188, y)
+            text_pos = (184, y)
             self.screen.blit(text, text_pos)
 
     def setup(self):
