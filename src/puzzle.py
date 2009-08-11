@@ -168,7 +168,9 @@ class PuzzleActivity(Activity):
                     self.sprites.draw(self.screen)
                 self.informative_text()
                 if self.count == 4:
-                    self.finished_ = True
+                    ok_button = pygame.image.load("../data/puzzle/ok.png").convert_alpha()
+                    self.screen.blit(ok_button, (300,101))
+                    #self.finished_ = True
                 """update all the screen"""
                 pygame.display.update()
 
@@ -285,7 +287,9 @@ class Puzzle2Activity(Activity):
                     self.sprites.draw(self.screen)
                 self.informative_text()
                 if self.count == 4:
-                    self.finished_ = True
+                    ok_button = pygame.image.load("../data/puzzle/ok.png").convert_alpha()
+                    self.screen.blit(ok_button, (300,101))
+                    #self.finished_ = True
                 """update all the screen"""
                 pygame.display.update()
 
@@ -402,7 +406,9 @@ class Puzzle3Activity(Activity):
                     self.sprites.draw(self.screen)
                 self.informative_text()
                 if self.count == 4:
-                    self.finished_ = True
+                    ok_button = pygame.image.load("../data/puzzle/ok.png").convert_alpha()
+                    self.screen.blit(ok_button, (300,101))
+                    #self.finished_ = True
                 """update all the screen"""
                 pygame.display.update()
 
@@ -518,7 +524,9 @@ class Puzzle4Activity(Activity):
                     self.sprites.draw(self.screen)
                 self.informative_text()
                 if self.count == 4:
-                    self.finished_ = True
+                    ok_button = pygame.image.load("../data/puzzle/ok.png").convert_alpha()
+                    self.screen.blit(ok_button, (300,101))
+                    #self.finished_ = True
                 """update all the screen"""
                 pygame.display.update()
 
