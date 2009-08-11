@@ -46,10 +46,10 @@ def main():
         MenuItem('missing', Missing, 'dragndrop'), # Act 1
         MenuItem('crazyletter', CrazyLetterActivity, 'dragndrop'),  # Act 2
         MenuItem('fivesenses', SoupActivity, 'soups'), # Act 3
-        MenuItem('puzzle1', PuzzleActivity, 'puzzle'), # Act 4-16
-        MenuItem('puzzle2', Puzzle2Activity, 'puzzle'), # Act 4-16
-        MenuItem('puzzle3', Puzzle3Activity, 'puzzle'), # Act 4-16
-        MenuItem('puzzle4', Puzzle4Activity, 'puzzle'), # Act 4-16
+        MenuItem('readings1', PuzzleActivity, 'puzzle'), # Act 4-16
+        MenuItem('beach', Puzzle2Activity, 'puzzle'), # Act 4-16
+        MenuItem('shower', Puzzle3Activity, 'puzzle'), # Act 4-16
+        MenuItem('cleaning', Puzzle4Activity, 'puzzle'), # Act 4-16
         MenuItem('shower', Shower, 'associations'), # Act 5
         MenuItem('healthy', Healthy, 'dragndrop'), # Act 6
         MenuItem('readings2', PoetryActivity, 'readings'), # Act 7
