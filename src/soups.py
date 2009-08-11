@@ -153,6 +153,9 @@ class SoupActivity(Activity):
                 self.check = 0
         else:
             self.check = 0
+
+        if self.check == 2:
+            self.count += 1
         #en caso que la palabra este mal se 
         #borrar las marcadas
         if self.check == 0:
@@ -191,6 +194,7 @@ class SoupActivity(Activity):
         self.background = pygame.image.load(constants.illustration_003).convert_alpha()
 
     def setup(self):
+        self.count = 0
         self.lapiz = Lapiz()
         self.puntalapiz = Puntalapiz()
         #ocultamos el puntero del raton 
@@ -267,6 +271,8 @@ class SoupActivity(Activity):
                     self.sprites.draw(self.screen)
                 self.informative_text()
                 pygame.display.update() #actualizar la pantalla
+                if self.count == 5:
+                    self.finished_ = True
 
 
 class SoupActivity2(Activity):
@@ -358,6 +364,10 @@ class SoupActivity2(Activity):
                 self.check = 0
         else:
             self.check = 0
+
+        if self.check == 2:
+            self.count += 1
+
         if self.check == 0:
             for item in lista_coloreadas:
                 item.color = 0
@@ -394,6 +404,7 @@ class SoupActivity2(Activity):
         self.background = pygame.image.load(constants.illustration_017).convert_alpha()
 
     def setup(self):
+        self.count = 0
         self.lapiz = Lapiz()
         self.puntalapiz = Puntalapiz()
         #turn off the mouse pointer
@@ -473,3 +484,5 @@ class SoupActivity2(Activity):
                     self.sprites.draw(self.screen)
                 self.informative_text()
                 pygame.display.update() #actualizar la pantalla
+                if self.count == 6:
+                    self.finished_ = True
