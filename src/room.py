@@ -18,33 +18,29 @@ from icons import Icons
 class Room(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
-        wrong_pos = (
-                (498, 277, 509, 298),
-                (522, 282, 577, 318),
-                (587, 292, 605, 310),
-                (605, 322, 618, 356),
-                (445, 318, 480, 330),
-                (443, 362, 462, 377),
-                (468, 374, 490, 420),
-                (510, 372, 584, 400),
-#                (633, 368, 631, 412),
-                (521, 426, 576, 474),
-                (513, 475, 539, 505),
-                (470, 506, 498, 526),
-#                (548, 518, 563, 542),
-                (642, 448, 680, 477),
-                (740, 329, 765, 360),
-                (660, 199, 675, 217),
-                (726, 181, 736, 193),
-                (733, 211, 742, 223),
-#                (590, 288, 602, 307),
-                (630, 368, 636, 419),
-                (540, 518, 569, 542),
-                )
-        self.wrong_pos = []
-        for i in wrong_pos:
-            rect = (i[0], i[1], i[2] - i[0], i[3] - i[1])
-            self.wrong_pos.append(Rect(rect))
+        self.wrong_pos = [
+                Rect(490, 272, 21, 29),
+                Rect(439, 315, 47, 21),
+                Rect(435, 355, 34, 29),
+                Rect(458, 376, 45, 47),
+                Rect(517, 372, 63, 36),
+                Rect(614, 370, 37, 41),
+                Rect(525, 421, 33, 30),
+                Rect(567, 454, 25, 20),
+                Rect(510, 473, 34, 33),
+                Rect(467, 505, 36, 23),
+                Rect(541, 516, 33, 28),
+                Rect(639, 432, 53, 45),
+                Rect(738, 329, 41, 23),
+                Rect(722, 206, 29, 21),
+                Rect(713, 176, 33, 20),
+                Rect(653, 196, 30, 26),
+                Rect(519, 271, 61, 52),
+                Rect(583, 290, 24, 22),
+                Rect(591, 318, 29, 38),
+                ]
+
+        self.found = 0
 
         self.screen = screen
         path = os.path.join(constants.data_folder, "room", 'room.png')
@@ -109,14 +105,20 @@ class Room(Activity):
                     self.quit = True
                     return
                 if self.room.collidepoint(mouse_pos):
-                    self.xs.add(Xs(mouse_pos))
+                    correct = False
                     for i in range(len(self.wrong_pos)):
                         if self.wrong_pos[i].collidepoint(mouse_pos):
-                            self.check.add(Check(mouse_pos))
-                            del(self.wrong_pos[i])
+                            correct = True
+#                            self.check.add(Check(mouse_pos))
+                            pos = self.wrong_pos[i].center
+                            self.check.add(Check(pos))
+                            self.found += 1
                             break
+                    if not correct:
+                        self.xs.add(Xs(mouse_pos))
 
-        if not self.wrong_pos:
+
+        if self.found == len(self.wrong_pos):
             self.finished_ = True
 
         self.screen.blit(self.background, (0, 0))
@@ -166,7 +168,6 @@ class Check(Xs):
         if not pos:
             pos = map(lambda x: x/2.0, constants.screen_mode)
         
-        pygame.mouse.set_pos(pos)
         self.update(pos)
 
 if __name__ == "__main__":
