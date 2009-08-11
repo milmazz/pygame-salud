@@ -62,7 +62,7 @@ def main():
         MenuItem('environment', SoupActivity2, 'soups'), # Act 14
         # TODO Act 15
         # TODO Act 16
-        MenuItem('room', Room, 'select'), # Act 17
+        #MenuItem('room', Room, 'select'), # Act 17
         # TODO Act 18
         # TODO Act 19
         # TODO Act 20
