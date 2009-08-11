@@ -72,6 +72,18 @@ class PuzzleActivity(Activity):
             textRect.centery = 20
             self.screen.blit(text, textRect)
 
+            font = pygame.font.SysFont("dejavusans", 20)
+            font.set_bold(False)
+            instructions = [u"arrastra las piezas con el ratón hacia el"\
+                    + u" recuadro."]
+            y = 39
+            for line in instructions:
+                text = font.render(line, 1,(0, 0, 0))
+                self.screen.blit(text, (20, y))
+                y+=20
+
+
+
     def setup(self):
         """Turn off the mouse pointer"""
         pygame.mouse.set_visible( False )
@@ -172,6 +184,17 @@ class Puzzle2Activity(Activity):
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
             self.screen.blit(text, textRect)
+            
+            font = pygame.font.SysFont("dejavusans", 20)
+            font.set_bold(False)
+            instructions = [u"arrastra las piezas con el ratón hacia el"\
+                    + u" recuadro."]
+            y = 39
+            for line in instructions:
+                text = font.render(line, 1,(0, 0, 0))
+                self.screen.blit(text, (20, y))
+                y+=20
+
 
 
     def setup(self):
@@ -274,6 +297,17 @@ class Puzzle3Activity(Activity):
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
             self.screen.blit(text, textRect)
+            
+            font = pygame.font.SysFont("dejavusans", 20)
+            font.set_bold(False)
+            instructions = [u"arrastra las piezas con el ratón hacia el"\
+                    + u" recuadro."]
+            y = 39
+            for line in instructions:
+                text = font.render(line, 1,(0, 0, 0))
+                self.screen.blit(text, (20, y))
+                y+=20
+
 
 
     def setup(self):
@@ -376,6 +410,16 @@ class Puzzle4Activity(Activity):
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
             self.screen.blit(text, textRect)
+            font = pygame.font.SysFont("dejavusans", 20)
+            font.set_bold(False)
+            instructions = [u"arrastra las piezas con el ratón hacia el"\
+                    + u" recuadro."]
+            y = 39
+            for line in instructions:
+                text = font.render(line, 1,(0, 0, 0))
+                self.screen.blit(text, (20, y))
+                y+=20
+
 
 
     def setup(self):
