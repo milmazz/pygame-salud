@@ -75,10 +75,7 @@ class View():
 
     def __init__(self):
        self.pos = 0
-       #self.size = (800, 600)
-       #self.screen = pygame.display.set_mode(self.size, 0, 32)
        self.background = pygame.image.load(constants.illustration_002).convert_alpha()
-       #self.background = pygame.transform.scale(self.background, self.size)
 
     def groupContainer(self, positions, word, color):
         containers = pygame.sprite.Group()
@@ -108,6 +105,7 @@ class CrazyLetterActivity(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
         self.selection = None
+        self.count = 0
 
     def setup(self):
         self.informative_text()
@@ -115,7 +113,6 @@ class CrazyLetterActivity(Activity):
         position_red = [(20,560), (70,560), (130,560), \
                  (180,560), (230,560), (280,560), \
                  (330, 560)]
-
         #position of the green container
         position_green = [ (500,560), (550,560), (600,560), \
                     (650,560), (700,560)]
@@ -133,11 +130,9 @@ class CrazyLetterActivity(Activity):
         self.sprites = pygame.sprite.OrderedUpdates()
         self.sprites.add([self.icons, container_red, container_green, self.letters, self.hand])
         pygame.mouse.set_visible( False ) #oculntar el puntero del mouse
-        self.screen.blit(self.view.background, (0,0))
         self.sprites.draw(self.screen)
         self.informative_text()
         pygame.display.update()
-        #mouse button is down
         self.button_down = 0
 
     def informative_text(self):
@@ -213,12 +208,16 @@ class CrazyLetterActivity(Activity):
                     if self.selection.letter != letter_in_container.letter:
                         self.selection.back()
                         self.selection.update(self.selection.orig)
-                        self.screen.blit(self.view.background, (0,0))
+                        self.screen.blit(self.view.background,
+                                self.screen.middle)
                         self.sprites.draw(self.screen)
                         self.informative_text()
                         pygame.display.update()
                     else:
                         self.selection.fix = 1
+                        self.count += 1
+                        if self.count == 13:
+                            self.finished_ = True
                 else:
                     self.selection.color = 0
                     self.selection.update(pos)

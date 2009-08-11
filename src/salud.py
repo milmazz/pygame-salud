@@ -74,7 +74,7 @@ def main():
         # TODO Act 24-3
         # TODO Act 24-4
         MenuItem('riddle', Riddle, 'complete'), # Act 25
-        MenuItem('cooking', Cooking, 'dragndrop'), # Act 26
+#        MenuItem('cooking', Cooking, 'dragndrop'), # Act 26
         # TODO Act 27
     ]
 

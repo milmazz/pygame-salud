@@ -21,7 +21,20 @@ class Food(Sprite):
         self.size_x, self.size_y = self.image.get_size()
         self.rect.move_ip(pos)
         self.orig_x, self.orig_y = pos
+        self.name = name
+        self.image_small = pygame.transform.scale(self.image,
+                (self.size_x/2, self.size_y/2))
+        self.image_orig = self.image
+        self.small = 0
 		
+    def change_size(self):
+        if self.small == 1:
+            self.image = self.image_orig
+            self.small = 0
+        else:
+	        self.image = self.image_small
+            self.small = 1
+	
     def update(self, pos):
         self.rect.x, self.rect.y = pos
 
@@ -52,12 +65,12 @@ class Hand(Sprite):
             self.image = self.close
 
 
-class correct(Sprite):
+class check(Sprite):
     def __init__(self, pos=(0,0)):
         Sprite.__init__(self)
-        self.path_correct = os.path.join(constants.data_folder, \
-                'shopping', "correct.png")
-        self.image, self.rect = common.load_image(self.path_correct)
+        self.path_check = os.path.join(constants.data_folder, \
+                'shopping', "check.png")
+        self.image, self.rect = common.load_image(self.path_check)
         self.rect.move_ip(pos)
 
 
@@ -74,6 +87,7 @@ class Shopping(Activity):
 
     def instruction_text(self):
         font_title = pygame.font.SysFont("dejavusans", 32)
+        font_title.set_bold(True)
         font_instructions = pygame.font.SysFont("dejavusans", 20)
         title = u"¡De compras!"
         title_width, title_height = font_title.size(title)
@@ -93,12 +107,15 @@ class Shopping(Activity):
             self.screen.blit(text, text_pos)
 
     def setup(self):
+        self.cont = None
+        self.selection = None
+        self.correct_container = None
         self.sprites  = pygame.sprite.OrderedUpdates()
         self.pos_vegetables = {'beetroot': (52, 162), 'carrot': (295, 238), \
                 'cauliflower': (57, 347), 'x': (295, 450)}
         self.pos_fruits = {'banana': (252, 165), 'watermelon': (46, 220), \
-                'pineapple': (239, 324), 'pear': (53, 440), 'grape': (50, 520), \
-                'apple': (448, 529)}
+                'pineapple': (239, 324), 'pear': (53, 440), 'grape': (50, \
+                520), 'apple': (448, 529)}
         self.pos_meats = {'chicken': (247, 124), 'fish': (57, 287), \
                 'meat': (278, 508)}
         self.pos_milks = {'milk': (142, 126), 'milk2': (160, 387), \
@@ -109,10 +126,14 @@ class Shopping(Activity):
                 'pear', 'grape', 'apple']
         self.correct_meats = ['chicken', 'fish', 'meat']
         self.correct_milks = ['milk', 'milk2', 'cheese', 'cheese2']
+        self.checked_vegetables = 0
+        self.checked_fruits = 0
+        self.checked_meats = 0
+        self.checked_milks = 0
         self.hand = Hand() #load hand
         self.icons = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
-        self.correct = pygame.sprite.Group()
+        self.checked = pygame.sprite.Group()
         self.vegetables = pygame.sprite.Group()
         self.fruits = pygame.sprite.Group()
         self.meats = pygame.sprite.Group()
@@ -136,81 +157,106 @@ class Shopping(Activity):
         self.sprites.draw(self.screen)
         self.instruction_text()
         pygame.display.update()
+        pygame.event.clear()
 
     def handle_events(self):
-        pygame.event.clear()
-        while True:
-            for event in [ pygame.event.wait() ] + pygame.event.get():
-                pos = pygame.mouse.get_pos()
-                self.hand.update(pos)
-                if event.type == QUIT:
+        for event in self.get_event():
+            pos = pygame.mouse.get_pos()
+            self.hand.update(pos)
+            if event.type == QUIT:
+                self.quit = True
+                return
+            elif event.type == KEYUP:
+                self.changed = False
+                if event.key == K_ESCAPE:
                     self.quit = True
                     return
-                elif event.type == KEYUP:
-                    self.changed = False
-                    if event.key == K_ESCAPE:
-                        self.quit = True
-                        return
-                if event.type == MOUSEMOTION:
-                    self.hand.update(pos)
-                if event.type == MOUSEMOTION and self.button_down:
-                    selection.update(pos)
-                if event.type == MOUSEBUTTONDOWN:
-                    if pygame.sprite.spritecollideany(self.hand, self.icons):
-                        self.quit = True
-                        return
-                    self.hand.change_hand()
-                    self.hand.update(pos)
-                if event.type == MOUSEBUTTONUP:
-                    self.hand.change_hand()
-                    self.hand.update(pos)
-                if event.type == MOUSEBUTTONUP and selection:
-                    self.button_down = 0
-                    food_in_container = \
-                            selection.rect.colliderect(self.containers[container])
-                    if food_in_container:
-                        selection.rect = ((selection.orig_x, \
-                                selection.orig_y), (0, 0))
-                        selection.kill()
-                        selection.add(self.sprites)
-                        self.correct.add([correct((selection.orig_x + \
-                                (selection.size_x - 76)/2, \
-                                selection.orig_y + (selection.size_y - \
-                                70)/2))])
-                        self.sprites.remove([self.hand])
-                        self.sprites.add([self.correct, self.hand])
-                    else:
-#                        selection.update(pos)
-                        selection.update((selection.orig_x, selection.orig_y))
-                if event.type == MOUSEBUTTONDOWN:
-                    selection = pygame.sprite.Group()
-                    if pygame.sprite.spritecollideany(self.hand, \
-                            self.vegetables):
-                        selection = pygame.sprite.spritecollideany(self.hand, \
-                                self.vegetables)
-                        container = 0
-                    if pygame.sprite.spritecollideany(self.hand, \
-                            self.fruits):
-                        selection = pygame.sprite.spritecollideany(self.hand, \
-                                self.fruits)
-                        container = 1
-                    if pygame.sprite.spritecollideany(self.hand, \
-                            self.meats):
-                        selection = pygame.sprite.spritecollideany(self.hand, \
-                                self.meats)
-                        container = 2
-                    if pygame.sprite.spritecollideany(self.hand, \
-                            self.milks):
-                        selection = pygame.sprite.spritecollideany(self.hand, \
-                                self.milks)
-                        container = 3
-                    if selection:
-                        self.button_down = 1
-                        selection.remove(self.sprites)
-                        selection.add(self.sprites)
-                self.hand.remove(self.sprites)
-                self.hand.add(self.sprites)
-                self.screen.blit(self.background, (0,0))
-                self.instruction_text()
-                self.sprites.draw(self.screen)
-                pygame.display.update()
+            if event.type == MOUSEMOTION:
+                self.hand.update(pos)
+            if event.type == MOUSEMOTION and self.button_down:
+                self.selection.update(pos)
+            if event.type == MOUSEBUTTONDOWN:
+                if pygame.sprite.spritecollideany(self.hand, self.icons):
+                    self.quit = True
+                    return
+                self.hand.change_hand()
+                self.hand.update(pos)
+            if event.type == MOUSEBUTTONUP:
+                self.hand.change_hand()
+                self.hand.update(pos)
+            if event.type == MOUSEBUTTONUP and self.selection:
+                self.button_down = 0
+                food_in_container = \
+                        self.selection.rect.colliderect(self.containers[self.correct_container])
+                if food_in_container:
+                    if self.correct_container == 0:
+                        self.checked_vegetables = self.checked_vegetables + 1
+                        if self.checked_vegetables >= 4:
+                            self.checked.add([check((self.containers[self.correct_container][0] \
+                                    + 60, self.containers[self.correct_container][1] \
+                                    + 12))])
+                            self.checked_vegetables = -1
+                    if self.correct_container == 1:
+                        self.checked_fruits = self.checked_fruits + 1
+                        if self.checked_fruits >= 6:
+                            self.checked.add([check((self.containers[self.correct_container][0] \
+                                    + 60, self.containers[self.correct_container][1] \
+                                    + 12))])
+                            self.checked_fruits = -1
+                    if self.correct_container == 2:
+                        self.checked_meats = self.checked_meats + 1
+                        if self.checked_meats >= 3:
+                            self.checked.add([check((self.containers[self.correct_container][0] \
+                                    + 60, self.containers[self.correct_container][1] \
+                                    + 12))])
+                            self.checked_meats = -1
+                    if self.correct_container == 3:
+                        self.checked_milks = self.checked_milks + 1
+                        if self.checked_milks >= 4:
+                            self.checked.add([check((self.containers[self.correct_container][0] \
+                                    + 60, self.containers[self.correct_container][1] \
+                                    + 12))])
+                            self.checked_milks = -1
+                    self.selection.rect = ((pos), (0, 0))
+                    self.selection.kill()
+                    self.selection.add(self.sprites)
+                    self.sprites.add([self.checked])
+                else:
+                    self.selection.change_size()
+                    self.selection.update((self.selection.orig_x, self.selection.orig_y))
+            if event.type == MOUSEBUTTONDOWN:
+                self.selection = pygame.sprite.Group()
+                if pygame.sprite.spritecollideany(self.hand, \
+                        self.vegetables):
+                    self.selection = pygame.sprite.spritecollideany(self.hand, \
+                            self.vegetables)
+                    self.correct_container = 0
+                if pygame.sprite.spritecollideany(self.hand, \
+                        self.fruits):
+                    self.selection = pygame.sprite.spritecollideany(self.hand, \
+                            self.fruits)
+                    self.correct_container = 1
+                if pygame.sprite.spritecollideany(self.hand, \
+                        self.meats):
+                    self.selection = pygame.sprite.spritecollideany(self.hand, \
+                            self.meats)
+                    self.correct_container = 2
+                if pygame.sprite.spritecollideany(self.hand, \
+                        self.milks):
+                    self.selection = pygame.sprite.spritecollideany(self.hand, \
+                            self.milks)
+                    self.correct_container = 3
+                if self.selection:
+                    self.selection.change_size()
+                    self.button_down = 1
+                    self.selection.remove(self.sprites)
+                    self.selection.add(self.sprites)
+            if self.checked_vegetables == -1 and self.checked_fruits == -1 \
+                    and self.checked_meats == -1 and self.checked_milks == -1:
+                        self.finished_ = True
+            self.hand.remove(self.sprites)
+            self.hand.add(self.sprites)
+            self.screen.blit(self.background, (0,0))
+            self.instruction_text()
+            self.sprites.draw(self.screen)
+            pygame.display.update()

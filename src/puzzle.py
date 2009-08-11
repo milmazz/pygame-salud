@@ -58,6 +58,7 @@ class Hand(Sprite):
 class PuzzleActivity(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.count = 0
     
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_puzzle)
@@ -151,6 +152,7 @@ class PuzzleActivity(Activity):
                         if verify_correct and verify_correct.id == self.selection.id:
                             self.selection.fix = 1
                             self.selection.rect = verify_correct.rect
+                            self.count += 1
                     self.button_down = 0
                     self.selection = 0
                     self.hand.change_hand() #change the close hand by the open hand
@@ -168,9 +170,13 @@ class PuzzleActivity(Activity):
                 """update all the screen"""
                 pygame.display.update()
 
+                if self.count == 4:
+                    self.finished_ = True
+
 class Puzzle2Activity(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.count = 0
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_puzzle)
@@ -264,6 +270,7 @@ class Puzzle2Activity(Activity):
                         if verify_correct and verify_correct.id == self.selection.id:
                             self.selection.fix = 1
                             self.selection.rect = verify_correct.rect
+                            self.count += 1
                     self.button_down = 0
                     self.selection = 0
                     self.hand.change_hand() #change the close hand by the open hand
@@ -280,10 +287,13 @@ class Puzzle2Activity(Activity):
                 self.informative_text()
                 """update all the screen"""
                 pygame.display.update()
+                if self.count == 4:
+                    self.finished_ = True
 
 class Puzzle3Activity(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.count = 0
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_puzzle)
@@ -377,6 +387,7 @@ class Puzzle3Activity(Activity):
                         if verify_correct and verify_correct.id == self.selection.id:
                             self.selection.fix = 1
                             self.selection.rect = verify_correct.rect
+                            self.count += 1
                     self.button_down = 0
                     self.selection = 0
                     self.hand.change_hand() #change the close hand by the open hand
@@ -393,10 +404,13 @@ class Puzzle3Activity(Activity):
                 self.informative_text()
                 """update all the screen"""
                 pygame.display.update()
+                if self.count == 4:
+                    self.finished_ = True
 
 class Puzzle4Activity(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.count = 0
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_puzzle)
@@ -489,6 +503,7 @@ class Puzzle4Activity(Activity):
                         if verify_correct and verify_correct.id == self.selection.id:
                             self.selection.fix = 1
                             self.selection.rect = verify_correct.rect
+                            self.count += 1
                     self.button_down = 0
                     self.selection = 0
                     self.hand.change_hand() #change the close hand by the open hand
@@ -505,4 +520,6 @@ class Puzzle4Activity(Activity):
                 self.informative_text()
                 """update all the screen"""
                 pygame.display.update()
+                if self.count == 4:
+                    self.finished_ = True
 
