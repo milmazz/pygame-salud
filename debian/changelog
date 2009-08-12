@@ -1,3 +1,9 @@
+pygame-salud (0.2-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Milton R. Mazzarri S. <milmazz@gmail.com>  Tue, 11 Aug 2009 13:52:26 -0430
+
 pygame-salud (0.1-7) unstable; urgency=low
 
   * Se agrega funcionalidad de salida del juego por medio de botones.
