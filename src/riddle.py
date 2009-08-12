@@ -175,7 +175,7 @@ class Riddle(Activity):
 #        for i in self.points:
 #            pygame.draw.rect(self.screen, (100, 100, 100), i)
 
-        if len(self.lines) == 40:
+        if len(self.lines) == 39:
             self.finished_ = True
 
         self.draw_text()
