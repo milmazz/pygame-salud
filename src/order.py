@@ -188,38 +188,31 @@ class OrderActivity2(Activity):
 
     def informative_text(self):
         if pygame.font:
-            font = pygame.font.SysFont('dejavusans', 26)
-            #font.set_bold(True)
-            title = unicode("Nuestro cuerpo cambia", 'utf-8')
-            text = font.render(title, 1, (0, 0, 0))
+            font = pygame.font.SysFont('dejavusans', 24)
+            title = unicode("Nuestro cuerpo cambia cuando crecemos", 'utf-8')
+            text = font.render(title, True, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
             self.screen.blit(text, textRect)
 
-            font_height = font.get_linesize()
-            title = unicode("cuando crecemos", 'utf-8')
-            text = font.render(title, True, (0, 0, 0))
-            textRect = text.get_rect()
-            textRect.centerx = self.screen.get_rect().centerx
-            textRect.centery = 15 + font_height
-            self.screen.blit(text, textRect)
-
-            messages = ["Cuando eras un bebé, tomabas tetero y usabas",
-            "pañal. Eras chiquito, cada",
-            "año creces un poco y te vas haciendo más alto.",
-            "Ordena del más pequeño al más grande,",
-            "pon 1, 2, 3 y 4 en los círculos correspondientes."]
+            messages = ["Cuando eras un bebé, tomabas tetero y usabas pañal.",
+            "Eras chiquito, cada año creces un poco y te vas",
+            "haciendo más alto. Ordena del más",
+            "pequeño al más grande,",
+            "pon 1, 2, 3 y 4 en los", "círculos correspondientes."]
             
             y = font.get_linesize()
-            font = pygame.font.SysFont("dejavusans", 20)
+            font = pygame.font.SysFont("dejavusans", 16)
             font_height = font.get_linesize()
 
             for message in messages:
                 message = unicode(message, 'utf-8')
                 text = font.render(message, True, (122, 122, 122))
+                textRect = text.get_rect()
+                textRect.centerx = self.screen.get_rect().centerx
                 y += font_height 
-                textRect.midtop = (300, y) 
+                textRect.centery = y
                 self.screen.blit(text, textRect)
 
     def setup(self):
@@ -266,7 +259,6 @@ class OrderActivity2(Activity):
                     self.button_down = 1
                     self.selection = pygame.sprite.spritecollideany\
                       (self.hand, self.pictures)
-                    #print self.selection
                     """put the picture select and the hand in the
                      front of the queue"""
                     if self.selection and self.selection.fix == 0:
