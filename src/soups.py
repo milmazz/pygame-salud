@@ -254,6 +254,7 @@ class SoupActivity(Activity):
                         #si estamos sobre una letra y esta no esta coloreada
                         #la coloreamos
                         if letra_coloreada and letra_coloreada.color != 1:
+                            self.sounds['click'].play()
                             letra_coloreada.color = 1 #la coloreamos
                             letra_coloreada.update()   #actualizamos la imagen de la letra
                             self.lista.append(letra_coloreada)
@@ -467,6 +468,7 @@ class SoupActivity2(Activity):
                         #si estamos sobre una letra y esta no esta coloreada
                         #la coloreamos
                         if letra_coloreada and letra_coloreada.color != 1:
+                            self.sounds['click'].play()
                             letra_coloreada.color = 1 #la coloreamos
                             letra_coloreada.update()   #actualizamos la imagen de la letra
                             self.lista.append(letra_coloreada)

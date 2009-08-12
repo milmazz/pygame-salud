@@ -12,7 +12,6 @@ from icons import Icons
 
 
 class Container(Sprite):
-
     """Define a container to the correct word
        pos container position
        letter correct letter that the container contains"""
@@ -188,6 +187,7 @@ class CrazyLetterActivity(Activity):
                     self.quit = True
                     return
                 self.hand.change_hand()
+                self.sounds['click'].play()
                 self.hand.update(pos)
                 self.screen.blit(self.view.background, (0,0))
                 self.sprites.draw(self.screen)
@@ -208,15 +208,13 @@ class CrazyLetterActivity(Activity):
                     if self.selection.letter != letter_in_container.letter:
                         self.selection.back()
                         self.selection.update(self.selection.orig)
-                        self.screen.blit(self.view.background,
-                                self.screen.middle)
                         self.sprites.draw(self.screen)
                         self.informative_text()
                         pygame.display.update()
                     else:
                         self.selection.fix = 1
                         self.count += 1
-                        if self.count == 13:
+                        if self.count == 12:
                             self.finished_ = True
                 else:
                     self.selection.color = 0
