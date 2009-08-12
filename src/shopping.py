@@ -87,7 +87,6 @@ class Shopping(Activity):
 
     def instruction_text(self):
         font_title = pygame.font.SysFont("dejavusans", 32)
-        font_title.set_bold(True)
         font_instructions = pygame.font.SysFont("dejavusans", 20)
         title = u"¡De compras!"
         title_width, title_height = font_title.size(title)
