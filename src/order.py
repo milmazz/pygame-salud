@@ -198,8 +198,8 @@ class OrderActivity2(Activity):
             messages = ["Cuando eras un bebé, tomabas tetero y usabas pañal.",
             "Eras chiquito, cada año creces un poco y te vas",
             "haciendo más alto. Ordena del más",
-            "pequeño al más grande,",
-            "pon 1, 2, 3 y 4 en los", "círculos correspondientes."]
+            "pequeño al más grande, arrastra",
+            "el número (1, 2, 3 y 4) al", "círculo correspondiente."]
             
             y = font.get_linesize()
             font = pygame.font.SysFont("dejavusans", 16)
