@@ -88,7 +88,6 @@ class Missing(Activity):
 
     def instruction_text(self):
         font_title = pygame.font.SysFont("dejavusans", 18)
-        font_title.set_bold(True)
         font_instructions = pygame.font.SysFont("dejavusans", 14)
         title = u"¿Qué le falta a Kiko en cada figura?"
         instructions = [u"A Kiko le desaparecieron algunas partes de su cuerpo", 

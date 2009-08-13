@@ -66,7 +66,6 @@ class PuzzleActivity(Activity):
     def informative_text(self):
         if pygame.font:
             font = pygame.font.SysFont('dejavusans', 32)
-            font.set_bold(True)
             text = font.render("Arma las piezas del rompecabezas.", 1, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
@@ -74,7 +73,6 @@ class PuzzleActivity(Activity):
             self.screen.blit(text, textRect)
 
             font = pygame.font.SysFont("dejavusans", 20)
-            font.set_bold(False)
             instructions = [u"arrastra las piezas con el ratón hacia el"\
                     + u" recuadro."]
             y = 39
@@ -185,7 +183,6 @@ class Puzzle2Activity(Activity):
     def informative_text(self):
         if pygame.font:
             font = pygame.font.SysFont('dejavusans', 32)
-            font.set_bold(True)
             text = font.render("Arma las piezas del rompecabezas.", 1, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
@@ -193,7 +190,6 @@ class Puzzle2Activity(Activity):
             self.screen.blit(text, textRect)
             
             font = pygame.font.SysFont("dejavusans", 20)
-            font.set_bold(False)
             instructions = [u"arrastra las piezas con el ratón hacia el"\
                     + u" recuadro."]
             y = 39
@@ -304,7 +300,6 @@ class Puzzle3Activity(Activity):
     def informative_text(self):
         if pygame.font:
             font = pygame.font.SysFont('dejavusans', 32)
-            font.set_bold(True)
             text = font.render("Arma las piezas del rompecabezas.", 1, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
@@ -312,7 +307,6 @@ class Puzzle3Activity(Activity):
             self.screen.blit(text, textRect)
             
             font = pygame.font.SysFont("dejavusans", 20)
-            font.set_bold(False)
             instructions = [u"arrastra las piezas con el ratón hacia el"\
                     + u" recuadro."]
             y = 39
@@ -423,14 +417,12 @@ class Puzzle4Activity(Activity):
     def informative_text(self):
         if pygame.font:
             font = pygame.font.SysFont('dejavusans', 32)
-            font.set_bold(True)
             text = font.render("Arma las piezas del rompecabezas.", 1, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
             self.screen.blit(text, textRect)
             font = pygame.font.SysFont("dejavusans", 20)
-            font.set_bold(False)
             instructions = [u"arrastra las piezas con el ratón hacia el"\
                     + u" recuadro."]
             y = 39

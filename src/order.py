@@ -66,7 +66,6 @@ class OrderActivity(Activity):
     def informative_text(self):
         if pygame.font:
             font = pygame.font.SysFont('dejavusans', 32)
-            font.set_bold(True)
             title = unicode("¿Qué va primero?", 'utf-8')
             text = font.render(title, 1, (0, 0, 0))
             textRect = text.get_rect()

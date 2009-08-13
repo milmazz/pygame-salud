@@ -171,7 +171,6 @@ class SoupActivity(Activity):
     def informative_text(self):
         if pygame.font:
             font = pygame.font.SysFont('dejavusans', 26)
-            font.set_bold(True)
             text = font.render("En busca de los cinco sentidos", 1, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
@@ -180,7 +179,6 @@ class SoupActivity(Activity):
 
 
             font = pygame.font.SysFont("dejavusans", 20)
-            font.set_bold(False)
             instructions = [u"Busca los cinco sentidos en la sopa de",
                             u"letra y marca con el lápiz cada palabra."]
             y = 45
@@ -382,7 +380,6 @@ class SoupActivity2(Activity):
     def informative_text(self):
         if pygame.font:
             font = pygame.font.SysFont('dejavusans', 26)
-            font.set_bold(True)
             text = font.render("Letras escondidas", 1, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx - 120
@@ -391,7 +388,6 @@ class SoupActivity2(Activity):
 
 
             font = pygame.font.SysFont("dejavusans", 20)
-            font.set_bold(False)
             instructions = [u"     Encuentra en la sopa de letras las",
                             u"palabras relacionadas con el ambiente",
                             u"que nos rodea. Márcalas con el lápiz."]
