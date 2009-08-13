@@ -12,7 +12,7 @@ from pygame.locals import *
 import constants
 import common
 from activity import Activity
-from icons import Icons
+from icons import *
 
 
 # Activity 7
@@ -129,7 +129,7 @@ class Shower(Activity):
                                 self.arrows.append(self.arrow)
                                 pos = ((start[0] + end[0]) / 2.0, 
                                              (start[1] + end[1]) / 2.0)
-                                self.sprites1.add(Check(pos))
+                                self.sprites1.add(Check(pos, 0, (36, 35)))
                         else:
                             for i in self.couple:
                                 i.deactivate()
@@ -240,18 +240,6 @@ class Pointer(sprite.Sprite):
 
     def update(self, pos):
         self.rect.topleft = pos
-
-
-class Check(sprite.Sprite):
-    def __init__(self, pos=(0,0)):
-        sprite.Sprite.__init__(self)
-        self.path_check = os.path.join(constants.data_folder, \
-                'missing', "check.png")
-        self.image, self.rect = common.load_image(self.path_check)
-        size = self.rect[2] * 0.5, self.rect[3] * 0.5
-        self.image = pygame.transform.scale(self.image, size)
-        self.rect.centerx = pos[0]
-        self.rect.centery = pos[1]
 
 
 class Arrow:

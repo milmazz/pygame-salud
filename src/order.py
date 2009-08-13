@@ -59,22 +59,6 @@ class Hand(Sprite):
             self.image = self.close
 
 
-"""class Check(Sprite):
-    def __init__(self, pos = None):
-        Sprite.__init__(self) 
-        path = os.path.join(constants.data_folder, "icons", "check.png")
-        self.image, self.rect = common.load_image(path)
-        self.image = pygame.transform.scale(self.image, (20, 20))
-        self.rect = self.image.get_rect()
-        if not pos:
-            pos = map(lambda x: x/2.0, constants.screen_mode)
-        self.update(pos)
-
-    def update(self, pos):
-        pos = pos[0], pos[1] - self.rect[3] / 2.0
-        self.rect.midtop = pos"""
-
-
 class OrderActivity(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
