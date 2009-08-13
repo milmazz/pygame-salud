@@ -29,7 +29,7 @@ class Riddle(Activity):
                         u"Así descubrirás la respuesta.")
 		riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
 				  u"grato eres también;", u"donde yo no existo", 
-				  u"el mundo triste es:", u"adivina quién puede ser.")
+				  u"el mundo triste es:", u"adivina quién puede ser.", u"¿Quién soy?")
 
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])
