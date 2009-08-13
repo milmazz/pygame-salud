@@ -145,14 +145,14 @@ class PuzzleActivity(Activity):
                     self.sprites.draw(self.screen)
                 elif event.type == MOUSEBUTTONUP and self.button_down == 1:
                     if self.selection:
-                        verify_correct = pygame.sprite.spritecollideany\
-                          (self.selection, self.transparent)
-                        if verify_correct and\
-                          verify_correct.id == self.selection.id and\
+                        verify_correct = pygame.sprite.spritecollide\
+                          (self.selection, self.transparent, False)
+                        if len(verify_correct) == 1 and\
+                          verify_correct[0].id == self.selection.id and\
                           self.selection.fix == 0:
                                 self.selection.fix = 1
-                                self.selection.rect = verify_correct.rect
-                                self.count += 1
+                                self.selection.rect = verify_correct[0].rect
+                                self.count += 1 
                     self.button_down = 0
                     self.selection = 0
                     self.hand.change_hand() #change the close hand by the open hand
@@ -264,13 +264,13 @@ class Puzzle2Activity(Activity):
                     self.sprites.draw(self.screen)
                 elif event.type == MOUSEBUTTONUP and self.button_down == 1:
                     if self.selection:
-                        verify_correct = pygame.sprite.spritecollideany\
+                        verify_correct = pygame.sprite.spritecollide\
                           (self.selection, self.transparent)
-                        if verify_correct and\
-                          verify_correct.id == self.selection.id and\
+                        if len(verify_correct) == 1 and\
+                          verify_correct[0].id == self.selection.id and\
                           self.selection.fix == 0:
                             self.selection.fix = 1
-                            self.selection.rect = verify_correct.rect
+                            self.selection.rect = verify_correct[0].rect
                             self.count += 1
                     self.button_down = 0
                     self.selection = 0
@@ -383,13 +383,13 @@ class Puzzle3Activity(Activity):
                     self.sprites.draw(self.screen)
                 elif event.type == MOUSEBUTTONUP and self.button_down == 1:
                     if self.selection:
-                        verify_correct = pygame.sprite.spritecollideany\
+                        verify_correct = pygame.sprite.spritecollide\
                           (self.selection, self.transparent)
-                        if verify_correct and\
-                          verify_correct.id == self.selection.id and\
+                        if len(verify_correct) == 1 and\
+                          verify_correct[0].id == self.selection.id and\
                           self.selection.fix == 0:
                             self.selection.fix = 1
-                            self.selection.rect = verify_correct.rect
+                            self.selection.rect = verify_correct[0].rect
                             self.count += 1
                     self.button_down = 0
                     self.selection = 0
@@ -501,13 +501,13 @@ class Puzzle4Activity(Activity):
                     self.sprites.draw(self.screen)
                 elif event.type == MOUSEBUTTONUP and self.button_down == 1:
                     if self.selection:
-                        verify_correct = pygame.sprite.spritecollideany\
+                        verify_correct = pygame.sprite.spritecollide\
                           (self.selection, self.transparent)
-                        if verify_correct and\
-                          verify_correct.id == self.selection.id and\
+                        if len(verify_correct) == 1 and\
+                          verify_correct[0].id == self.selection.id and\
                           self.selection.fix == 0:
                             self.selection.fix = 1
-                            self.selection.rect = verify_correct.rect
+                            self.selection.rect = verify_correct[0].rect
                             self.count += 1
                     self.button_down = 0
                     self.selection = 0
