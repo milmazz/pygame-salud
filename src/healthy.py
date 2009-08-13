@@ -10,7 +10,7 @@ from pygame.locals import *
 import constants
 from activity import Activity
 import common
-from icons import Icons
+from icons import *
 
 class textLine(Sprite):
     def __init__(self, textline, pos=(0,0)):
@@ -18,13 +18,12 @@ class textLine(Sprite):
         image_name = os.path.join(constants.data_folder, "healthy",
                                   textline  + ".png")
         self.image, self.rect = common.load_image(image_name)
-        self.size_x, self.size_y = self.image.get_size()
-        self.rect.move_ip(pos)
+        self.rect.center = pos
         self.orig_x, self.orig_y = pos
         self.name = textline
 		
     def update(self, pos):
-        self.rect.x, self.rect.y = pos
+        self.rect.centerx, self.rect.centery = pos
 
 
 class Hand(Sprite):
@@ -51,15 +50,6 @@ class Hand(Sprite):
             self.image = self.normal
         if self.color == 1:
             self.image = self.close
-
-
-class check(Sprite):
-    def __init__(self, pos=(0,0)):
-        Sprite.__init__(self)
-        self.path_check = os.path.join(constants.data_folder, \
-                'healthy', "check.png")
-        self.image, self.rect = common.load_image(self.path_check)
-        self.rect.move_ip(pos)
 
 
 class changeButtons(Sprite):
@@ -99,8 +89,6 @@ class View():
             self.background = self.back2
         else:
             self.background = self.back1
-
-
 
 
 class Healthy(Activity):
@@ -207,11 +195,10 @@ class Healthy(Activity):
                         self.correct = self.correct1
                     for i in range(0,3):
                         if self.correct[i] == 1:
-                            left, top, width, height = self.containers[i]
                             self.auxtextline = textLine(self.correctlines[i], \
-                                    (left, top))
-                            self.checked.add([check((left + (width \
-                                    /2) - 25, top - 150))])
+                                    self.containers[i].center)
+                            self.checked.add([Check((self.containers[i].centerx, \
+                                    self.containers[i].centery - 75))])
                             self.textlines.add([self.auxtextline])
                         if self.correct[i] == 0:
                             self.textlines.add([textLine(self.correctlines[i], \
@@ -229,17 +216,16 @@ class Healthy(Activity):
                 if textline_in_container:
                     if self.selection.name == \
                             self.correctlines[textline_in_container[0]]:
-                                left, top, width, height = \
-                                        self.containers[textline_in_container[0]]
                                 self.selection.kill()
                                 self.selection.add(self.sprites)
                                 self.selection.rect = \
-                                        pygame.Rect(left + (width - \
-                                        self.selection.size_x)/2, top + (height - \
-                                        self.selection.size_y)/2, 0, 0)
+                                        pygame.Rect((self.containers[textline_in_container[0]][0], \
+                                        self.containers[textline_in_container[0]][1]), \
+                                        (0, 0))
                                 self.correct[textline_in_container[0]] = 1
-                                self.checked.add([check((left + (width \
-                                        /2) - 25, top - 150))])
+                                self.checked.add([Check((self.containers[textline_in_container[0]].centerx, \
+                                        self.containers[textline_in_container[0]].centery - 75))])
+
                                 self.sprites.add([self.checked])
                     else:
                         self.selection.update((self.selection.orig_x, self.selection.orig_y))

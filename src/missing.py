@@ -156,9 +156,9 @@ class Missing(Activity):
                                 self.selection.kill()
                                 self.selection.add(self.sprites)
                                 self.selection.rect = \
-                                pygame.Rect((self.containers[bodypart_in_container[0]][0], \
-                                self.containers[bodypart_in_container[0]][1]), \
-                                (0, 0))
+                                        pygame.Rect((self.containers[bodypart_in_container[0]][0], \
+                                        self.containers[bodypart_in_container[0]][1]), \
+                                        (0, 0))
                                 self.correct[bodypart_in_container[0]] = 1
                                 self.checked.add([Check(self.containers[bodypart_in_container[0]].center)])
                                 self.sprites.add([self.checked])
