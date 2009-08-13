@@ -12,7 +12,7 @@ from pygame.locals import *
 import constants
 import common
 from activity import Activity
-from icons import Icons
+from icons import Icons, Check
 
 
 class Room(Activity):
@@ -105,19 +105,17 @@ class Room(Activity):
                     self.quit = True
                     return
                 if self.room.collidepoint(mouse_pos):
-                    correct = False
                     for i in range(len(self.wrong_pos)):
                         if self.wrong_pos[i].collidepoint(mouse_pos):
-                            correct = True
                             pos = self.wrong_pos[i].center
                             self.xs.add(Xs(pos))
-                            self.found += 1
+                            del self.wrong_pos[i]
                             break
 
-        if self.found == len(self.wrong_pos):
+        if not self.wrong_pos:
             center = (constants.screen_mode[0]/2.0, 
                       constants.screen_mode[0]/2.0)
-            self.xs.add(Check(center))
+            self.xs.add(Check(pos=center, zoom=2))
             self.finished_ = True
 
         self.screen.blit(self.background, (0, 0))
@@ -155,6 +153,7 @@ class Xs(sprite.Sprite):
         self.rect.midtop = pos
 
 
+"""
 class Check(Xs):
     def __init__(self, pos = None):
         sprite.Sprite.__init__(self) 
@@ -167,7 +166,7 @@ class Check(Xs):
             pos = map(lambda x: 3*x, constants.screen_mode)
         
         self.update(pos)
-
+"""
 
 if __name__ == "__main__":
 	pygame.init()

@@ -194,6 +194,29 @@ class MainMenu(Activity):
             for item in self.submenus.keys():
                 self.menu.add(ItemCategory(item, self.cat_pos))
 
+        introduction = (u"Este contenido educativo", 
+                        u"está diseñado con actividades ", 
+                        u"lúaaaadicas para la adquisición de ",
+                        u"conceptos y hábitos que contribuyen ",
+                        u"a formar niñas y niños saludables.",
+                        u" ",
+                        u"Esperamos que pases momentos ",
+                        u"agradables divertidos ",
+                        u"mientras aprendes.")
+
+        font_default = pygame.font.SysFont(constants.font_default[0],
+                                           constants.font_default[1])
+
+        isize = font_default.size(introduction[0])[1]
+
+        introduction_pos = (constants.screen_mode[0] / 2.0 + 3, 100)
+        
+        introduction_ = []
+        for i in introduction:
+            line = font_default.render(i, True, (102, 102, 102))
+            introduction_.append(line)
+        self.text = ((introduction_, introduction_pos),)
+
         self.finger = Finger()
         self.sprites = pygame.sprite.Group()
         self.icons = pygame.sprite.Group()
@@ -204,7 +227,6 @@ class MainMenu(Activity):
         return
         
     def handle_events(self):
-#        event = pygame.event.wait()
         for event in self.get_event():
             if event.type == QUIT:
                 self.quit = True
@@ -234,11 +256,29 @@ class MainMenu(Activity):
                 
         return
 
+    def setup(self):
+        self.draw_text()
+
     def on_change(self):
         self.sprites.update()        
 
         self.menu.draw(self.screen)
         if self.active:
             self.active.draw(self.screen)
+        else:
+            self.draw_text()
         self.sprites.draw(self.screen)
         self.mprev = self.pos
+
+    def draw_text(self):
+        x, y = 0, 0
+        for i in self.text:
+            center = (i[1][0], i[1][1])
+            y = center[1]
+            surfaces = i[0]
+            for surface in surfaces:
+                x = center[0] - surface.get_width() / 2.0
+                pos = (x, y)
+                self.screen.blit(surface, pos)
+                y = y + surface.get_height()
+

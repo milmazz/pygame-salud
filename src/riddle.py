@@ -181,6 +181,7 @@ class Riddle(Activity):
             self.pointer.kill()
             self.sprites.add(self.pointer)
 
+        self.screen.blit(self.background, (0, 0))
         self.draw_text()
         if self.line:
             self.line.update()
