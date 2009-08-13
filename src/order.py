@@ -23,10 +23,14 @@ class ImagePuzzle(Sprite):
         self.rect.y = y
         self.id = id #id to compare between images
         self.fix = 0 #fix if the correct image is in the correct position
+        self.origin = (x, y)
 
     def update(self, pos=(0,0)):
         self.rect.x = pos[0]
         self.rect.y = pos[1]
+
+    def reset(self):
+        self.update(self.origin)
 
 class Hand(Sprite):
     def __init__(self):
@@ -53,6 +57,22 @@ class Hand(Sprite):
             self.image = self.normal
         if self.color == 1:
             self.image = self.close
+
+
+class Check(Sprite):
+    def __init__(self, pos = None):
+        Sprite.__init__(self) 
+        path = os.path.join(constants.data_folder, "icons", "check.png")
+        self.image, self.rect = common.load_image(path)
+        self.image = pygame.transform.scale(self.image, (20, 20))
+        self.rect = self.image.get_rect()
+        if not pos:
+            pos = map(lambda x: x/2.0, constants.screen_mode)
+        self.update(pos)
+
+    def update(self, pos):
+        pos = pos[0], pos[1] - self.rect[3] / 2.0
+        self.rect.midtop = pos
 
 
 class OrderActivity(Activity):
@@ -133,7 +153,6 @@ class OrderActivity(Activity):
                 self.button_down = 1
                 self.selection = pygame.sprite.spritecollideany\
                   (self.hand, self.pictures)
-                #print self.selection
                 """put the picture select and the hand in the
                  front of the queue"""
                 if self.selection and self.selection.fix == 0:
@@ -156,6 +175,13 @@ class OrderActivity(Activity):
                         self.selection.fix = 1
                         self.selection.rect = verify_correct.rect
                         self.correct.add(self.selection)
+                        check = (self.selection.rect[0],
+                                 self.selection.rect[1])
+                        self.sprites.add(Check(check))
+                        self.hand.kill()
+                        self.sprites.add([self.hand])
+                    else:
+                        self.selection.reset()
                 self.button_down = 0
                 self.selection = 0
                 self.hand.change_hand() #change the close hand by the open hand
@@ -280,6 +306,14 @@ class OrderActivity2(Activity):
                             self.selection.fix = 1
                             self.selection.rect = verify_correct.rect
                             self.correct.add(self.selection)
+                            check = (self.selection.rect[0],
+                                 self.selection.rect[1])
+                            self.sprites.add(Check(check))
+                            self.hand.kill()
+                            self.sprites.add([self.hand])
+                        else:
+                            self.selection.reset()
+
                     self.button_down = 0
                     self.selection = 0
                     self.hand.change_hand() #change the close hand by the open hand

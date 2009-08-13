@@ -230,8 +230,7 @@ class MainMenu(Activity):
                         submenu_sel.activate(self.screen)
 
             self.pos = mouse.get_pos()
-            if self.pos != self.mprev:
-                self.changed = True
+            self.changed = True
                 
         return
 
