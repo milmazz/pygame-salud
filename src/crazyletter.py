@@ -209,8 +209,9 @@ class CrazyLetterActivity(Activity):
                         self.informative_text()
                         pygame.display.update()
                     else:
-                        self.selection.fix = 1
-                        self.count += 1
+                        if self.selection.fix == 0:
+                            self.count += 1
+                            self.selection.fix = 1
                         if self.count == 12:
                             self.finished_ = True
                 else:
