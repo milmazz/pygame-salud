@@ -10,7 +10,7 @@ from pygame.locals import *
 import constants
 from activity import Activity
 import common
-from icons import Icons
+from icons import *
 
 class bodyPart(Sprite):
     def __init__(self, name, pos=(0,0)):
@@ -64,15 +64,6 @@ class Hand(Sprite):
             self.image = self.normal
         if self.color == 1:
             self.image = self.close
-
-
-class check(Sprite):
-    def __init__(self, pos=(0,0)):
-        Sprite.__init__(self)
-        self.path_check = os.path.join(constants.data_folder, \
-                'missing', "check.png")
-        self.image, self.rect = common.load_image(self.path_check)
-        self.rect.move_ip(pos)
 
 
 class Missing(Activity):
@@ -162,16 +153,14 @@ class Missing(Activity):
                 if bodypart_in_container:
                     if self.selection.name == \
                             self.correctbodyparts[bodypart_in_container[0]]:
-                                left, top, width, height = self.containers[bodypart_in_container[0]]
                                 self.selection.kill()
                                 self.selection.add(self.sprites)
                                 self.selection.rect = \
-                                        pygame.Rect(left + (width - \
-                                        self.selection.size_x)/2, top + (height - \
-                                        self.selection.size_y)/2, 0, 0)
+                                pygame.Rect((self.containers[bodypart_in_container[0]][0], \
+                                self.containers[bodypart_in_container[0]][1]), \
+                                (0, 0))
                                 self.correct[bodypart_in_container[0]] = 1
-                                self.checked.add([check((left + ((width
-                                    - 76) / 2), top))])
+                                self.checked.add([Check(self.containers[bodypart_in_container[0]].center)])
                                 self.sprites.add([self.checked])
                     else:
                         self.selection.change_size()
