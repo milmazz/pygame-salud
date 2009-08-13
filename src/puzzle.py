@@ -73,7 +73,7 @@ class PuzzleActivity(Activity):
             self.screen.blit(text, textRect)
 
             font = pygame.font.SysFont("dejavusans", 20)
-            instructions = [u"arrastra las piezas con el ratón hacia el"\
+            instructions = [u"Arrastra las piezas con el ratón hacia el"\
                     + u" recuadro."]
             y = 39
             for line in instructions:
@@ -190,7 +190,7 @@ class Puzzle2Activity(Activity):
             self.screen.blit(text, textRect)
             
             font = pygame.font.SysFont("dejavusans", 20)
-            instructions = [u"arrastra las piezas con el ratón hacia el"\
+            instructions = [u"Arrastra las piezas con el ratón hacia el"\
                     + u" recuadro."]
             y = 39
             for line in instructions:
@@ -307,7 +307,7 @@ class Puzzle3Activity(Activity):
             self.screen.blit(text, textRect)
             
             font = pygame.font.SysFont("dejavusans", 20)
-            instructions = [u"arrastra las piezas con el ratón hacia el"\
+            instructions = [u"Arrastra las piezas con el ratón hacia el"\
                     + u" recuadro."]
             y = 39
             for line in instructions:
@@ -423,7 +423,7 @@ class Puzzle4Activity(Activity):
             textRect.centery = 20
             self.screen.blit(text, textRect)
             font = pygame.font.SysFont("dejavusans", 20)
-            instructions = [u"arrastra las piezas con el ratón hacia el"\
+            instructions = [u"Arrastra las piezas con el ratón hacia el"\
                     + u" recuadro."]
             y = 39
             for line in instructions:
