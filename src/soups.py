@@ -180,7 +180,7 @@ class SoupActivity(Activity):
 
             font = pygame.font.SysFont("dejavusans", 20)
             instructions = [u"Busca los cinco sentidos en la sopa de",
-                            u"letra y marca con el lápiz cada palabra."]
+                            u"letras y marca con el lápiz cada palabra."]
             y = 45
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
