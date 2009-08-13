@@ -147,10 +147,12 @@ class PuzzleActivity(Activity):
                     if self.selection:
                         verify_correct = pygame.sprite.spritecollideany\
                           (self.selection, self.transparent)
-                        if verify_correct and verify_correct.id == self.selection.id:
-                            self.selection.fix = 1
-                            self.selection.rect = verify_correct.rect
-                            self.count += 1
+                        if verify_correct and\
+                          verify_correct.id == self.selection.id and\
+                          self.selection.fix == 0:
+                                self.selection.fix = 1
+                                self.selection.rect = verify_correct.rect
+                                self.count += 1
                     self.button_down = 0
                     self.selection = 0
                     self.hand.change_hand() #change the close hand by the open hand
@@ -264,7 +266,9 @@ class Puzzle2Activity(Activity):
                     if self.selection:
                         verify_correct = pygame.sprite.spritecollideany\
                           (self.selection, self.transparent)
-                        if verify_correct and verify_correct.id == self.selection.id:
+                        if verify_correct and\
+                          verify_correct.id == self.selection.id and\
+                          self.selection.fix == 0:
                             self.selection.fix = 1
                             self.selection.rect = verify_correct.rect
                             self.count += 1
@@ -381,7 +385,9 @@ class Puzzle3Activity(Activity):
                     if self.selection:
                         verify_correct = pygame.sprite.spritecollideany\
                           (self.selection, self.transparent)
-                        if verify_correct and verify_correct.id == self.selection.id:
+                        if verify_correct and\
+                          verify_correct.id == self.selection.id and\
+                          self.selection.fix == 0:
                             self.selection.fix = 1
                             self.selection.rect = verify_correct.rect
                             self.count += 1
@@ -497,7 +503,9 @@ class Puzzle4Activity(Activity):
                     if self.selection:
                         verify_correct = pygame.sprite.spritecollideany\
                           (self.selection, self.transparent)
-                        if verify_correct and verify_correct.id == self.selection.id:
+                        if verify_correct and\
+                          verify_correct.id == self.selection.id and\
+                          self.selection.fix == 0:
                             self.selection.fix = 1
                             self.selection.rect = verify_correct.rect
                             self.count += 1
