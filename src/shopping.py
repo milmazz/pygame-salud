@@ -92,7 +92,7 @@ class Shopping(Activity):
         title_width, title_height = font_title.size(title)
         instructions = [u"Coloca en cada carrito de mercado los"\
                 u" alimentos que corresponden.", u"Arrastra el" \
-                u" alimento al carrito respectivo"]
+                u" alimento al carrito respectivo."]
         y = 5
         text = font_title.render(title, True, (102, 102, 102))
         text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
