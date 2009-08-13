@@ -113,8 +113,8 @@ class Healthy(Activity):
         title = u"Para estar sano debo..."
         title_width, title_height = font_title.size(title)
         instructions = [u"Todas estas actividades sirven para que"\
-                u" tengas buena salud.", u" ¿Qué hace cada niño?."\
-                u" Arrastra la palabra que falta debajo del dibujo"]
+                u" tengas buena salud.", u" ¿Qué hace cada niño?"\
+                u" Arrastra la palabra que falta debajo del dibujo."]
         y = title_height / 2
         text = font_title.render(title, True, (102, 102, 102))
         text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
