@@ -11,7 +11,7 @@ from pygame.sprite import Sprite
 import constants
 from activity import Activity
 import common
-from icons import Icons
+from icons import *
 
 class ImagePuzzle(Sprite):
     def __init__(self, x, y, id, numimage):
@@ -59,7 +59,7 @@ class Hand(Sprite):
             self.image = self.close
 
 
-class Check(Sprite):
+"""class Check(Sprite):
     def __init__(self, pos = None):
         Sprite.__init__(self) 
         path = os.path.join(constants.data_folder, "icons", "check.png")
@@ -72,7 +72,7 @@ class Check(Sprite):
 
     def update(self, pos):
         pos = pos[0], pos[1] - self.rect[3] / 2.0
-        self.rect.midtop = pos
+        self.rect.midtop = pos"""
 
 
 class OrderActivity(Activity):
@@ -175,9 +175,9 @@ class OrderActivity(Activity):
                         self.selection.fix = 1
                         self.selection.rect = verify_correct.rect
                         self.correct.add(self.selection)
-                        check = (self.selection.rect[0],
-                                 self.selection.rect[1])
-                        self.sprites.add(Check(check))
+                        check = (self.selection.rect.centerx,
+                                 self.selection.rect.centery)
+                        self.sprites.add(Check(check, 0, (20, 20)))
                         self.hand.kill()
                         self.sprites.add([self.hand])
                     else:
@@ -306,9 +306,9 @@ class OrderActivity2(Activity):
                             self.selection.fix = 1
                             self.selection.rect = verify_correct.rect
                             self.correct.add(self.selection)
-                            check = (self.selection.rect[0],
-                                 self.selection.rect[1])
-                            self.sprites.add(Check(check))
+                            check = (self.selection.rect.centerx,
+                                 self.selection.rect.centery)
+                            self.sprites.add(Check(check, 0, (20, 20)))
                             self.hand.kill()
                             self.sprites.add([self.hand])
                         else:

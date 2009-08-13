@@ -21,15 +21,16 @@ class Icons(Sprite):
 
 
 class Check(Sprite):
-    def __init__(self, pos=None, zoom=None):
+    def __init__(self, pos=None, zoom=0, size=None):
         Sprite.__init__(self)
         self.path_check = os.path.join(constants.data_folder, \
                 'icons', "check.png")
         self.image, self.rect = common.load_image(self.path_check)
-        if zoom:
+        if zoom != 0:
             size = self.rect[2] * zoom, self.rect[3] * zoom
             self.image = pygame.transform.scale(self.image, size)
-
+        if zoom == 0 and size:
+            self.image = pygame.transform.scale(self.image, size)
         if not pos:
             pos = map(lambda x: x/2.0, constants.screen_mode)
         self.rect.centerx = pos[0]
