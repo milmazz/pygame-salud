@@ -10,7 +10,7 @@ from pygame.locals import *
 import constants
 from activity import Activity
 import common
-from icons import Icons
+from icons import *
 
 class Food(Sprite):
     def __init__(self, name, pos=(0,0)):
@@ -63,15 +63,6 @@ class Hand(Sprite):
             self.image = self.normal
         if self.color == 1:
             self.image = self.close
-
-
-class check(Sprite):
-    def __init__(self, pos=(0,0)):
-        Sprite.__init__(self)
-        self.path_check = os.path.join(constants.data_folder, \
-                'shopping', "check.png")
-        self.image, self.rect = common.load_image(self.path_check)
-        self.rect.move_ip(pos)
 
 
 class Shopping(Activity):
@@ -191,31 +182,23 @@ class Shopping(Activity):
                     if self.correct_container == 0:
                         self.checked_vegetables = self.checked_vegetables + 1
                         if self.checked_vegetables >= 4:
-                            self.checked.add([check((self.containers[self.correct_container][0] \
-                                    + 60, self.containers[self.correct_container][1] \
-                                    + 12))])
+                            self.checked.add([Check(self.containers[self.correct_container].center)])
                             self.checked_vegetables = -1
                     if self.correct_container == 1:
                         self.checked_fruits = self.checked_fruits + 1
                         if self.checked_fruits >= 6:
-                            self.checked.add([check((self.containers[self.correct_container][0] \
-                                    + 60, self.containers[self.correct_container][1] \
-                                    + 12))])
+                            self.checked.add([Check(self.containers[self.correct_container].center)])
                             self.checked_fruits = -1
                     if self.correct_container == 2:
                         self.checked_meats = self.checked_meats + 1
                         if self.checked_meats >= 3:
-                            self.checked.add([check((self.containers[self.correct_container][0] \
-                                    + 60, self.containers[self.correct_container][1] \
-                                    + 12))])
-                            self.checked_meats = -1
+                           self.checked.add([Check(self.containers[self.correct_container].center)])
+                           self.checked_meats = -1
                     if self.correct_container == 3:
                         self.checked_milks = self.checked_milks + 1
                         if self.checked_milks >= 4:
-                            self.checked.add([check((self.containers[self.correct_container][0] \
-                                    + 60, self.containers[self.correct_container][1] \
-                                    + 12))])
-                            self.checked_milks = -1
+                           self.checked.add([Check(self.containers[self.correct_container].center)])
+                           self.checked_milks = -1
                     self.selection.rect = ((pos), (0, 0))
                     self.selection.kill()
                     self.selection.add(self.sprites)
