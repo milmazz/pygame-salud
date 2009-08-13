@@ -12,7 +12,7 @@ from pygame.locals import *
 import constants
 import common
 from activity import Activity
-from icons import Icons
+from icons import Icons, Check
 
 class Riddle(Activity):
     def __init__(self, screen):
@@ -60,8 +60,8 @@ class Riddle(Activity):
         self.icons      = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
         self.pointer = Pointer()
-        self.sprites = sprite.RenderUpdates()
-        self.sprites.add([self.pointer, self.icons])
+        self.sprites = sprite.OrderedUpdates()
+        self.sprites.add([self.icons, self.pointer])
         self.lines = []
 
         points = (
@@ -177,6 +177,9 @@ class Riddle(Activity):
 
         if len(self.lines) == 39:
             self.finished_ = True
+            self.sprites.add(Check(zoom=2))
+            self.pointer.kill()
+            self.sprites.add(self.pointer)
 
         self.draw_text()
         if self.line:
