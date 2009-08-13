@@ -196,7 +196,7 @@ class MainMenu(Activity):
 
         introduction = (u"Este contenido educativo", 
                         u"está diseñado con actividades ", 
-                        u"lúaaaadicas para la adquisición de ",
+                        u"lúdicas para la adquisición de ",
                         u"conceptos y hábitos que contribuyen ",
                         u"a formar niñas y niños saludables.",
                         u" ",
