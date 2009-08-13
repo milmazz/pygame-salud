@@ -144,7 +144,7 @@ class CrazyLetterActivity(Activity):
             self.screen.blit(text, textRect)
 
             font = pygame.font.SysFont("dejavusans", 20)
-            instructions = [u"     Busca las letra que conforman la palabra"\
+            instructions = [u"     Busca las letras que conforman la palabra"\
               +  u"\"HIGIENE\" y arrástralas ",
               u"a los cuadros  rojos una por una. También  puedes buscar"\
               + " las  letras",
