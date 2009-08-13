@@ -178,7 +178,8 @@ class Labyrinth(Activity):
         self.Girls.add([Girl((330,85),1,'1',(330, 170)),
                         Girl((280,480),2,'2',(400,473)),
                         Girl((120,318),3,'3',(216, 306)),
-                        Girl((495,343),4,'4',(486,387))])
+                        Girl((495,343),4,'4',(486,387)),
+                        Girl((340,289),5,'5')])
 
         self.GroupSprite = pygame.sprite.OrderedUpdates()
         self.GroupSprite.add([ self.icons, self.Gball, self.Girls,
