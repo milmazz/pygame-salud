@@ -265,7 +265,7 @@ class Puzzle2Activity(Activity):
                 elif event.type == MOUSEBUTTONUP and self.button_down == 1:
                     if self.selection:
                         verify_correct = pygame.sprite.spritecollide\
-                          (self.selection, self.transparent)
+                          (self.selection, self.transparent, False)
                         if len(verify_correct) == 1 and\
                           verify_correct[0].id == self.selection.id and\
                           self.selection.fix == 0:
@@ -384,7 +384,7 @@ class Puzzle3Activity(Activity):
                 elif event.type == MOUSEBUTTONUP and self.button_down == 1:
                     if self.selection:
                         verify_correct = pygame.sprite.spritecollide\
-                          (self.selection, self.transparent)
+                          (self.selection, self.transparent, False)
                         if len(verify_correct) == 1 and\
                           verify_correct[0].id == self.selection.id and\
                           self.selection.fix == 0:
@@ -502,7 +502,7 @@ class Puzzle4Activity(Activity):
                 elif event.type == MOUSEBUTTONUP and self.button_down == 1:
                     if self.selection:
                         verify_correct = pygame.sprite.spritecollide\
-                          (self.selection, self.transparent)
+                          (self.selection, self.transparent, False)
                         if len(verify_correct) == 1 and\
                           verify_correct[0].id == self.selection.id and\
                           self.selection.fix == 0:
