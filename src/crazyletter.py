@@ -129,6 +129,7 @@ class CrazyLetterActivity(Activity):
         self.sprites = pygame.sprite.OrderedUpdates()
         self.sprites.add([self.icons, container_red, container_green, self.letters, self.hand])
         pygame.mouse.set_visible( False ) #oculntar el puntero del mouse
+        self.screen.blit(self.view.background, (0,0))
         self.sprites.draw(self.screen)
         self.informative_text()
         pygame.display.update()
