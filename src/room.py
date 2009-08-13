@@ -109,16 +109,15 @@ class Room(Activity):
                     for i in range(len(self.wrong_pos)):
                         if self.wrong_pos[i].collidepoint(mouse_pos):
                             correct = True
-#                            self.check.add(Check(mouse_pos))
                             pos = self.wrong_pos[i].center
-                            self.check.add(Check(pos))
+                            self.xs.add(Xs(pos))
                             self.found += 1
                             break
-                    if not correct:
-                        self.xs.add(Xs(mouse_pos))
-
 
         if self.found == len(self.wrong_pos):
+            center = (constants.screen_mode[0]/2.0, 
+                      constants.screen_mode[0]/2.0)
+            self.xs.add(Check(center))
             self.finished_ = True
 
         self.screen.blit(self.background, (0, 0))
@@ -149,7 +148,6 @@ class Xs(sprite.Sprite):
         if not pos:
             pos = map(lambda x: x/2.0, constants.screen_mode)
         
-        pygame.mouse.set_pos(pos)
         self.update(pos)
 
     def update(self, pos):
@@ -162,13 +160,14 @@ class Check(Xs):
         sprite.Sprite.__init__(self) 
         path = os.path.join(constants.data_folder, "room", "check.png")
         self.image, self.rect = common.load_image(path)
-        self.image = pygame.transform.scale(self.image, (20, 20))
+        self.image = pygame.transform.scale(self.image, (120, 120))
         self.rect = self.image.get_rect()
 
         if not pos:
-            pos = map(lambda x: x/2.0, constants.screen_mode)
+            pos = map(lambda x: 3*x, constants.screen_mode)
         
         self.update(pos)
+
 
 if __name__ == "__main__":
 	pygame.init()
