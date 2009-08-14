@@ -38,6 +38,8 @@ class Room(Activity):
                 Rect(519, 271, 61, 52),
                 Rect(583, 290, 24, 22),
                 Rect(591, 318, 29, 38),
+                Rect(401, 536, 105, 61),
+                Rect(720, 248, 74, 33),
                 ]
 
         self.found = 0
