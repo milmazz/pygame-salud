@@ -201,7 +201,7 @@ class MainMenu(Activity):
                         u"a formar niñas y niños saludables.",
                         u" ",
                         u"Esperamos que pases momentos ",
-                        u"agradables divertidos ",
+                        u"agradables y divertidos ",
                         u"mientras aprendes.")
 
         font_default = pygame.font.SysFont(constants.font_default[0],
