@@ -4,6 +4,7 @@
 import os
 import sys
 import pygame
+import random
 from pygame.sprite import Sprite
 from pygame.locals import *
 
@@ -97,6 +98,7 @@ class Shopping(Activity):
             self.screen.blit(text, text_pos)
 
     def setup(self):
+        random.seed()
         self.cont = None
         self.selection = None
         self.correct_container = None
@@ -194,12 +196,19 @@ class Shopping(Activity):
                         if self.checked_meats >= 3:
                            self.checked.add([Check(self.containers[self.correct_container].center)])
                            self.checked_meats = -1
+                    
                     if self.correct_container == 3:
                         self.checked_milks = self.checked_milks + 1
                         if self.checked_milks >= 4:
                            self.checked.add([Check(self.containers[self.correct_container].center)])
                            self.checked_milks = -1
-                    self.selection.rect = ((pos), (0, 0))
+#                    self.selection.rect = ((pos), (0, 0))
+                    self.selection.rect.topleft = \
+                            (self.containers[self.correct_container][0] + \
+                            random.randrange(0, 190 - self.selection.size_x/2), \
+                            self.containers[self.correct_container][1] + \
+                            random.randrange(0, 100 - self.selection.size_y/2))
+                    self.selection.rect.size = (0, 0)
                     self.selection.kill()
                     self.selection.add(self.sprites)
                     self.sprites.add([self.checked])
