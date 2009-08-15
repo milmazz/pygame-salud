@@ -21,7 +21,6 @@ class Letras(Sprite):
         self.image, self.rect = common.load_image(self.imagen_normal)
         self.rect.move_ip(x, y)
         self.color = 0 #0 normal 1 coloreada 2 terminada
-        #self.letra = letra
         self.id = id
 
     def update(self, mover = (0,0)):
@@ -175,7 +174,7 @@ class SoupActivity(Activity):
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
-            self.screen.blit(text, textRect)
+            self.background.blit(text, textRect)
 
 
             font = pygame.font.SysFont("dejavusans", 20)
@@ -184,7 +183,7 @@ class SoupActivity(Activity):
             y = 45
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
-                self.screen.blit(text, (350, y))
+                self.background.blit(text, (350, y))
                 y+=20
             
         
@@ -268,7 +267,6 @@ class SoupActivity(Activity):
                     self.screen.blit(self.background, (0, 0))
                     self.sprites.update(self.final_pos)
                     self.sprites.draw(self.screen)
-                self.informative_text()
                 pygame.display.update() #actualizar la pantalla
                 if self.count == 5:
                     self.finished_ = True
@@ -384,7 +382,7 @@ class SoupActivity2(Activity):
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx - 120
             textRect.centery = 20
-            self.screen.blit(text, textRect)
+            self.background.blit(text, textRect)
 
 
             font = pygame.font.SysFont("dejavusans", 20)
@@ -394,7 +392,7 @@ class SoupActivity2(Activity):
             y = 40
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
-                self.screen.blit(text, (20, y))
+                self.background.blit(text, (20, y))
                 y+=20
  
     def setup_background(self):
@@ -480,7 +478,6 @@ class SoupActivity2(Activity):
                     self.screen.blit(self.background, (0, 0))
                     self.sprites.update(self.final_pos)
                     self.sprites.draw(self.screen)
-                self.informative_text()
                 pygame.display.update() #actualizar la pantalla
                 if self.count == 6:
                     self.finished_ = True
