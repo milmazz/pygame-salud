@@ -26,7 +26,7 @@ build-python%: configure-stamp
 clean: configure
 	dh_testdir
 	dh_testroot
-	rm -rf `find . -name "*.pyc" -or -name "*.xcf"`
+	rm -rf `find . -name "*.pyc" -or -name "*.xcf" -or -name "*.svg?"`
 	rm -f build-stamp configure-stamp
 	rm -f build-python* install-python*
 	rm -rf module/build/
