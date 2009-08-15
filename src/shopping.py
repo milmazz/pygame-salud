@@ -82,7 +82,7 @@ class Shopping(Activity):
         font_instructions = pygame.font.SysFont("dejavusans", 20)
         title = u"¡De compras!"
         title_width, title_height = font_title.size(title)
-        instructions = [u"Coloca en cada carrito de mercado los"\
+        instructions = [u"Coloca en cada carrito de mercado los", \
                 u" alimentos que corresponden.", u"Arrastra el" \
                 u" alimento al carrito respectivo."]
         y = 5
