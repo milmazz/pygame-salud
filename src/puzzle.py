@@ -70,7 +70,7 @@ class PuzzleActivity(Activity):
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
-            self.screen.blit(text, textRect)
+            self.background.blit(text, textRect)
 
             font = pygame.font.SysFont("dejavusans", 20)
             instructions = [u"Arrastra las piezas con el ratón hacia el"\
@@ -78,7 +78,7 @@ class PuzzleActivity(Activity):
             y = 39
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
-                self.screen.blit(text, (20, y))
+                self.background.blit(text, (20, y))
                 y+=20
 
 
@@ -166,7 +166,6 @@ class PuzzleActivity(Activity):
                     self.hand.update(pos)
                     self.screen.blit(self.background, (0,0))
                     self.sprites.draw(self.screen)
-                self.informative_text()
                 if self.count == 4:
                     ok_button = pygame.image.load("../data/puzzle/ok.png").convert_alpha()
                     self.screen.blit(ok_button, (300,101))
@@ -189,7 +188,7 @@ class Puzzle2Activity(Activity):
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
-            self.screen.blit(text, textRect)
+            self.background.blit(text, textRect)
             
             font = pygame.font.SysFont("dejavusans", 20)
             instructions = [u"Arrastra las piezas con el ratón hacia el"\
@@ -197,7 +196,7 @@ class Puzzle2Activity(Activity):
             y = 39
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
-                self.screen.blit(text, (20, y))
+                self.background.blit(text, (20, y))
                 y+=20
 
 
@@ -285,7 +284,6 @@ class Puzzle2Activity(Activity):
                     self.hand.update(pos)
                     self.screen.blit(self.background, (0,0))
                     self.sprites.draw(self.screen)
-                self.informative_text()
                 if self.count == 4:
                     ok_button = pygame.image.load("../data/puzzle/ok.png").convert_alpha()
                     self.screen.blit(ok_button, (300,101))
@@ -308,7 +306,7 @@ class Puzzle3Activity(Activity):
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
-            self.screen.blit(text, textRect)
+            self.background.blit(text, textRect)
             
             font = pygame.font.SysFont("dejavusans", 20)
             instructions = [u"Arrastra las piezas con el ratón hacia el"\
@@ -316,7 +314,7 @@ class Puzzle3Activity(Activity):
             y = 39
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
-                self.screen.blit(text, (20, y))
+                self.background.blit(text, (20, y))
                 y+=20
 
 
@@ -404,7 +402,6 @@ class Puzzle3Activity(Activity):
                     self.hand.update(pos)
                     self.screen.blit(self.background, (0,0))
                     self.sprites.draw(self.screen)
-                self.informative_text()
                 if self.count == 4:
                     ok_button = pygame.image.load("../data/puzzle/ok.png").convert_alpha()
                     self.screen.blit(ok_button, (300,101))
@@ -427,14 +424,14 @@ class Puzzle4Activity(Activity):
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
-            self.screen.blit(text, textRect)
+            self.background.blit(text, textRect)
             font = pygame.font.SysFont("dejavusans", 20)
             instructions = [u"Arrastra las piezas con el ratón hacia el"\
                     + u" recuadro."]
             y = 39
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
-                self.screen.blit(text, (20, y))
+                self.background.blit(text, (20, y))
                 y+=20
 
 
@@ -522,7 +519,6 @@ class Puzzle4Activity(Activity):
                     self.hand.update(pos)
                     self.screen.blit(self.background, (0,0))
                     self.sprites.draw(self.screen)
-                self.informative_text()
                 if self.count == 4:
                     ok_button = pygame.image.load("../data/puzzle/ok.png").convert_alpha()
                     self.screen.blit(ok_button, (300,101))
