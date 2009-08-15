@@ -51,7 +51,6 @@ class Letters(Sprite):
     def __init__(self, pos, letter, id):
         Sprite.__init__(self)
         self.imagen_normal = constants.images_cletter+'/'+letter+'_normal.png'
-        #self.imagen_color  = constants.images_cletter+'/'+letter+'_color.png'
         self.image = pygame.image.load(self.imagen_normal)
         self.rect = self.image.get_rect()
         self.rect.move_ip(pos)
@@ -63,18 +62,16 @@ class Letters(Sprite):
 
     def update(self, pos):
         if self.fix == 0:
-            self.rect.x = pos[0]
-            self.rect.y = pos[1]
+            self.rect.x, self.rect.y = pos[0], pos[1]
 
     def back(self):
-        self.rect.x = self.orig[0]
-        self.rect.y = self.orig[1]
+        self.rect.x, self.rect.y = self.orig[0], self.orig[1]
 
-class View():
-
-    def __init__(self):
-       self.pos = 0
-       self.background = pygame.image.load(constants.illustration_002).convert_alpha()
+class CrazyLetterActivity(Activity):
+    def __init__(self, screen):
+        Activity.__init__(self, screen)
+        self.selection = None
+        self.count = 0
 
     def groupContainer(self, positions, word, color):
         containers = pygame.sprite.Group()
@@ -100,38 +97,32 @@ class View():
         return letters
 
 
-class CrazyLetterActivity(Activity):
-    def __init__(self, screen):
-        Activity.__init__(self, screen)
-        self.selection = None
-        self.count = 0
-
     def setup(self):
-        self.informative_text()
+        self.background =\
+          pygame.image.load(constants.illustration_002).convert_alpha()
         #position of the red container
+        self.informative_text()
         position_red = [(20,560), (70,560), (130,560), \
                  (180,560), (230,560), (280,560), \
                  (330, 560)]
         #position of the green container
         position_green = [ (500,560), (550,560), (600,560), \
                     (650,560), (700,560)]
-        self.view = View() #cargamos el fondo estatico
         self.hand = Hand() 
         self.icons = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
-        self.letters = self.view.groupLetters()
-        container_red = self.view.groupContainer(position_red, 'higiene',
+        self.letters = self.groupLetters()
+        container_red = self.groupContainer(position_red, 'higiene',
                 'red')
-        container_green = self.view.groupContainer(position_green, 'salud',
+        container_green = self.groupContainer(position_green, 'salud',
                 'green')
         self.contenedor = pygame.sprite.Group()
         self.contenedor.add([container_red, container_green])
         self.sprites = pygame.sprite.OrderedUpdates()
         self.sprites.add([self.icons, container_red, container_green, self.letters, self.hand])
         pygame.mouse.set_visible( False ) #oculntar el puntero del mouse
-        self.screen.blit(self.view.background, (0,0))
+        self.screen.blit(self.background, (0,0))
         self.sprites.draw(self.screen)
-        self.informative_text()
         pygame.display.update()
         self.button_down = 0
 
@@ -142,7 +133,7 @@ class CrazyLetterActivity(Activity):
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
-            self.screen.blit(text, textRect)
+            self.background.blit(text, textRect)
 
             font = pygame.font.SysFont("dejavusans", 20)
             instructions = [u"     Busca las letras que conforman la palabra"\
@@ -155,7 +146,7 @@ class CrazyLetterActivity(Activity):
             y = 39
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
-                self.screen.blit(text, (20, y))
+                self.background.blit(text, (20, y))
                 y+=20
 
 
@@ -174,9 +165,8 @@ class CrazyLetterActivity(Activity):
 
             if event.type == MOUSEMOTION:
                 self.hand.update(pos)
-                self.screen.blit(self.view.background, (0,0))
+                self.screen.blit(self.background, (0,0))
                 self.sprites.draw(self.screen)
-                self.informative_text()
                 pygame.display.update()
             if event.type == MOUSEMOTION and self.button_down:
                 self.selection.update(pos)
@@ -187,18 +177,15 @@ class CrazyLetterActivity(Activity):
                 self.hand.change_hand()
                 self.sounds['click'].play()
                 self.hand.update(pos)
-                self.screen.blit(self.view.background, (0,0))
+                self.screen.blit(self.background, (0,0))
                 self.sprites.draw(self.screen)
-                self.informative_text()
                 pygame.display.update()
             if event.type == MOUSEBUTTONUP:
                 self.hand.change_hand()
                 self.hand.update(pos)
-                self.screen.blit(self.view.background, (0,0))
+                self.screen.blit(self.background, (0,0))
                 self.sprites.draw(self.screen)
-                self.informative_text()
                 pygame.display.update()
-
             if event.type == MOUSEBUTTONUP and self.selection:
                 self.button_down = 0
                 letter_in_container = pygame.sprite.spritecollideany(self.selection, self.contenedor)
@@ -207,7 +194,6 @@ class CrazyLetterActivity(Activity):
                         self.selection.back()
                         self.selection.update(self.selection.orig)
                         self.sprites.draw(self.screen)
-                        self.informative_text()
                         pygame.display.update()
                     else:
                         if self.selection.fix == 0:
