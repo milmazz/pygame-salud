@@ -99,7 +99,6 @@ class Shopping(Activity):
 
     def setup(self):
         random.seed()
-        self.cont = None
         self.selection = None
         self.correct_container = None
         self.sprites  = pygame.sprite.OrderedUpdates()
@@ -118,6 +117,13 @@ class Shopping(Activity):
                 'pear', 'grape', 'apple']
         self.correct_meats = ['chicken', 'fish', 'meat']
         self.correct_milks = ['milk', 'milk2', 'cheese', 'cheese2']
+        self.vegetables_cart = Food('vegetables_cart', (524, 46))
+        self.fruits_cart = Food('fruits_cart', (635, 202))
+        self.meats_cart = Food('meats_cart', (486, 314))
+        self.milks_cart = Food('milks_cart', (645, 449))
+        self.carts = pygame.sprite.Group()
+        self.carts.add([self.vegetables_cart, self.fruits_cart, \
+                self.meats_cart, self.milks_cart])
         self.checked_vegetables = 0
         self.checked_fruits = 0
         self.checked_meats = 0
@@ -126,20 +132,14 @@ class Shopping(Activity):
         self.icons = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
         self.checked = pygame.sprite.Group()
-        self.vegetables = pygame.sprite.Group()
-        self.fruits = pygame.sprite.Group()
-        self.meats = pygame.sprite.Group()
-        self.milks = pygame.sprite.Group()
         self.vegetables = self.groupfood(self.pos_vegetables)
         self.fruits = self.groupfood(self.pos_fruits)
         self.meats = self.groupfood(self.pos_meats)
         self.milks = self.groupfood(self.pos_milks)
-        self.containers = [pygame.Rect(425, 80, 190, 100), \
-                pygame.Rect(575, 205, 190, 100), \
-                pygame.Rect(423, 313, 190, 100), \
-                pygame.Rect(560, 449, 190, 100)]
+        self.containers = [self.vegetables_cart, self.fruits_cart, \
+                self.meats_cart, self.milks_cart]
         self.sprites = pygame.sprite.OrderedUpdates()
-        self.sprites.add([self.icons, self.vegetables, self.fruits, \
+        self.sprites.add([self.icons, self.carts, self.vegetables, self.fruits, \
                 self.meats, self.milks, self.hand])
         pygame.mouse.set_visible( False ) #hide pointer
         self.button_down = 0
@@ -179,35 +179,38 @@ class Shopping(Activity):
             if event.type == MOUSEBUTTONUP and self.selection:
                 self.button_down = 0
                 food_in_container = \
-                        self.selection.rect.colliderect(self.containers[self.correct_container])
+                        self.selection.rect.colliderect(self.containers[self.correct_container].rect)
                 if food_in_container:
                     if self.correct_container == 0:
                         self.checked_vegetables = self.checked_vegetables + 1
                         if self.checked_vegetables >= 4:
-                            self.checked.add([Check(self.containers[self.correct_container].center)])
+                            self.checked.add([Check(self.containers[self.correct_container].rect.center)])
                             self.checked_vegetables = -1
                     if self.correct_container == 1:
                         self.checked_fruits = self.checked_fruits + 1
                         if self.checked_fruits >= 6:
-                            self.checked.add([Check(self.containers[self.correct_container].center)])
+                            self.checked.add([Check(self.containers[self.correct_container].rect.center)])
                             self.checked_fruits = -1
                     if self.correct_container == 2:
                         self.checked_meats = self.checked_meats + 1
                         if self.checked_meats >= 3:
-                           self.checked.add([Check(self.containers[self.correct_container].center)])
+                           self.checked.add([Check(self.containers[self.correct_container].rect.center)])
                            self.checked_meats = -1
-                    
                     if self.correct_container == 3:
                         self.checked_milks = self.checked_milks + 1
                         if self.checked_milks >= 4:
-                           self.checked.add([Check(self.containers[self.correct_container].center)])
+                           self.checked.add([Check(self.containers[self.correct_container].rect.center)])
                            self.checked_milks = -1
 #                    self.selection.rect = ((pos), (0, 0))
                     self.selection.rect.topleft = \
-                            (self.containers[self.correct_container][0] + \
-                            random.randrange(0, 190 - self.selection.size_x/2), \
-                            self.containers[self.correct_container][1] + \
-                            random.randrange(0, 100 - self.selection.size_y/2))
+                            (self.containers[self.correct_container].rect[0] \
+                            + random.randrange(0, \
+                            self.containers[self.correct_container].size_x \
+                            - self.selection.size_x/2), \
+                            self.containers[self.correct_container].rect[1] + \
+                            random.randrange(0, \
+                            self.containers[self.correct_container].size_y \
+                            - self.selection.size_y/2))
                     self.selection.rect.size = (0, 0)
                     self.selection.kill()
                     self.selection.add(self.sprites)
@@ -249,5 +252,8 @@ class Shopping(Activity):
             self.hand.add(self.sprites)
             self.screen.blit(self.background, (0,0))
             self.instruction_text()
+#            for i in range(0,4):
+#                pygame.draw.rect(self.background, (0, 0, 0),
+#                        self.containers[i].rect)
             self.sprites.draw(self.screen)
             pygame.display.update()
