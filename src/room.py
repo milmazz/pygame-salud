@@ -45,7 +45,7 @@ class Room(Activity):
         self.found = 0
 
         self.screen = screen
-        path = os.path.join(constants.data_folder, "room", 'room.png')
+        path = os.path.join(constants.data_folder, "backgrounds", 'illustration_020_021.png')
         self.background, rect = common.load_image(path)
 
         title = u"¡Orden en mi habitación!"
