@@ -70,6 +70,7 @@ class Missing(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
         self.background = common.load_image(constants.illustration_001)[0]
+        self.instruction_text()
 
     def groupbodyparts(self, pos_bodyparts):
         bodyparts = pygame.sprite.Group()
@@ -85,14 +86,17 @@ class Missing(Activity):
                 u"¿Puedes unirlas arrastrando las partes?"]
         text = font_title.render(title, True, (102, 102, 102))
         text_pos = (172, 35)
-        self.screen.blit(text, text_pos)
+#        self.screen.blit(text, text_pos)
+        self.background.blit(text, text_pos)
+
         y = 45
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
             text = font_instructions.render(line, True, (102, 102, 102))
             y += line_height
             text_pos = (184, y)
-            self.screen.blit(text, text_pos)
+#            self.screen.blit(text, text_pos)
+            self.background.blit(text, text_pos)
 
     def setup(self):
         self.cont = None
@@ -115,9 +119,10 @@ class Missing(Activity):
         self.sprites.add([self.icons, self.bodyparts, self.hand])
         pygame.mouse.set_visible( False ) #hide pointer
         self.button_down = 0
+        pos = pygame.mouse.get_pos()
+        self.hand.update(pos)
         self.screen.blit(self.background, (0,0))
         self.sprites.draw(self.screen)
-        self.instruction_text()
         pygame.display.update()
         pygame.event.clear()
 
@@ -188,6 +193,5 @@ class Missing(Activity):
             self.hand.remove(self.sprites)
             self.hand.add(self.sprites)
             self.screen.blit(self.background, (0,0))
-            self.instruction_text()
             self.sprites.draw(self.screen)
             pygame.display.update()
