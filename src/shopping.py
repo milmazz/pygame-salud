@@ -201,20 +201,20 @@ class Shopping(Activity):
                         if self.checked_milks >= 4:
                            self.checked.add([Check(self.containers[self.correct_container].rect.center)])
                            self.checked_milks = -1
-#                    self.selection.rect = ((pos), (0, 0))
                     self.selection.rect.topleft = \
                             (self.containers[self.correct_container].rect[0] \
-                            + random.randrange(0, \
+                            + random.randrange(20, \
                             self.containers[self.correct_container].size_x \
-                            - self.selection.size_x/2), \
-                            self.containers[self.correct_container].rect[1] + \
-                            random.randrange(0, \
+                            - self.selection.size_x/2 - 20), \
+                            self.containers[self.correct_container].rect[1] \
+                            + random.randrange(6, \
                             self.containers[self.correct_container].size_y \
-                            - self.selection.size_y/2))
+                            - self.selection.size_y/2 - 20))
                     self.selection.rect.size = (0, 0)
                     self.selection.kill()
                     self.selection.add(self.sprites)
-                    self.sprites.add([self.checked])
+                    self.sprites.remove([self.carts, self.checked])
+                    self.sprites.add([self.carts, self.checked])
                 else:
                     self.selection.change_size()
                     self.selection.update((self.selection.orig_x, self.selection.orig_y))
@@ -252,8 +252,5 @@ class Shopping(Activity):
             self.hand.add(self.sprites)
             self.screen.blit(self.background, (0,0))
             self.instruction_text()
-#            for i in range(0,4):
-#                pygame.draw.rect(self.background, (0, 0, 0),
-#                        self.containers[i].rect)
             self.sprites.draw(self.screen)
             pygame.display.update()
