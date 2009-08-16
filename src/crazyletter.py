@@ -1,6 +1,8 @@
 # vim:ts=4:sts=4:et:nowrap:tw=77
 # -*- coding: utf-8 -*-
 
+import os
+import sys
 import pygame
 from pygame.sprite import Sprite
 from pygame.locals import *
@@ -8,7 +10,7 @@ from pygame.locals import *
 import constants
 from activity import Activity
 import common
-from icons import Icons
+from icons import *
 
 
 class Container(Sprite):
@@ -17,20 +19,24 @@ class Container(Sprite):
        letter correct letter that the container contains"""
     def __init__(self, pos, letter, color):
         Sprite.__init__(self)
-        self.container = '../data/crazyletter/container_'+color+'.png'
-        self.image = pygame.image.load(self.container)
-        self.rect = self.image.get_rect()
+        image_name = os.path.join(constants.data_folder, "crazyletter",
+                                  "container_" + color + ".png")
+        self.image, self.rect = common.load_image(image_name)
         self.rect.move_ip(pos)
         self.letter = letter
+
 
 class Hand(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image_normal = constants.images_cletter+"/all-scroll2.png"
-        self.image_close =  constants.images_cletter+"/grabbing2.png"
-        self.image = pygame.image.load(self.image_normal)
-        self.color = 1
-        self.rect = self.image.get_rect()
+        self.image_normal = os.path.join(constants.data_folder, 'cursors',
+                                    "hand-open.png")
+        self.image_close = os.path.join(constants.data_folder, 'cursors', 
+                                    "hand-close.png")
+        self.normal, self.rect = common.load_image(self.image_normal)
+        self.close, self.rect = common.load_image(self.image_close)
+        self.image = self.normal
+        self.color = 0
 
     def change_hand(self):
         if self.color == 0:
@@ -39,22 +45,20 @@ class Hand(Sprite):
             self.color = 0
 
     def update(self, mover=(0,0)):
-        self.rect.x = mover[0] 
-        self.rect.y = mover[1] 
+        self.rect.x, self.rect.y = mover
         if self.color == 0:
-            self.image = pygame.image.load(self.image_normal)
+            self.image = self.normal
         if self.color == 1:
-            self.image = pygame.image.load(self.image_close)
+            self.image = self.close
+
 
 class Letters(Sprite):
-
     def __init__(self, pos, letter, id):
         Sprite.__init__(self)
-        self.imagen_normal = constants.images_cletter+'/'+letter+'_normal.png'
-        self.image = pygame.image.load(self.imagen_normal)
-        self.rect = self.image.get_rect()
+        image_name = os.path.join(constants.data_folder, "crazyletter",
+                                  letter + ".png")
+        self.image, self.rect = common.load_image(image_name)
         self.rect.move_ip(pos)
-        self.color = 0 #0 normal 1 coloreada 2 terminada
         self.letter = letter
         self.id = id
         self.orig = pos
@@ -62,10 +66,8 @@ class Letters(Sprite):
 
     def update(self, pos):
         if self.fix == 0:
-            self.rect.x, self.rect.y = pos[0], pos[1]
+            self.rect.x, self.rect.y = pos
 
-    def back(self):
-        self.rect.x, self.rect.y = self.orig[0], self.orig[1]
 
 class CrazyLetterActivity(Activity):
     def __init__(self, screen):
@@ -98,8 +100,7 @@ class CrazyLetterActivity(Activity):
 
 
     def setup(self):
-        self.background =\
-          pygame.image.load(constants.illustration_002).convert_alpha()
+        self.background = common.load_image(constants.illustration_002)[0]
         #position of the red container
         self.informative_text()
         position_red = [(20,560), (70,560), (130,560), \
@@ -116,15 +117,20 @@ class CrazyLetterActivity(Activity):
                 'red')
         container_green = self.groupContainer(position_green, 'salud',
                 'green')
-        self.contenedor = pygame.sprite.Group()
-        self.contenedor.add([container_red, container_green])
+        self.containers = pygame.sprite.Group()
+        self.containers.add([container_red, container_green])
         self.sprites = pygame.sprite.OrderedUpdates()
-        self.sprites.add([self.icons, container_red, container_green, self.letters, self.hand])
+        self.sprites.add([self.icons, self.containers, self.letters, \
+                self.hand])
         pygame.mouse.set_visible( False ) #oculntar el puntero del mouse
+        self.button_down = 0
+        pos = pygame.mouse.get_pos()
+        self.hand.update(pos)
         self.screen.blit(self.background, (0,0))
         self.sprites.draw(self.screen)
         pygame.display.update()
-        self.button_down = 0
+        pygame.event.clear()
+
 
     def informative_text(self):
         if pygame.font:
@@ -149,11 +155,10 @@ class CrazyLetterActivity(Activity):
                 self.background.blit(text, (20, y))
                 y+=20
 
-
     def handle_events(self):
         for event in self.get_event():
             pos = pygame.mouse.get_pos()
-
+            self.hand.update(pos)
             if event.type == QUIT:
                 self.quit = True
                 return
@@ -162,12 +167,8 @@ class CrazyLetterActivity(Activity):
                 if event.key == K_ESCAPE:
                     self.quit = True
                     return
-
             if event.type == MOUSEMOTION:
                 self.hand.update(pos)
-                self.screen.blit(self.background, (0,0))
-                self.sprites.draw(self.screen)
-                pygame.display.update()
             if event.type == MOUSEMOTION and self.button_down:
                 self.selection.update(pos)
             if event.type == MOUSEBUTTONDOWN:
@@ -175,45 +176,44 @@ class CrazyLetterActivity(Activity):
                     self.quit = True
                     return
                 self.hand.change_hand()
-                self.sounds['click'].play()
                 self.hand.update(pos)
-                self.screen.blit(self.background, (0,0))
-                self.sprites.draw(self.screen)
-                pygame.display.update()
             if event.type == MOUSEBUTTONUP:
                 self.hand.change_hand()
                 self.hand.update(pos)
-                self.screen.blit(self.background, (0,0))
-                self.sprites.draw(self.screen)
-                pygame.display.update()
             if event.type == MOUSEBUTTONUP and self.selection:
                 self.button_down = 0
-                letter_in_container = pygame.sprite.spritecollideany(self.selection, self.contenedor)
+                letter_in_container = \
+                        pygame.sprite.spritecollideany(self.selection, \
+                        self.containers)
                 if letter_in_container:
-                    if self.selection.letter != letter_in_container.letter:
-                        self.selection.back()
-                        self.selection.update(self.selection.orig)
-                        self.sprites.draw(self.screen)
-                        pygame.display.update()
-                    else:
+                    if self.selection.letter == letter_in_container.letter:
                         if self.selection.fix == 0:
                             self.count += 1
                             self.selection.fix = 1
                         if self.count == 12:
                             self.finished_ = True
+                        self.selection.rect.x, self.selection.rect.y = \
+                                letter_in_container.rect.x, \
+                                letter_in_container.rect.y
+                    else:
+                        self.selection.update(self.selection.orig)
                 else:
                     self.selection.color = 0
-                    self.selection.update(pos)
-           
+                    self.selection.update(self.selection.orig)
+#                    self.selection.update(pos)
             if event.type == MOUSEBUTTONDOWN:
-                self.selection = pygame.sprite.spritecollideany(self.hand, self.letters)
-                for list in pygame.sprite.spritecollide(self.hand, self.letters,0):
+                self.selection = pygame.sprite.spritecollideany(self.hand, \
+                        self.letters)
+                for list in pygame.sprite.spritecollide(self.hand, \
+                        self.letters, 0):
                     x = pos[0] + self.hand.rect.width / 2
                     y = pos[1] + self.hand.rect.height / 2
                     if list.rect.collidepoint(x,y):
                         self.selection = list
-
                 if self.selection:
-                    self.selection.color = 1
                     self.button_down = 1
-    
+            self.hand.remove(self.sprites)
+            self.hand.add(self.sprites)
+            self.screen.blit(self.background, (0,0))
+            self.sprites.draw(self.screen)
+            pygame.display.update()
