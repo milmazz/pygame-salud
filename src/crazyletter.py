@@ -200,7 +200,6 @@ class CrazyLetterActivity(Activity):
                 else:
                     self.selection.color = 0
                     self.selection.update(self.selection.orig)
-#                    self.selection.update(pos)
             if event.type == MOUSEBUTTONDOWN:
                 self.selection = pygame.sprite.spritecollideany(self.hand, \
                         self.letters)
