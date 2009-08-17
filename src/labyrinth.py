@@ -1,4 +1,4 @@
-# vim:ts=4:sts=4:et:nowrap:tw=77
+
 # -*- coding: utf-8 -*-
 
 import os
@@ -135,7 +135,7 @@ class Labyrinth(Activity):
             text = font.render("El laberinto de la salud", 1, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
-            textRect.centery = 12
+            textRect.centery = 20
             self.screen.blit(text, textRect)
 
             font = pygame.font.SysFont("dejavusans", 20)
@@ -144,7 +144,7 @@ class Labyrinth(Activity):
                     u"las tareas diarias a través",
                     u"del laberinto. Utiliza las",
                     u"teclas de desplazamiento."]
-            y = 450
+            y = 490
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
                 self.screen.blit(text, (20, y))
@@ -156,11 +156,11 @@ class Labyrinth(Activity):
         self.checkImage, self.checkImageRect = common.load_image(path)
         self.counter = 0
         self.rectangleListEnter = [
-                pygame.Rect(345, 70, 10, 15),
-                pygame.Rect(340, 460, 10, 15),
-                pygame.Rect(300, 370, 10, 15),
-                pygame.Rect(493, 305, 10, 15),
-                pygame.Rect(362, 279, 10, 15)
+                pygame.Rect(345, 90, 10, 15),
+                pygame.Rect(340, 480, 10, 15),
+                pygame.Rect(300, 390, 10, 15),
+                pygame.Rect(493, 325, 10, 15),
+                pygame.Rect(362, 299, 10, 15)
                 ]
         self.pointList = [
                 (350, 123),
