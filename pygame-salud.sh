@@ -1,5 +1,13 @@
 #!/bin/sh
 
-cd /usr/share/games/pygame-salud/src
+path="`readlink $0`"
+
+if [ $path ]; then
+    gamedir="`dirname $path`"
+else
+    gamedir="`dirname $0`"
+fi
+
+cd $gamedir/src
 
 python salud.py $* 
