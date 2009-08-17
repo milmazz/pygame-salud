@@ -1,73 +1,61 @@
 #!/usr/bin/make -f
 
+include /usr/share/dpatch/dpatch.make
+
 #export DH_VERBOSE=1
 export DH_ALWAYS_EXCLUDE=.git
 
-PYVERS=$(shell pyversions -vs)
+CFLAGS = -Wall -g
+export DH_ALWAYS_EXCLUDE=.git
 
-patch:
-	dh_testdir
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+   CFLAGS += -O0
+else
+   CFLAGS += -O2
+endif
 
-configure: configure-stamp
-configure-stamp:
+config.status: configure patch-stamp
 	dh_testdir
-	chmod 644 `find . -name "*.py"`
 	touch configure-stamp
 
 build: build-stamp
-build-stamp: configure $(PYVERS:%=build-python%)
+build-stamp: config.status
 	dh_testdir
 	touch build-stamp
 
-build-python%: configure-stamp
-	dh_testdir
-	touch $@
-
-clean: configure
+clean: unpatch
 	dh_testdir
 	dh_testroot
-	rm -rf `find . -name "*.pyc" -or -name "*.xcf" -or -name "*.svg?"`
 	rm -f build-stamp configure-stamp
-	rm -f build-python* install-python*
-	rm -rf module/build/
 	dh_clean 
 
-install-indep:
+install: build
 	dh_testdir
 	dh_testroot
 	dh_clean
+	chmod +x pygame-salud.sh
 	dh_installdirs
 
-	chmod +x pygame-salud.sh
-
-install-arch: build $(PYVERS:%=install-python%)
-
-install-python%:
-	dh_testdir
-	dh_testroot
-	touch $@
-
-install: install-arch install-indep
-
-binary-indep: install-indep
+binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs
-	dh_installdocs -i
-	dh_installexamples -i
+	dh_installdocs
+	dh_installexamples
 	dh_install
-	dh_installmenu -i
-	dh_installman -ppygame-salud debian/pygame-salud.6
+	dh_installmenu
+	dh_pysupport
+	dh_installman debian/pygame-salud.6
 	dh_link
-	dh_compress -i
-	dh_fixperms -i
-	dh_pysupport -i
-	dh_installdeb -i
-	dh_gencontrol -i
-	dh_md5sums -i
-	dh_builddeb -i
+	dh_compress
+	dh_fixperms
+	rm -f `find $(CURDIR)/debian/pygame-salud -name "*.xcf" -or -name "*.svg" -or -name "*.svgz"` 
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
 
 binary-arch: 
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install-indep install-arch install configure get-doc
+.PHONY: build clean binary-indep binary-arch binary install configure
