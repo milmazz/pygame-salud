@@ -86,7 +86,6 @@ class Missing(Activity):
                 u"¿Puedes unirlas arrastrando las partes?"]
         text = font_title.render(title, True, (102, 102, 102))
         text_pos = (172, 35)
-#        self.screen.blit(text, text_pos)
         self.background.blit(text, text_pos)
 
         y = 45
@@ -95,7 +94,6 @@ class Missing(Activity):
             text = font_instructions.render(line, True, (102, 102, 102))
             y += line_height
             text_pos = (184, y)
-#            self.screen.blit(text, text_pos)
             self.background.blit(text, text_pos)
 
     def setup(self):
@@ -121,20 +119,16 @@ class Missing(Activity):
         self.button_down = 0
         pos = pygame.mouse.get_pos()
         self.hand.update(pos)
-        self.screen.blit(self.background, (0,0))
         self.sprites.draw(self.screen)
-        pygame.display.update()
         pygame.event.clear()
 
     def handle_events(self):
         for event in self.get_event():
             pos = pygame.mouse.get_pos()
-            self.hand.update(pos)
             if event.type == QUIT:
                 self.quit = True
                 return
             elif event.type == KEYUP:
-                self.changed = False
                 if event.key == K_ESCAPE:
                     self.quit = True
                     return
