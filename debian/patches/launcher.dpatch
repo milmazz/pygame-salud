@@ -1,0 +1,25 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## launcher.dpatch by Milton R. Mazzarri S. <mazzarrim@pdvsa.com>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad pygame-salud~/pygame-salud.sh pygame-salud/pygame-salud.sh
+--- pygame-salud~/pygame-salud.sh	2009-08-14 12:34:24.000000000 -0430
++++ pygame-salud/pygame-salud.sh	2009-08-16 23:48:14.570036905 -0430
+@@ -1,13 +1,5 @@
+ #!/bin/sh
+ 
+-path="`readlink $0`"
+-
+-if [ $path ]; then
+-    gamedir="`dirname $path`"
+-else
+-    gamedir="`dirname $0`"
+-fi
+-
+-cd $gamedir/src
++cd /usr/share/games/pygame-salud/src
+ 
+ python salud.py $* 
