@@ -19,7 +19,7 @@ class textLine(Sprite):
                                   textline  + ".png")
         self.image, self.rect = common.load_image(image_name)
         self.rect.center = pos
-        self.orig_x, self.orig_y = pos
+        self.orig = pos
         self.name = textline
 		
     def update(self, pos):
@@ -78,22 +78,18 @@ class changeButtons(Sprite):
             self.rect = self.next_rect
 
 
-class View():
-    def __init__(self):
+class Healthy(Activity):
+    def __init__(self, screen):
+        Activity.__init__(self, screen)
         self.back1 = common.load_image(constants.illustration_005)[0]
         self.back2 = common.load_image(constants.illustration_006)[0]
         self.background = self.back1
 
-    def update(self):
+    def update_background(self):
         if self.background == self.back1:
             self.background = self.back2
         else:
             self.background = self.back1
-
-
-class Healthy(Activity):
-    def __init__(self, screen):
-        Activity.__init__(self, screen)
 
     def instruction_text(self):
         font_title = pygame.font.SysFont("dejavusans", 40)
@@ -106,14 +102,14 @@ class Healthy(Activity):
         y = title_height / 2
         text = font_title.render(title, True, (102, 102, 102))
         text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
-        self.screen.blit(text, text_pos)
+        self.background.blit(text, text_pos)
         y += title_height
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
             text = font_instructions.render(line, True, (102, 102, 102))
             y += line_height
             text_pos = (50, y)
-            self.screen.blit(text, text_pos)
+            self.background.blit(text, text_pos)
 
     def setup(self):
         self.cont = None
@@ -131,7 +127,6 @@ class Healthy(Activity):
         self.correct2 = [0, 0, 0]
         self.correct = self.correct1
         self.correctlines = self.correctlines1
-        self.view = View() #load static background
         self.hand = Hand() #load hand
         self.change = pygame.sprite.Group()
         self.change.add([changeButtons()]) #load next and prev buttons
@@ -150,9 +145,11 @@ class Healthy(Activity):
         self.sprites.add([self.icons, self.textlines, self.change, self.hand])
         pygame.mouse.set_visible( False ) #hide pointer
         self.button_down = 0
-        self.screen.blit(self.view.background, (0,0))
-        self.sprites.draw(self.screen)
+        pos = pygame.mouse.get_pos()
+        self.hand.update(pos)
         self.instruction_text()
+        self.screen.blit(self.background, (0,0))
+        self.sprites.draw(self.screen)
         pygame.display.update()
         pygame.event.clear()
 
@@ -179,7 +176,8 @@ class Healthy(Activity):
                 if pygame.sprite.spritecollideany(self.hand, self.change):
                     self.sprites.empty()
                     self.sprites.add([self.icons, self.change])
-                    self.view.update()
+                    self.update_background()
+                    self.instruction_text()
                     self.change.update()
                     self.checked.empty()
                     self.textlines.empty()
@@ -228,9 +226,9 @@ class Healthy(Activity):
 
                                 self.sprites.add([self.checked])
                     else:
-                        self.selection.update((self.selection.orig_x, self.selection.orig_y))
+                        self.selection.update((self.selection.orig))
                 else:
-                    self.selection.update((self.selection.orig_x, self.selection.orig_y))
+                    self.selection.update((self.selection.orig))
                     self.selection.color = 0
             if event.type == MOUSEBUTTONDOWN:
                 self.selection = pygame.sprite.spritecollideany(self.hand, \
@@ -252,7 +250,6 @@ class Healthy(Activity):
                 self.finished_ = True
             self.hand.remove(self.sprites)
             self.hand.add(self.sprites)
-            self.screen.blit(self.view.background, (0,0))
-            self.instruction_text()
+            self.screen.blit(self.background, (0,0))
             self.sprites.draw(self.screen)
             pygame.display.update()
