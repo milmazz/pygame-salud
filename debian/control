@@ -3,7 +3,7 @@ Section: games
 Priority: optional
 Maintainer: Milton Mazzarri <milmazz@gmail.com>
 Uploaders: Rafael Leon <leonza99@gmail.com>, Laudin Molina <laudin.molina@gmail.com>
-Build-Depends: debhelper (>= 7), python-support (>= 0.6.4), python-dev
+Build-Depends: debhelper (>= 7), python-support (>= 0.6.4), python-dev, dpatch
 Standards-Version: 3.8.1
 Homepage: http://proyectos.canaima.softwarelibre.gob.ve/actividades-salud
 Vcs-Git: git://github.com/milmazz/pygame-salud.git
