@@ -107,6 +107,7 @@ class PuzzleActivity(Activity):
           ImagePuzzle(50,150,3,"3",  ''),\
           ImagePuzzle(50,350,4,"4",  '')])
         self.informative_text()
+        self.screen.blit(self.background, (0,0))
         self.sprites.add([self.transparent, self.pictures, self.icons, self.hand])
         self.sprites.draw(self.screen)
 
@@ -225,6 +226,7 @@ class Puzzle2Activity(Activity):
           ImagePuzzle(50,150,3,"3","2"),\
           ImagePuzzle(50,350,4,"4","2")])
         self.informative_text()
+        self.screen.blit(self.background, (0,0))
         self.sprites.add([self.transparent, self.pictures, self.icons, self.hand])
         self.sprites.draw(self.screen)
 
@@ -343,6 +345,7 @@ class Puzzle3Activity(Activity):
           ImagePuzzle(50,150,3,"3","3"),\
           ImagePuzzle(50,350,4,"4","3")])
         self.informative_text()
+        self.screen.blit(self.background, (0,0))
         self.sprites.add([self.transparent, self.pictures, self.icons, self.hand])
         self.sprites.draw(self.screen)
 
@@ -460,6 +463,7 @@ class Puzzle4Activity(Activity):
           ImagePuzzle(50,150,3,"3","4"),\
           ImagePuzzle(50,350,4,"4","4")])
         self.informative_text()
+        self.screen.blit(self.background, (0,0))
         self.sprites.add([self.transparent, self.pictures, self.icons, self.hand])
         self.sprites.draw(self.screen)
 
