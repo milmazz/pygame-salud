@@ -1,3 +1,12 @@
+pygame-salud (0.2-2) unstable; urgency=low
+
+  * Inclusion de dpatch para el manejo de parches.
+  * Mejora en el lanzador del juego.
+  * Mejora en la estructura del fichero rules.
+  * Se eliminan ficheros innecesarios para el paquete binario.
+
+ -- Milton R. Mazzarri S. <milmazz@gmail.com>  Mon, 17 Aug 2009 13:57:25 -0430
+
 pygame-salud (0.2-1) unstable; urgency=low
 
   * New upstream release.
