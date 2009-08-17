@@ -20,7 +20,7 @@ class bodyPart(Sprite):
         self.image, self.rect = common.load_image(image_name)
         self.size_x, self.size_y = self.image.get_size()
         self.rect.move_ip(pos)
-        self.orig_x, self.orig_y = pos
+        self.orig_y = pos
         self.name = name
         self.image_small = pygame.transform.scale(self.image,
                 (self.size_x/2, self.size_y/2))
@@ -37,7 +37,7 @@ class bodyPart(Sprite):
             self.small = 1
 	
     def update(self, pos):
-        self.rect.x, self.rect.y = pos
+        self.rect.topleft = pos
 
 
 class Hand(Sprite):
@@ -59,7 +59,7 @@ class Hand(Sprite):
             self.color = 0
 
     def update(self, mover=(0,0)):
-        self.rect.x, self.rect.y = mover
+        self.rect.topleft = mover
         if self.color == 0:
             self.image = self.normal
         if self.color == 1:
@@ -163,10 +163,10 @@ class Missing(Activity):
                                 self.sprites.add([self.checked])
                     else:
                         self.selection.change_size()
-                        self.selection.update((self.selection.orig_x, self.selection.orig_y))
+                        self.selection.update((self.selection.orig))
                 else:
                     self.selection.change_size()
-                    self.selection.update((self.selection.orig_x, self.selection.orig_y))
+                    self.selection.update((self.selection.orig))
                     self.selection.color = 0
             if event.type == MOUSEBUTTONDOWN:
                 self.selection = pygame.sprite.spritecollideany(self.hand, \

@@ -21,7 +21,7 @@ class Food(Sprite):
         self.image, self.rect = common.load_image(image_name)
         self.size_x, self.size_y = self.image.get_size()
         self.rect.move_ip(pos)
-        self.orig_x, self.orig_y = pos
+        self.orig = pos
         self.name = name
         self.image_small = pygame.transform.scale(self.image,
                 (self.size_x/2, self.size_y/2))
@@ -37,7 +37,7 @@ class Food(Sprite):
             self.small = 1
 	
     def update(self, pos):
-        self.rect.x, self.rect.y = pos
+        self.rect.topleft = pos
 
 
 class Hand(Sprite):
@@ -59,7 +59,7 @@ class Hand(Sprite):
             self.color = 0
 
     def update(self, mover=(0,0)):
-        self.rect.x, self.rect.y = mover
+        self.rect.topleft = mover
         if self.color == 0:
             self.image = self.normal
         if self.color == 1:
@@ -70,6 +70,7 @@ class Shopping(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
         self.background = common.load_image(constants.illustration_025)[0]
+        self.instruction_text()
 
     def groupfood(self, pos_food):
         food = pygame.sprite.Group()
@@ -88,14 +89,14 @@ class Shopping(Activity):
         y = 5
         text = font_title.render(title, True, (102, 102, 102))
         text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
-        self.screen.blit(text, text_pos)
+        self.background.blit(text, text_pos)
         y = 20
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
             text = font_instructions.render(line, True, (102, 102, 102))
             y += line_height
             text_pos = (35, y)
-            self.screen.blit(text, text_pos)
+            self.background.blit(text, text_pos)
 
     def setup(self):
         random.seed()
@@ -145,21 +146,16 @@ class Shopping(Activity):
         self.button_down = 0
         pos = pygame.mouse.get_pos()
         self.hand.update(pos)
-        self.screen.blit(self.background, (0,0))
         self.sprites.draw(self.screen)
-        self.instruction_text()
-        pygame.display.update()
         pygame.event.clear()
 
     def handle_events(self):
         for event in self.get_event():
             pos = pygame.mouse.get_pos()
-            self.hand.update(pos)
             if event.type == QUIT:
                 self.quit = True
                 return
             elif event.type == KEYUP:
-                self.changed = False
                 if event.key == K_ESCAPE:
                     self.quit = True
                     return
@@ -217,7 +213,7 @@ class Shopping(Activity):
                     self.sprites.add([self.carts, self.checked])
                 else:
                     self.selection.change_size()
-                    self.selection.update((self.selection.orig_x, self.selection.orig_y))
+                    self.selection.update((self.selection.orig))
             if event.type == MOUSEBUTTONDOWN:
                 self.selection = pygame.sprite.Group()
                 if pygame.sprite.spritecollideany(self.hand, \
@@ -251,6 +247,5 @@ class Shopping(Activity):
             self.hand.remove(self.sprites)
             self.hand.add(self.sprites)
             self.screen.blit(self.background, (0,0))
-            self.instruction_text()
             self.sprites.draw(self.screen)
             pygame.display.update()
