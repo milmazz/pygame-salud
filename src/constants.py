@@ -70,7 +70,6 @@ poetry2 = os.path.join(data_folder, "poetries", "poetry2.txt")
 
 # soups
 illustration_003 = os.path.join(data_folder, "backgrounds", "illustration_003.jpg")
-images_soups = os.path.join(data_folder,"soups")
 
 # soups2
 illustration_017 = os.path.join(data_folder, "backgrounds", "illustration_017.jpg")
