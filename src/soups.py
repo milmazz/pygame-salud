@@ -1,3 +1,4 @@
+# vim:ts=4:sts=4:et:nowrap:tw=77
 # -*- coding: utf-8 -*-
 
 import os
@@ -16,18 +17,21 @@ from icons import Icons
 class Letras(Sprite):
     def __init__(self, x, y, letra, id):
         Sprite.__init__(self)
-        self.imagen_normal = constants.images_soups+'/'+letra+'_normal.png'
-        self.imagen_color  = constants.images_soups+'/'+letra+'_color.png'
-        self.image, self.rect = common.load_image(self.imagen_normal)
+        image_name = os.path.join(constants.data_folder, "soups",
+                                  letra + "_normal.png")
+        self.image_normal, self.rect = common.load_image(image_name)
+        image_name = os.path.join(constants.data_folder, "soups",
+                                  letra + "_color.png")
+        self.image_color, self.rect = common.load_image(image_name)
         self.rect.move_ip(x, y)
         self.color = 0 #0 normal 1 coloreada 2 terminada
         self.id = id
 
     def update(self, mover = (0,0)):
         if self.color == 0:
-            self.image = pygame.image.load(self.imagen_normal)
+            self.image = self.image_normal
         if self.color == 1:
-            self.image = pygame.image.load(self.imagen_color)
+            self.image = self.image_color
 
 
 class Lapiz(Sprite):
@@ -45,25 +49,27 @@ class Lapiz(Sprite):
 class Puntalapiz(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image, self.rect = common.load_image(constants.images_soups+"/puntalapiz.png")
+        path = os.path.join(constants.data_folder, "soups", "puntalapiz.png")
+        self.image, self.rect = common.load_image(path)
 
     def update(self, mover):
-        self.rect.x = mover[0]
-        self.rect.y = mover[1]
+        self.rect.topleft = mover
 
 
 class Palabras(Sprite):
-    def __init__(self, x, y, palabra):
+    def __init__(self, x, y, word):
         Sprite.__init__(self)
-        self.imagen_normal = constants.images_soups+'/'+palabra+'.png'
-        self.imagen_raya  = constants.images_soups+'/'+palabra+'_lista.png'
-        self.image, self.rect = common.load_image(self.imagen_normal)
+        self.path_image_normal = os.path.join(constants.data_folder, "soups", \
+                word + ".png")
+        self.path_image_done = os.path.join(constants.data_folder, "soups", \
+                word + "_done.png")
+        self.image, self.rect = common.load_image(self.path_image_normal)
         self.rect.move_ip(x, y)
-        self.palabra = palabra
+        self.word = word
 
-    def update(self, palabra = 'vacio'):
-        if palabra == self.palabra:
-            self.image = pygame.image.load(self.imagen_raya)
+    def update(self, word = 'vacio'):
+        if word == self.word:
+            self.image = common.load_image(self.path_image_done)[0]
 
 class SoupActivity(Activity):
     def random_position(self):
@@ -109,13 +115,13 @@ class SoupActivity(Activity):
             self.tactoPos = [7, 15, 23, 31, 39]
             self.olfatoPos= [0, 1, 2, 3, 4, 5]
 
-    def limpiar_letras_incorrectas(self, lista_coloreadas, palabras):
+    def limpiar_letras_incorrectas(self, lista_coloreadas, words):
         #usando los identificadores de las letras
         #verificamos si son las correctas
-        #la variable check si es 0 no es correcta la palabra
+        #la variable check si es 0 no es correcta la word
         self.check = 1
         self.lista_ordenada = list()
-        #palabras correctas
+        #words correctas
         #vista, gusto, tacto, olfato, oido
         self.tamano_lista = len(lista_coloreadas)
         #verificamos el tamano de la lista.
@@ -127,27 +133,27 @@ class SoupActivity(Activity):
             #oido
             if self.tamano_lista == 4 and self.lista_ordenada == self.oidoPos:
                 self.check = 2
-                self.palabras.update("oido")
+                self.words.update("oido")
             #vista
             elif self.tamano_lista == 5 and self.lista_ordenada ==\
               self.vistaPos:
                 self.check = 2
-                self.palabras.update("vista")
+                self.words.update("vista")
             #gusto
             elif self.tamano_lista == 5 and self.lista_ordenada ==\
               self.gustoPos:
                 self.check = 2
-                self.palabras.update("gusto")
+                self.words.update("gusto")
             #tacto
             elif self.tamano_lista == 5 and self.lista_ordenada ==\
               self.tactoPos:
                 self.check = 2
-                self.palabras.update("tacto")
+                self.words.update("tacto")
             #olfato
             elif self.tamano_lista == 6 and self.lista_ordenada ==\
               self.olfatoPos:
                 self.check = 2
-                self.palabras.update("olfato")
+                self.words.update("olfato")
             elif self.check != 2:
                 self.check = 0
         else:
@@ -155,7 +161,7 @@ class SoupActivity(Activity):
 
         if self.check == 2:
             self.count += 1
-        #en caso que la palabra este mal se 
+        #en caso que la word este mal se 
         #borrar las marcadas
         if self.check == 0:
             for item in lista_coloreadas:
@@ -188,7 +194,8 @@ class SoupActivity(Activity):
             
         
     def setup_background(self):
-        self.background = pygame.image.load(constants.illustration_003).convert_alpha()
+        self.background = common.load_image(constants.illustration_003)[0]
+#        self.background = pygame.image.load(constants.illustration_003).convert_alpha()
 
     def setup(self):
         self.count = 0
@@ -199,7 +206,7 @@ class SoupActivity(Activity):
         #grupos de sprite
         self.sprites  = pygame.sprite.OrderedUpdates()
         self.letras   = pygame.sprite.Group()
-        self.palabras = pygame.sprite.Group()
+        self.words = pygame.sprite.Group()
         self.icons    = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
         ### variables generales ###
@@ -218,18 +225,18 @@ class SoupActivity(Activity):
                 self.letras.add([Letras(self.pos_x + tam_x * j, \
                   pos_y + tam_y * i, self.letrasM[j + i * 8], j + i * 8)])
            
-        self.palabras.add([Palabras(110, 370, 'vista'), Palabras(117, 400, 'gusto'), \
+        self.words.add([Palabras(110, 370, 'vista'), Palabras(117, 400, 'gusto'), \
           Palabras(108, 430, 'tacto'), Palabras(117, 460, 'oido'), \
           Palabras(104, 490, 'olfato')])
         
-        self.sprites.add([self.icons, self.letras, self.lapiz, self.puntalapiz, self.palabras])
+        self.sprites.add([self.icons, self.letras, self.words, self.lapiz, self.puntalapiz])
         self.sprites.update((0,0))
         self.sprites.draw(self.screen)
 
         done = False
 
     def handle_events(self):
-            for event in [ pygame.event.wait() ] + pygame.event.get():
+            for event in self.get_event():
                 if event.type == QUIT:
                     self.quit = True
                     return
@@ -251,7 +258,6 @@ class SoupActivity(Activity):
                         #si estamos sobre una letra y esta no esta coloreada
                         #la coloreamos
                         if letra_coloreada and letra_coloreada.color != 1:
-                            self.sounds['click'].play()
                             letra_coloreada.color = 1 #la coloreamos
                             letra_coloreada.update()   #actualizamos la imagen de la letra
                             self.lista.append(letra_coloreada)
@@ -261,7 +267,7 @@ class SoupActivity(Activity):
                     self.sprites.draw(self.screen) #dibujar los sprite
                 elif event.type == MOUSEBUTTONUP:
                     self.mouse_down = 0 #se solto el boton del mouse
-                    self.limpiar_letras_incorrectas(self.lista, self.palabras)
+                    self.limpiar_letras_incorrectas(self.lista, self.words)
                     #limpiar la lista
                     self.lista = list()
                     self.screen.blit(self.background, (0, 0))
@@ -313,13 +319,13 @@ class SoupActivity2(Activity):
             self.plantasPos =  [6, 14, 22, 30, 38, 46, 54]
             self.animalesPos=  [0, 8, 16, 24, 32, 40, 48, 56]
 
-    def limpiar_letras_incorrectas(self, lista_coloreadas, palabras):
+    def limpiar_letras_incorrectas(self, lista_coloreadas, words):
         #usando los identificadores de las letras
         #verificamos si son las correctas
-        #la variable check si es 0 no es correcta la palabra
+        #la variable check si es 0 no es correcta la word
         self.check = 1
         self.lista_ordenada = list()
-        #palabras correctas
+        #words correctas
         #vista, gusto, tacto, olfato, oido
         self.tamano_lista = len(lista_coloreadas)
         #verificamos el tamano de la lista.
@@ -331,32 +337,32 @@ class SoupActivity2(Activity):
             #luz
             if self.tamano_lista == 3 and self.lista_ordenada == self.luzPos:
                 self.check = 2
-                palabras.update("luz")
+                words.update("luz")
             #aire
             elif self.tamano_lista == 4 and self.lista_ordenada ==\
               self.airePos:
                 self.check = 2
-                palabras.update("aire")
+                words.update("aire")
             #agua
             elif self.tamano_lista == 4 and self.lista_ordenada ==\
               self.aguaPos:
                 self.check = 2
-                palabras.update("agua")
+                words.update("agua")
             #suelo
             elif self.tamano_lista == 5 and self.lista_ordenada ==\
               self.sueloPos:
                 self.check = 2
-                palabras.update("suelo")
+                words.update("suelo")
             #plantas
             elif self.tamano_lista == 7 and self.lista_ordenada ==\
               self.plantasPos:
                 self.check = 2
-                palabras.update("plantas")
+                words.update("plantas")
             #animales
             elif self.tamano_lista == 8 and self.lista_ordenada ==\
               self.animalesPos:
                 self.check = 2
-                palabras.update("animales")
+                words.update("animales")
             elif self.check != 2:
                 self.check = 0
         else:
@@ -396,7 +402,7 @@ class SoupActivity2(Activity):
                 y+=20
  
     def setup_background(self):
-        self.background = pygame.image.load(constants.illustration_017).convert_alpha()
+        self.background = common.load_image(constants.illustration_017)[0]
 
     def setup(self):
         self.count = 0
@@ -407,7 +413,7 @@ class SoupActivity2(Activity):
         #sprite groups
         self.sprites  = pygame.sprite.OrderedUpdates()
         self.letras   = pygame.sprite.Group()
-        self.palabras = pygame.sprite.Group()
+        self.words = pygame.sprite.Group()
         self.icons    = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
         ### General variable ###
@@ -429,18 +435,18 @@ class SoupActivity2(Activity):
                 self.letras.add([Letras(self.pos_x + tam_x * j, \
                   pos_y + tam_y * i, self.letrasM[j + i * 8], j + i * 8)])
            
-        self.palabras.add([Palabras(550, 200, 'plantas'), Palabras(550, 250, 'aire'), \
+        self.words.add([Palabras(550, 200, 'plantas'), Palabras(550, 250, 'aire'), \
           Palabras(550, 300, 'agua'), Palabras(550, 350, 'luz'), \
           Palabras(550, 400, 'animales'), Palabras(550, 450, 'suelo')])
         
-        self.sprites.add([self.icons, self.letras, self.lapiz, self.puntalapiz, self.palabras])
+        self.sprites.add([self.icons, self.letras, self.words, self.lapiz, self.puntalapiz])
         self.sprites.update((0,0))
         self.sprites.draw(self.screen)
 
         done = False
 
     def handle_events(self):
-            for event in [ pygame.event.wait() ] + pygame.event.get():
+            for event in self.get_event():
                 if event.type == QUIT:
                     self.quit = True
                     return
@@ -472,7 +478,7 @@ class SoupActivity2(Activity):
                     self.sprites.draw(self.screen) #dibujar los sprite
                 elif event.type == MOUSEBUTTONUP:
                     self.mouse_down = 0 #se solto el boton del mouse
-                    self.limpiar_letras_incorrectas(self.lista, self.palabras)
+                    self.limpiar_letras_incorrectas(self.lista, self.words)
                     #limpiar la lista
                     self.lista = list()
                     self.screen.blit(self.background, (0, 0))
