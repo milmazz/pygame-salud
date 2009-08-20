@@ -192,11 +192,7 @@ class CrazyLetterActivity(Activity):
                             self.selection.fix = 1
                         if self.count == 12:
                             self.finished_ = True
-#                        self.selection.rect.x, self.selection.rect.y = \
-#                                letter_in_container.rect.x, \
-#                                letter_in_container.rect.y
-                        self.selection.rect = \
-                                letter_in_container.rect
+                        self.selection.rect = letter_in_container.rect
                         check = self.selection.rect.center
                         self.sprites.add(Check(check, 0, (20, 20)))
                     else:

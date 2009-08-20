@@ -76,7 +76,6 @@ illustration_017 = os.path.join(data_folder, "backgrounds", "illustration_017.jp
 
 #crazyletter
 illustration_002 = os.path.join(data_folder, "backgrounds", "illustration_002.jpg")
-images_cletter = os.path.join(data_folder,"crazyletter")
 
 #puzzle
 illustration_puzzle = os.path.join(data_folder, "backgrounds", "illustration_012_b.jpg")
