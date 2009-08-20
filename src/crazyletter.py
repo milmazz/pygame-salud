@@ -103,9 +103,9 @@ class CrazyLetterActivity(Activity):
         self.background = common.load_image(constants.illustration_002)[0]
         #position of the red container
         self.informative_text()
-        position_red = [(20,560), (70,560), (130,560), \
-                 (180,560), (230,560), (280,560), \
-                 (330, 560)]
+        position_red = [(20,560), (70,560), (120,560), \
+                 (170,560), (220,560), (270,560), \
+                 (320, 560)]
         #position of the green container
         position_green = [ (500,560), (550,560), (600,560), \
                     (650,560), (700,560)]
@@ -192,9 +192,13 @@ class CrazyLetterActivity(Activity):
                             self.selection.fix = 1
                         if self.count == 12:
                             self.finished_ = True
-                        self.selection.rect.x, self.selection.rect.y = \
-                                letter_in_container.rect.x, \
-                                letter_in_container.rect.y
+#                        self.selection.rect.x, self.selection.rect.y = \
+#                                letter_in_container.rect.x, \
+#                                letter_in_container.rect.y
+                        self.selection.rect = \
+                                letter_in_container.rect
+                        check = self.selection.rect.center
+                        self.sprites.add(Check(check, 0, (20, 20)))
                     else:
                         self.selection.update(self.selection.orig)
                 else:
