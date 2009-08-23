@@ -110,7 +110,7 @@ class Shopping(Activity):
                 520), 'apple': (448, 529)}
         self.pos_meats = {'chicken': (247, 124), 'fish': (57, 287), \
                 'meat': (278, 508)}
-        self.pos_milks = {'milk': (142, 126), 'milk2': (160, 387), \
+        self.pos_milks = {'milk': (142, 126), 'butter': (140, 387), \
                 'cheese': (415, 239), 'cheese2': (155, 475)}
         # list of all food and positions on the screen
         self.correct_vegetables = ['beetroot', 'carrot', 'cauliflower', 'x']
