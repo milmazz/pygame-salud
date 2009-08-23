@@ -86,6 +86,10 @@ illustration_010 = os.path.join(data_folder, "backgrounds",
                                 "illustration_010.png")
 images_labyrinth = os.path.join(data_folder,"labyrinth")
 
+illustration_022 = os.path.join(data_folder, "backgrounds",
+                                "illustration_022.jpg")
+
+
 # sound buffer length
 mixer_buffersize = 3 * 1024
 
