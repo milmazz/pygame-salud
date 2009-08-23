@@ -95,7 +95,7 @@ mixer_buffersize = 3 * 1024
 
 # Flags for screen display
 screen_flags = FULLSCREEN | NOFRAME
-screen_flags = 0
+#screen_flags = 0
 screen_mode = (800, 600)
 
 # Profiling file
