@@ -152,7 +152,7 @@ class Select2Activity(Activity):
             textRect.centery = 20
             self.background.blit(text, textRect)
 
-            messages = ["¿ Quíen esta haciendo bien las cosas ?",
+            messages = ["¿ Quien esta haciendo bien las cosas ?",
             "Selecciona las actividades correctas en el dibujo."]
             
             y = font.get_linesize()
