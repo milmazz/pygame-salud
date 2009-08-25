@@ -89,6 +89,11 @@ images_labyrinth = os.path.join(data_folder,"labyrinth")
 illustration_022 = os.path.join(data_folder, "backgrounds",
                                 "illustration_022.jpg")
 
+#Select Activity
+
+illustration_011 = os.path.join(data_folder, "backgrounds", "illustration_011.jpg")
+illustration_015 = os.path.join(data_folder, "backgrounds", "illustration_015.jpg")
+illustration_016 = os.path.join(data_folder, "backgrounds", "illustration_016.jpg")
 
 # sound buffer length
 mixer_buffersize = 3 * 1024
