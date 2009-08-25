@@ -31,10 +31,10 @@ class ImagePuzzle(Sprite):
 class Hand(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image_normal = os.path.join(constants.images_puzzle,
-                                         "all-scroll2.png")
-        self.image_close =  os.path.join(constants.images_puzzle,
-                                         "grabbing2.png")
+        self.image_normal = os.path.join(constants.data_folder, 'cursors',
+                                    "hand-open.png")
+        self.image_close = os.path.join(constants.data_folder, 'cursors',
+                                    "hand-close.png")
         self.normal, self.rect = common.load_image(self.image_normal)
         self.image = self.normal
         self.close, rect = common.load_image(self.image_close)
