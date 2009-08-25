@@ -1,5 +1,4 @@
 log/* !.gitignore
 src/*.pyc
-*.svg
 *.debhelper
 *.py.swp
