@@ -4,7 +4,6 @@
 import os
 import sys
 import pygame
-import random
 from pygame.sprite import Sprite
 from pygame.locals import *
 
@@ -145,11 +144,21 @@ class Cooking(Activity):
                 ingredient_in_container = \
                         self.container.colliderect(self.selection.rect)
                 if ingredient_in_container and correct:
-                    self.selection.rect.topleft = (self.container[0] \
-                            + random.randrange(0, self.container[2] \
-                            - self.selection.size_x), self.container[1] \
-                            - self.selection.size_y + 20 \
-                            + random.randrange(0, self.container[3] - 20))
+                    if self.selection.name == 'butter':
+                        self.selection.rect.topleft = (self.container[0] \
+                                , self.container[1] + 10)
+                    elif self.selection.name == 'eggs':
+                        self.selection.rect.topleft = (self.container[0] \
+                                + 45, self.container[1] + 20)
+                    elif self.selection.name == 'milk':
+                        self.selection.rect.topleft = (self.container[0] \
+                                + 85, self.container[1] - 20)
+                    elif self.selection.name == 'flour':
+                        self.selection.rect.topleft = (self.container[0] \
+                                + 125, self.container[1] + 15)
+                    elif self.selection.name == 'sugar':
+                        self.selection.rect.topleft = (self.container[0] \
+                                + 160, self.container[1] - 30)
                     self.selection.rect.size = (0, 0)
                     self.selection.kill()
                     self.selection.add(self.sprites)
