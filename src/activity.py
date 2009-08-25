@@ -13,7 +13,7 @@ import constants
 MAXFPS = 20
 
 class Activity:
-    def __init__(self, screen):        
+    def __init__(self, screen): 
         self.screen = screen
         
         self.setup_background()

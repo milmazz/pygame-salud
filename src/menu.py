@@ -148,15 +148,15 @@ class Menu:
 
 class MenuActivity(Menu):
     def add(self, item):
-        sep = 10
+        sep = 15
         width = item.rect[2]
         hight = item.rect[3]
         if len(self.content) % 2 != 0:
             x = self.pos[0] + width + sep
-            y = self.pos[1] + sep + (len(self.content) / 2) * hight
         else:
             x = self.pos[0]
-            y = self.pos[1] + sep + (len(self.content) / 2) * hight
+
+        y = self.pos[1] + (len(self.content) / 2) * (sep + hight)
 
         item.place((x, y))
         self.content.add(item)
@@ -173,7 +173,7 @@ class MainMenu(Activity):
         self.cat_pos = (675, 60)
         
         # Position of the activities menu
-        self.act_pos = (270, 85)
+        self.act_pos = (270, 130)
 
         # items holds the categories
         self.menu = Menu(self.cat_pos)

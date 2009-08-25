@@ -20,7 +20,7 @@ class bodyPart(Sprite):
         self.image, self.rect = common.load_image(image_name)
         self.size_x, self.size_y = self.image.get_size()
         self.rect.move_ip(pos)
-        self.orig_y = pos
+        self.orig = pos
         self.name = name
         self.image_small = pygame.transform.scale(self.image,
                 (self.size_x/2, self.size_y/2))
