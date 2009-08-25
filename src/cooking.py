@@ -69,11 +69,11 @@ class Cooking(Activity):
     def instruction_text(self):
         font_title = pygame.font.SysFont("dejavusans", 32)
         font_instructions = pygame.font.SysFont("dejavusans", 20)
-        title = u"¡De compras!"
+        title = u"¡A Cocinar!"
         title_width, title_height = font_title.size(title)
-        instructions = [u"Coloca en cada carrito de mercado los", \
-                u" alimentos que corresponden.", u"Arrastra el" \
-                u" alimento al carrito respectivo."]
+        instructions = [u"Vamos a hacer una torta...", \
+                u"Observa los ingredientes que se necesitan", \
+                u"y arrástralos hasta la mesa."]
         y = 5
         text = font_title.render(title, True, (102, 102, 102))
         text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
@@ -83,7 +83,7 @@ class Cooking(Activity):
         for line in instructions:
             text = font_instructions.render(line, True, (102, 102, 102))
             y += line_height
-            text_pos = (35, y)
+            text_pos = (50, y)
             self.background.blit(text, text_pos)
 
     def setup(self):
