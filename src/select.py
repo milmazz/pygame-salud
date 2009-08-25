@@ -148,8 +148,7 @@ class Select2Activity(Activity):
             title = unicode("La salud en nuestras playas", 'utf-8')
             text = font.render(title, True, (0, 0, 0))
             textRect = text.get_rect()
-            textRect.centerx = self.screen.get_rect().centerx
-            textRect.centery = 20
+            textRect.topleft = (30, 10)
             self.background.blit(text, textRect)
 
             messages = ["¿ Quien esta haciendo bien las cosas ?",
@@ -163,9 +162,8 @@ class Select2Activity(Activity):
                 message = unicode(message, 'utf-8')
                 text = font.render(message, True, (122, 122, 122))
                 textRect = text.get_rect()
-                textRect.centerx = self.screen.get_rect().centerx
                 y += font_height 
-                textRect.centery = y
+                textRect.topleft = (30, y)
                 self.background.blit(text, textRect)
 
     def setup(self):
