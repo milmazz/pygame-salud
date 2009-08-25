@@ -89,10 +89,13 @@ class Cooking(Activity):
     def setup(self):
         self.selection = None
         self.sprites  = pygame.sprite.OrderedUpdates()
-        self.pos_ingredients = {'butter': (52, 162), 'eggs': (295, 238), \
-                'flour': (57, 347), 'ketchup': (295, 450), 'mayonnaise': (0,
-                    0), 'milk': (0, 0), 'pepper': (0, 0), 'sugar': (0, 0)}
+        self.pos_ingredients = {'butter': (15, 210), 'eggs': (750, 185), \
+                'milk': (75, 170), 'flour': (667, 180), 'sugar': \
+                (580, 170), 'mayonnaise': (715, 175), 'ketchup': \
+                (555, 163), 'pepper': (645, 197)}
         # list of all food and positions on the screen
+        self.correct_ingredients = ['butter', 'eggs', 'milk', 'flour', \
+                'sugar']
         self.checked_ingredients = 0
         self.hand = Hand() #load hand
         self.icons = pygame.sprite.Group()
@@ -134,25 +137,23 @@ class Cooking(Activity):
                 self.hand.update(pos)
             if event.type == MOUSEBUTTONUP and self.selection:
                 self.button_down = 0
+                correct = False
+                for i in range(0, len(self.correct_ingredients)):
+                    if self.selection.name == self.correct_ingredients[i]:
+                        correct = True
                 ingredient_in_container = \
                         self.container.colliderect(self.selection.rect)
-                if ingredient_in_container:
-#                    self.selection.update(pos)
-                    self.selection.rect.topleft = \
-                            (self.container[0] \
-                            + random.randrange(0, \
-                            self.container[2]\
-                            - self.selection.size_x), \
-                            self.container[1]\
-                            - self.selection.size_y + 20\
-                            + random.randrange(0, \
-                            self.container[3] - 20))
-#                            - self.selection.size_y))
+                if ingredient_in_container and correct:
+                    self.selection.rect.topleft = (self.container[0] \
+                            + random.randrange(0, self.container[2] \
+                            - self.selection.size_x), self.container[1] \
+                            - self.selection.size_y + 20 \
+                            + random.randrange(0, self.container[3] - 20))
                     self.selection.rect.size = (0, 0)
                     self.selection.kill()
                     self.selection.add(self.sprites)
                     self.checked_ingredients += 1
-                    if self.checked_ingredients >= 4:
+                    if self.checked_ingredients >= 5:
                         self.sprites.add([Check(self.container.center)])
                         self.finished_ = True
                 else:
@@ -169,7 +170,6 @@ class Cooking(Activity):
                     self.selection.add(self.sprites)
             self.hand.remove(self.sprites)
             self.hand.add(self.sprites)
-            pygame.draw.rect(self.background, (0, 0, 0), self.container)
             self.screen.blit(self.background, (0,0))
             self.sprites.draw(self.screen)
             pygame.display.update()
