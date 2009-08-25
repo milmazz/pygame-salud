@@ -172,6 +172,7 @@ class SoupActivity(Activity):
 
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.informative_text() 
 
     def informative_text(self):
         if pygame.font:
@@ -213,7 +214,6 @@ class SoupActivity(Activity):
         tam_x = 45  #tamano de los cuadros ancho
         tam_y = 45  #tamano de los cuadros alto
         self.list = list() #lista de letras que estan coloreadas
-        self.informative_text() 
         self.random_position()
         #lettersM = 'ydvgustojjrihrufimlvistadrywttemoIdotcxtianacmunonotactoolfatoat'
         for i in range(8):
@@ -373,6 +373,7 @@ class SoupActivity2(Activity):
 
     def __init__(self, screen):
         Activity.__init__(self, screen)
+        self.informative_text()
 
     def informative_text(self):
         if pygame.font:
@@ -415,8 +416,6 @@ class SoupActivity2(Activity):
         tam_x = 38  #tamano de los cuadros ancho
         tam_y = 37  #tamano de los cuadros alto
         self.list = list() #lista de letras que estan coloreadas
-        #display the informative text in the screen
-        self.informative_text()
         #Add the letters to the sprite group
         #generate the random seleccion to the final word position
         self.random_position()
