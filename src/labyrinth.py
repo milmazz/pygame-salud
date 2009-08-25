@@ -136,7 +136,7 @@ class Labyrinth(Activity):
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
-            self.screen.blit(text, textRect)
+            self.background.blit(text, textRect)
 
             font = pygame.font.SysFont("dejavusans", 20)
             instructions = \
@@ -147,7 +147,7 @@ class Labyrinth(Activity):
             y = 490
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
-                self.screen.blit(text, (20, y))
+                self.background.blit(text, (20, y))
                 y+=20
 
     def setup(self):
@@ -184,8 +184,8 @@ class Labyrinth(Activity):
         self.GroupSprite = pygame.sprite.OrderedUpdates()
         self.GroupSprite.add([ self.icons, self.Gball, self.hand])
         self.pos = (100,200)
-        self.screen.blit(self.background, (0,0))
         self.informative_text()
+        self.screen.blit(self.background, (0,0))
         self.GroupSprite.draw(self.screen)
         pygame.display.update()
         pygame.key.set_repeat(50, 50)
@@ -229,7 +229,6 @@ class Labyrinth(Activity):
 
         self.screen.blit(self.background, (0,0))
         self.GroupSprite.draw(self.screen)
-        self.informative_text()
         pygame.display.update()
 
 class Labyrinth2Activity(Activity):
@@ -252,7 +251,7 @@ class Labyrinth2Activity(Activity):
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
-            self.screen.blit(text, textRect)
+            self.background.blit(text, textRect)
 
             font = pygame.font.SysFont("dejavusans", 20)
             instructions = \
@@ -261,7 +260,7 @@ class Labyrinth2Activity(Activity):
             y = 60
             for line in instructions:
                 text = font.render(line, 1,(0, 0, 0))
-                self.screen.blit(text, (20, y))
+                self.background.blit(text, (20, y))
                 y+=20
 
     def setup(self):
@@ -298,8 +297,8 @@ class Labyrinth2Activity(Activity):
         self.GroupSprite = pygame.sprite.OrderedUpdates()
         self.GroupSprite.add([ self.icons, self.Gball, self.hand])
         self.pos = (100,200)
-        self.screen.blit(self.background, (0,0))
         self.informative_text()
+        self.screen.blit(self.background, (0,0))
         self.GroupSprite.draw(self.screen)
         pygame.display.update()
         pygame.key.set_repeat(50, 50)
@@ -343,5 +342,4 @@ class Labyrinth2Activity(Activity):
 
         self.screen.blit(self.background, (0,0))
         self.GroupSprite.draw(self.screen)
-        self.informative_text()
         pygame.display.update()
