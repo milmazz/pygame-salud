@@ -67,7 +67,7 @@ def main():
         # TODO Act 19
         # TODO Act 20
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
-        MenuItem('health', Labyrinth2Activity, 'labyrinth'), #  Act 22
+        MenuItem('cleaning', Labyrinth2Activity, 'labyrinth'), #  Act 22
         # TODO Act 23
         # TODO Act 24-1
         # TODO Act 24-2
