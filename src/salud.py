@@ -57,15 +57,15 @@ def main():
         MenuItem('readings2', PoetryActivity, 'readings'), # Act 7
         MenuItem('order1', OrderActivity, 'order'), # Act 8
         MenuItem('health', Labyrinth, 'labyrinth'), # Act 9
-        MenuItem('health', SelectActivity, 'select'), # Act 10
+        MenuItem('mouth', SelectActivity, 'select'), # Act 10
         MenuItem('readings1', PoetryActivity2, 'readings'), # Act 11
         MenuItem('order2', OrderActivity2, 'order'), # Act 12
-        MenuItem('health', Select3Activity, 'select'), # Act 13
+        MenuItem('diff', Select3Activity, 'select'), # Act 13
         MenuItem('environment', SoupActivity2, 'soups'), # Act 14
         # TODO Act 15
         # TODO Act 16
         MenuItem('room', Room, 'select'), # Act 17
-        MenuItem('health', Select2Activity, 'select'), # Act 18
+        MenuItem('beach', Select2Activity, 'select'), # Act 18
         # TODO Act 19
         # TODO Act 20
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
