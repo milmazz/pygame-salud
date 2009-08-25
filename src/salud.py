@@ -24,7 +24,7 @@ from shopping import Shopping
 from missing import Missing
 from room import Room
 from labyrinth import Labyrinth, Labyrinth2Activity
-from riddle import Riddle1, Riddle2
+from riddle import Riddle1, Riddle2, Riddle3, Riddle4, Riddle5, Riddle6
 from select import SelectActivity, Select2Activity,\
         Select3Activity
 
@@ -71,11 +71,12 @@ def main():
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
         MenuItem('cleaning', Labyrinth2Activity, 'labyrinth'), #  Act 22
         # TODO Act 23
-        # TODO Act 24-1
-        # TODO Act 24-2
-        # TODO Act 24-3
-        MenuItem('riddle', Riddle2, 'complete'), # Act 24-4
-        MenuItem('riddle', Riddle1, 'complete'), # Act 25
+        MenuItem('riddle', Riddle1, 'complete'), # Act 24-1
+        MenuItem('riddle', Riddle2, 'complete'), # Act 24-2
+        MenuItem('riddle', Riddle3, 'complete'), # Act 24-3
+        MenuItem('riddle', Riddle4, 'complete'), # Act 24-4
+        MenuItem('riddle', Riddle5, 'complete'), # Act 24-5
+        MenuItem('riddle', Riddle6, 'complete'), # Act 25
         MenuItem('cooking', Cooking, 'dragndrop'), # Act 26
         # TODO Act 27
     ]
