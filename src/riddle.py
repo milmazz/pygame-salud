@@ -334,28 +334,52 @@ class Riddle2(Activity):
                 if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
                     self.quit = True
                     return
-                for i in range(0, len(self.points)):
-                    if self.points[i].collidepoint(mouse_pos):
-                        self.couple.append(i)
-
-                        if len(self.couple) == 1:
-                            start = self.points[i].center
-                            self.line = Line(surface=self.screen, start=start,
-                                    end=start, width=3)
-                        elif len(self.couple) == 2:
-                            are_adjacent = (self.couple[0] - self.couple[1])**2
-                            if are_adjacent == 1:
-                                self.lastcouple = True
-                                if not (self.line in self.lines):
-                                    start = self.points[self.couple[0]].center
-                                    end = self.points[self.couple[1]].center
-                                    self.lines.append(Line(surface=self.screen, 
-                                                      start=start, end=end, width=3))
+                for pos in range(0, len(self.points)):
+                    if self.points[pos].collidepoint(mouse_pos):
+                        self.pos = pos
+                if self.pos != None:
+                    self.couple.append(self.pos)
+                    if len(self.couple) == 1:
+                        start = self.points[self.pos].center
+                        self.line = Line(surface=self.screen, \
+                                start=start, end=start, width=3)
+                    elif len(self.couple) == 2:
+                        are_adjacent = (self.couple[0] - self.couple[1])**2
+                        if are_adjacent == 1:
+                            start = self.points[self.couple[0]].center
+                            end = self.points[self.couple[1]].center
+                            self.line = Line(surface=self.screen, \
+                                    start=start, end=end, width=3)
+                            if len(self.lines) == 0:
+                                self.lines.append(self.line)
+                                self.couple[0] = self.couple[1]
+                                self.couple.pop()
+                                start = self.points[self.couple[0]].center
+                                self.line = Line(surface=self.screen, \
+                                        start=start, end=start, width=3)
                             else:
-                                self.lastcouple = False
-
-                            self.line = None
+                                for i in range(0,len(self.lines)):
+                                    if (((self.line.end == self.lines[i].end) and
+                                        (self.line.start == self.lines[i].start)) or
+                                        ((self.line.end == self.lines[i].start) and
+                                        (self.line.start == self.lines[i].end))):
+                                            self.exist = True
+                                    else:
+                                        self.exist = False
+                                if not self.exist:
+                                    self.lines.append(self.line)
+                                    self.couple[0] = self.couple[1]
+                                    self.couple.pop()
+                                    start = self.points[self.couple[0]].center
+                                    self.line = Line(surface=self.screen, \
+                                            start=start, end=start, width=3)
+                                else:
+                                    self.couple = []
+                                    self.line = None
+                        else:
                             self.couple = []
+                            self.line = None
+
             if event.type == MOUSEMOTION:
                 if self.line:
                     end = pygame.mouse.get_pos()
@@ -503,28 +527,51 @@ class Riddle3(Activity):
                 if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
                     self.quit = True
                     return
-                for i in range(0, len(self.points)):
-                    if self.points[i].collidepoint(mouse_pos):
-                        self.couple.append(i)
-
-                        if len(self.couple) == 1:
-                            start = self.points[i].center
-                            self.line = Line(surface=self.screen, start=start,
-                                    end=start, width=3)
-                        elif len(self.couple) == 2:
-                            are_adjacent = (self.couple[0] - self.couple[1])**2
-                            if are_adjacent == 1:
-                                self.lastcouple = True
-                                if not (self.line in self.lines):
-                                    start = self.points[self.couple[0]].center
-                                    end = self.points[self.couple[1]].center
-                                    self.lines.append(Line(surface=self.screen, 
-                                                      start=start, end=end, width=3))
+                for pos in range(0, len(self.points)):
+                    if self.points[pos].collidepoint(mouse_pos):
+                        self.pos = pos
+                if self.pos != None:
+                    self.couple.append(self.pos)
+                    if len(self.couple) == 1:
+                        start = self.points[self.pos].center
+                        self.line = Line(surface=self.screen, \
+                                start=start, end=start, width=3)
+                    elif len(self.couple) == 2:
+                        are_adjacent = (self.couple[0] - self.couple[1])**2
+                        if are_adjacent == 1:
+                            start = self.points[self.couple[0]].center
+                            end = self.points[self.couple[1]].center
+                            self.line = Line(surface=self.screen, \
+                                    start=start, end=end, width=3)
+                            if len(self.lines) == 0:
+                                self.lines.append(self.line)
+                                self.couple[0] = self.couple[1]
+                                self.couple.pop()
+                                start = self.points[self.couple[0]].center
+                                self.line = Line(surface=self.screen, \
+                                        start=start, end=start, width=3)
                             else:
-                                self.lastcouple = False
-
-                            self.line = None
+                                for i in range(0,len(self.lines)):
+                                    if (((self.line.end == self.lines[i].end) and
+                                        (self.line.start == self.lines[i].start)) or
+                                        ((self.line.end == self.lines[i].start) and
+                                        (self.line.start == self.lines[i].end))):
+                                            self.exist = True
+                                    else:
+                                        self.exist = False
+                                if not self.exist:
+                                    self.lines.append(self.line)
+                                    self.couple[0] = self.couple[1]
+                                    self.couple.pop()
+                                    start = self.points[self.couple[0]].center
+                                    self.line = Line(surface=self.screen, \
+                                            start=start, end=start, width=3)
+                                else:
+                                    self.couple = []
+                                    self.line = None
+                        else:
                             self.couple = []
+                            self.line = None
             if event.type == MOUSEMOTION:
                 if self.line:
                     end = pygame.mouse.get_pos()
@@ -664,28 +711,51 @@ class Riddle4(Activity):
                 if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
                     self.quit = True
                     return
-                for i in range(0, len(self.points)):
-                    if self.points[i].collidepoint(mouse_pos):
-                        self.couple.append(i)
-
-                        if len(self.couple) == 1:
-                            start = self.points[i].center
-                            self.line = Line(surface=self.screen, start=start,
-                                    end=start, width=3)
-                        elif len(self.couple) == 2:
-                            are_adjacent = (self.couple[0] - self.couple[1])**2
-                            if are_adjacent == 1:
-                                self.lastcouple = True
-                                if not (self.line in self.lines):
-                                    start = self.points[self.couple[0]].center
-                                    end = self.points[self.couple[1]].center
-                                    self.lines.append(Line(surface=self.screen, 
-                                                      start=start, end=end, width=3))
+                for pos in range(0, len(self.points)):
+                    if self.points[pos].collidepoint(mouse_pos):
+                        self.pos = pos
+                if self.pos != None:
+                    self.couple.append(self.pos)
+                    if len(self.couple) == 1:
+                        start = self.points[self.pos].center
+                        self.line = Line(surface=self.screen, \
+                                start=start, end=start, width=3)
+                    elif len(self.couple) == 2:
+                        are_adjacent = (self.couple[0] - self.couple[1])**2
+                        if are_adjacent == 1:
+                            start = self.points[self.couple[0]].center
+                            end = self.points[self.couple[1]].center
+                            self.line = Line(surface=self.screen, \
+                                    start=start, end=end, width=3)
+                            if len(self.lines) == 0:
+                                self.lines.append(self.line)
+                                self.couple[0] = self.couple[1]
+                                self.couple.pop()
+                                start = self.points[self.couple[0]].center
+                                self.line = Line(surface=self.screen, \
+                                        start=start, end=start, width=3)
                             else:
-                                self.lastcouple = False
-
-                            self.line = None
+                                for i in range(0,len(self.lines)):
+                                    if (((self.line.end == self.lines[i].end) and
+                                        (self.line.start == self.lines[i].start)) or
+                                        ((self.line.end == self.lines[i].start) and
+                                        (self.line.start == self.lines[i].end))):
+                                            self.exist = True
+                                    else:
+                                        self.exist = False
+                                if not self.exist:
+                                    self.lines.append(self.line)
+                                    self.couple[0] = self.couple[1]
+                                    self.couple.pop()
+                                    start = self.points[self.couple[0]].center
+                                    self.line = Line(surface=self.screen, \
+                                            start=start, end=start, width=3)
+                                else:
+                                    self.couple = []
+                                    self.line = None
+                        else:
                             self.couple = []
+                            self.line = None
             if event.type == MOUSEMOTION:
                 if self.line:
                     end = pygame.mouse.get_pos()
@@ -843,28 +913,51 @@ class Riddle5(Activity):
                 if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
                     self.quit = True
                     return
-                for i in range(0, len(self.points)):
-                    if self.points[i].collidepoint(mouse_pos):
-                        self.couple.append(i)
-
-                        if len(self.couple) == 1:
-                            start = self.points[i].center
-                            self.line = Line(surface=self.screen, start=start,
-                                    end=start, width=3)
-                        elif len(self.couple) == 2:
-                            are_adjacent = (self.couple[0] - self.couple[1])**2
-                            if are_adjacent == 1:
-                                self.lastcouple = True
-                                if not (self.line in self.lines):
-                                    start = self.points[self.couple[0]].center
-                                    end = self.points[self.couple[1]].center
-                                    self.lines.append(Line(surface=self.screen, 
-                                                      start=start, end=end, width=3))
+                for pos in range(0, len(self.points)):
+                    if self.points[pos].collidepoint(mouse_pos):
+                        self.pos = pos
+                if self.pos != None:
+                    self.couple.append(self.pos)
+                    if len(self.couple) == 1:
+                        start = self.points[self.pos].center
+                        self.line = Line(surface=self.screen, \
+                                start=start, end=start, width=3)
+                    elif len(self.couple) == 2:
+                        are_adjacent = (self.couple[0] - self.couple[1])**2
+                        if are_adjacent == 1:
+                            start = self.points[self.couple[0]].center
+                            end = self.points[self.couple[1]].center
+                            self.line = Line(surface=self.screen, \
+                                    start=start, end=end, width=3)
+                            if len(self.lines) == 0:
+                                self.lines.append(self.line)
+                                self.couple[0] = self.couple[1]
+                                self.couple.pop()
+                                start = self.points[self.couple[0]].center
+                                self.line = Line(surface=self.screen, \
+                                        start=start, end=start, width=3)
                             else:
-                                self.lastcouple = False
-
-                            self.line = None
+                                for i in range(0,len(self.lines)):
+                                    if (((self.line.end == self.lines[i].end) and
+                                        (self.line.start == self.lines[i].start)) or
+                                        ((self.line.end == self.lines[i].start) and
+                                        (self.line.start == self.lines[i].end))):
+                                            self.exist = True
+                                    else:
+                                        self.exist = False
+                                if not self.exist:
+                                    self.lines.append(self.line)
+                                    self.couple[0] = self.couple[1]
+                                    self.couple.pop()
+                                    start = self.points[self.couple[0]].center
+                                    self.line = Line(surface=self.screen, \
+                                            start=start, end=start, width=3)
+                                else:
+                                    self.couple = []
+                                    self.line = None
+                        else:
                             self.couple = []
+                            self.line = None
             if event.type == MOUSEMOTION:
                 if self.line:
                     end = pygame.mouse.get_pos()
@@ -1012,28 +1105,51 @@ class Riddle6(Activity):
                 if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
                     self.quit = True
                     return
-                for i in range(0, len(self.points)):
-                    if self.points[i].collidepoint(mouse_pos):
-                        self.couple.append(i)
-
-                        if len(self.couple) == 1:
-                            start = self.points[i].center
-                            self.line = Line(surface=self.screen, start=start,
-                                    end=start, width=3)
-                        elif len(self.couple) == 2:
-                            are_adjacent = (self.couple[0] - self.couple[1])**2
-                            if are_adjacent == 1:
-                                self.lastcouple = True
-                                if not (self.line in self.lines):
-                                    start = self.points[self.couple[0]].center
-                                    end = self.points[self.couple[1]].center
-                                    self.lines.append(Line(surface=self.screen, 
-                                                      start=start, end=end, width=3))
+                for pos in range(0, len(self.points)):
+                    if self.points[pos].collidepoint(mouse_pos):
+                        self.pos = pos
+                if self.pos != None:
+                    self.couple.append(self.pos)
+                    if len(self.couple) == 1:
+                        start = self.points[self.pos].center
+                        self.line = Line(surface=self.screen, \
+                                start=start, end=start, width=3)
+                    elif len(self.couple) == 2:
+                        are_adjacent = (self.couple[0] - self.couple[1])**2
+                        if are_adjacent == 1:
+                            start = self.points[self.couple[0]].center
+                            end = self.points[self.couple[1]].center
+                            self.line = Line(surface=self.screen, \
+                                    start=start, end=end, width=3)
+                            if len(self.lines) == 0:
+                                self.lines.append(self.line)
+                                self.couple[0] = self.couple[1]
+                                self.couple.pop()
+                                start = self.points[self.couple[0]].center
+                                self.line = Line(surface=self.screen, \
+                                        start=start, end=start, width=3)
                             else:
-                                self.lastcouple = False
-
-                            self.line = None
+                                for i in range(0,len(self.lines)):
+                                    if (((self.line.end == self.lines[i].end) and
+                                        (self.line.start == self.lines[i].start)) or
+                                        ((self.line.end == self.lines[i].start) and
+                                        (self.line.start == self.lines[i].end))):
+                                            self.exist = True
+                                    else:
+                                        self.exist = False
+                                if not self.exist:
+                                    self.lines.append(self.line)
+                                    self.couple[0] = self.couple[1]
+                                    self.couple.pop()
+                                    start = self.points[self.couple[0]].center
+                                    self.line = Line(surface=self.screen, \
+                                            start=start, end=start, width=3)
+                                else:
+                                    self.couple = []
+                                    self.line = None
+                        else:
                             self.couple = []
+                            self.line = None
             if event.type == MOUSEMOTION:
                 if self.line:
                     end = pygame.mouse.get_pos()
