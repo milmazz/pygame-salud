@@ -50,7 +50,8 @@ illustration_013 = os.path.join(data_folder, "backgrounds", "illustration_013.jp
 
 # Shower
 illustration_007 = os.path.join(data_folder, "backgrounds", "illustration_007.jpg")
-# Meals 
+
+# Meals
 illustration_023 = os.path.join(data_folder, "backgrounds", "illustration_023.jpg")
 
 # Cooking
@@ -70,39 +71,38 @@ illustration_001 = os.path.join(data_folder, "backgrounds", "illustration_001.jp
 page_21a = os.path.join(data_folder, "backgrounds", "page_21a.png")
 page_21b = os.path.join(data_folder, "backgrounds", "page_21b.png")
 
+# Poetries
 poetry = os.path.join(data_folder, "poetries", "poetry.txt")
 poetry2 = os.path.join(data_folder, "poetries", "poetry2.txt")
 
-# soups
+# Soups
 illustration_003 = os.path.join(data_folder, "backgrounds", "illustration_003.jpg")
-
-# soups2
 illustration_017 = os.path.join(data_folder, "backgrounds", "illustration_017.jpg")
 
-#crazyletter
+# Crazy letter
 illustration_002 = os.path.join(data_folder, "backgrounds", "illustration_002.jpg")
 
-#puzzle
+# Puzzle
 illustration_puzzle = os.path.join(data_folder, "backgrounds", "illustration_012_b.jpg")
 images_puzzle = os.path.join(data_folder,"puzzle")
 
-## labyrinth ##
-illustration_010 = os.path.join(data_folder, "backgrounds",
-                                "illustration_010.png")
+# Labyrinth
 images_labyrinth = os.path.join(data_folder,"labyrinth")
+illustration_010 = os.path.join(data_folder, "backgrounds", "illustration_010.png")
+illustration_022 = os.path.join(data_folder, "backgrounds", "illustration_022.jpg")
 
-illustration_022 = os.path.join(data_folder, "backgrounds",
-                                "illustration_022.jpg")
-
-#Select Activity
-
+# Select Activity
 illustration_011 = os.path.join(data_folder, "backgrounds", "illustration_011.jpg")
 illustration_015 = os.path.join(data_folder, "backgrounds", "illustration_015.jpg")
 illustration_016 = os.path.join(data_folder, "backgrounds", "illustration_016.jpg")
 
-#Careful
-
+# Careful
 illustration_018 = os.path.join(data_folder, "backgrounds", "illustration_018.jpg")
+
+# Painting
+painting_folder = os.path.join(data_folder, "painting")
+teacher = os.path.join(painting_folder, "028_3.png")
+mechanic = os.path.join(painting_folder, "028_4.jpg")
 
 # sound buffer length
 mixer_buffersize = 3 * 1024
