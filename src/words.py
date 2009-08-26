@@ -78,10 +78,11 @@ class Bag:
         return
 
     def add(self, item):
-        item.update(self.next)
-        self.content.append(item)
+        pos = self.next[:]
         self.next[1] += self.sep
-        return
+        item.update(pos)
+        self.content.append(item)
+        return self.next
     
     def contains(self, rect):
         return self.rect.contains(rect)
@@ -194,8 +195,9 @@ class Words(Activity):
                     for bag in self.bags:
                         if bag.contains(self.selected.rect) and \
                                 self.correct(self.selected, bag):
-                            bag.add(self.selected)
+                            check_pos = bag.add(self.selected)
                             self.words.remove(self.selected)
+                            self.sprites.add(Check(check_pos, 0, (26, 25)))
                             added = True
                     if not added:
                         self.selected.reset()
