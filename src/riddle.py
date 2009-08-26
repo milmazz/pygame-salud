@@ -196,6 +196,7 @@ class Riddle1(Activity):
 
         if len(self.lines) == 31:
             self.finished_ = True
+            self.line = None
             self.sprites.add(Check(zoom=2))
             self.pointer.kill()
             self.sprites.add(self.pointer)
@@ -301,6 +302,8 @@ class Riddle2(Activity):
             
         self.couple = []
         self.line = None
+        self.exist = None
+        self.pos = None
 
     def draw_text(self):
         x, y = 0, 0
@@ -389,6 +392,7 @@ class Riddle2(Activity):
 
         if len(self.lines) == 29:
             self.finished_ = True
+            self.line = None
             self.sprites.add(Check(zoom=2))
             self.pointer.kill()
             self.sprites.add(self.pointer)
@@ -494,6 +498,8 @@ class Riddle3(Activity):
             
         self.couple = []
         self.line = None
+        self.exist = None
+        self.pos = None
 
     def draw_text(self):
         x, y = 0, 0
@@ -581,6 +587,7 @@ class Riddle3(Activity):
 
         if len(self.lines) == 29:
             self.finished_ = True
+            self.line = None
             self.sprites.add(Check(zoom=2))
             self.pointer.kill()
             self.sprites.add(self.pointer)
@@ -678,6 +685,8 @@ class Riddle4(Activity):
             
         self.couple = []
         self.line = None
+        self.exist = None
+        self.pos = None
 
     def draw_text(self):
         x, y = 0, 0
@@ -765,6 +774,7 @@ class Riddle4(Activity):
 
         if len(self.lines) == 21:
             self.finished_ = True
+            self.line = None
             self.sprites.add(Check(zoom=2))
             self.pointer.kill()
             self.sprites.add(self.pointer)
@@ -880,6 +890,8 @@ class Riddle5(Activity):
             
         self.couple = []
         self.line = None
+        self.exist = None
+        self.pos = None
 
     def draw_text(self):
         x, y = 0, 0
@@ -967,6 +979,7 @@ class Riddle5(Activity):
 
         if len(self.lines) == 39:
             self.finished_ = True
+            self.line = None
             self.sprites.add(Check(zoom=2))
             self.pointer.kill()
             self.sprites.add(self.pointer)
@@ -1072,6 +1085,8 @@ class Riddle6(Activity):
             
         self.couple = []
         self.line = None
+        self.exist = None
+        self.pos = None
 
     def draw_text(self):
         x, y = 0, 0
@@ -1158,6 +1173,7 @@ class Riddle6(Activity):
                 self.screen.blit(self.background, (0, 0))
 
         if len(self.lines) == 29:
+            self.line = None
             self.finished_ = True
             self.sprites.add(Check(zoom=2))
             self.pointer.kill()
