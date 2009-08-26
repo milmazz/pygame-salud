@@ -69,14 +69,14 @@ class CarefulActivity(Activity):
             title = unicode("Cuidado con los accidentes", 'utf-8')
             text = font.render(title, True, (0, 0, 0))
             textRect = text.get_rect()
-            textRect.centerx = self.screen.get_rect().centerx
-            textRect.centery = 20
+            x, y = 25, 520
+            textRect.topleft = (x, y)
             self.background.blit(text, textRect)
 
-            messages = ["  Escribe en los glovitos lo que dice cada",
+            messages = ["Arrastra hasta los globitos lo que dice cada",
             "personaje en cada situación."]
             
-            y = font.get_linesize()
+            y += font.get_linesize()
             font = pygame.font.SysFont("dejavusans", 16)
             font_height = font.get_linesize()
 
@@ -84,9 +84,8 @@ class CarefulActivity(Activity):
                 message = unicode(message, 'utf-8')
                 text = font.render(message, True, (122, 122, 122))
                 textRect = text.get_rect()
-                textRect.centerx = self.screen.get_rect().centerx
-                y += font_height 
-                textRect.centery = y
+                textRect.topleft = (x, y)
+                y += font_height
                 self.background.blit(text, textRect)
 
     def setup(self):
@@ -95,9 +94,9 @@ class CarefulActivity(Activity):
         """change the mouse pointer by a hand"""
         self.button_down = 0
         self.rectList = [ 
-                pygame.Rect(203, 43, 106, 67),
-                pygame.Rect(372, 268, 87, 52),
-                pygame.Rect(565, 237, 77, 57),
+                pygame.Rect(218, 60, 106, 67),
+                pygame.Rect(372, 278, 87, 52),
+                pygame.Rect(552, 247, 77, 57),
                 ]
         self.sprites = pygame.sprite.OrderedUpdates()
         self.icons = pygame.sprite.Group()
@@ -110,9 +109,9 @@ class CarefulActivity(Activity):
 
         self.text = pygame.sprite.Group()
         self.text.add([\
-          Text('1', pygame.Rect(203, 43, 106, 67), (10, 20)),
-          Text('2', pygame.Rect(372, 268, 87, 52), (10, 160)),
-          Text('3', pygame.Rect(565, 237, 77, 57), (10, 300)),
+          Text('1', self.rectList[0], (10, 20)),
+          Text('2', self.rectList[1], (10, 160)),
+          Text('3', self.rectList[2], (10, 300)),
           ])
         self.sprites.add([self.icons, self.text, self.hand])
         pos = pygame.mouse.get_pos()
@@ -173,5 +172,3 @@ class CarefulActivity(Activity):
 
         if len(self.rectList) == 0:
             self.finished_ = True
-
-
