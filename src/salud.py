@@ -12,7 +12,7 @@ import constants
 import common
 from menu import MenuItem, MainMenu
 from reads import PoetryActivity, PoetryActivity2, VerseActivity, Verse2Activity
-from links import Shower
+from links import Shower, Meals
 from soups import SoupActivity, SoupActivity2
 from crazyletter import CrazyLetterActivity
 from puzzle import PuzzleActivity, Puzzle2Activity,\
@@ -29,6 +29,7 @@ from select import SelectActivity, Select2Activity,\
         Select3Activity
 from careful import CarefulActivity
 from painting import PaintActivity, Paint2Activity
+from words import Words
 
 def main():
 	# Mixer pre init
@@ -63,15 +64,14 @@ def main():
         MenuItem('order2', OrderActivity2, 'order'), # Act 12
         MenuItem('diff', Select3Activity, 'select'), # Act 13
         MenuItem('environment', SoupActivity2, 'soups'), # Act 14
-        # TODO Act 15
+        MenuItem('cleaning', Labyrinth2Activity, 'labyrinth'), #  Act 15
         MenuItem('verses', VerseActivity, 'readings'), # Act 16
         MenuItem('verses', Verse2Activity, 'readings'), # Act 16
         MenuItem('room', Room, 'select'), # Act 17
         MenuItem('beach', Select2Activity, 'select'), # Act 18
         MenuItem('warning', CarefulActivity, 'dragndrop'), # Act 19
-        # TODO Act 20
+        MenuItem('words', Words, 'dragndrop'), # Act 19
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
-        MenuItem('cleaning', Labyrinth2Activity, 'labyrinth'), #  Act 22
         MenuItem('painting', PaintActivity, 'paint'), #  Act 23
         MenuItem('painting', Paint2Activity, 'paint'), #  Act 23
         MenuItem('riddle', Riddle1, 'complete'), # Act 24-1
@@ -81,7 +81,7 @@ def main():
         MenuItem('riddle', Riddle5, 'complete'), # Act 24-5
         MenuItem('riddle', Riddle6, 'complete'), # Act 25
         MenuItem('cooking', Cooking, 'dragndrop'), # Act 26
-        # TODO Act 27
+        MenuItem('meals', Meals, 'associations'), # Act 27
     ]
 
 	MainMenu(screen, items).run()

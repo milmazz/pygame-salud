@@ -98,6 +98,7 @@ illustration_016 = os.path.join(data_folder, "backgrounds", "illustration_016.jp
 
 # Careful
 illustration_018 = os.path.join(data_folder, "backgrounds", "illustration_018.jpg")
+illustration_019 = os.path.join(data_folder, "backgrounds", "illustration_019.jpg")
 
 # Painting
 painting_folder = os.path.join(data_folder, "painting")
