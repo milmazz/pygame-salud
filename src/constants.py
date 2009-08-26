@@ -50,6 +50,8 @@ illustration_013 = os.path.join(data_folder, "backgrounds", "illustration_013.jp
 
 # Shower
 illustration_007 = os.path.join(data_folder, "backgrounds", "illustration_007.jpg")
+# Meals 
+illustration_023 = os.path.join(data_folder, "backgrounds", "illustration_023.jpg")
 
 # Cooking
 illustration_024 = os.path.join(data_folder, "backgrounds", "illustration_024.jpg")

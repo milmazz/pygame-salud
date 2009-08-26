@@ -14,24 +14,97 @@ import common
 from activity import Activity
 from icons import *
 
+class Item(sprite.Sprite):
+        def __init__(self, name, position):
+            sprite.Sprite.__init__(self)
+            self.name = name
+            self.image_name = os.path.join(constants.data_folder, 
+                                           "links", name)
+            self.normal, self.rect = common.load_image(self.image_name + ".png")
+            self.over = common.load_image(self.image_name + "_hover.png")[0]
+            self.image = self.normal
+            self.rect.move_ip(position)
+            self.active = False
+
+#            self.rect.inflate_ip(-self.rect[2]*0.3, -self.rect[3]*0.3)
+
+        def update(self):
+            if self.active:
+                self.deactivate()
+            else:
+                self.activate()
+
+        def activate(self):
+            self.active = True
+            self.image = self.over
+
+        select = activate
+
+        def deactivate(self):
+            self.active = False
+            self.image = self.normal
+
+
+class Pointer(sprite.Sprite):
+    def __init__(self):
+        sprite.Sprite.__init__(self) 
+        self.image, self.rect = common.load_image(constants.cursor_filename)
+
+        self.rect[2] = 10
+        self.rect[3] = 10
+
+        pos = (constants.screen_mode[0]/2.0, constants.screen_mode[1]/2.0)
+        pygame.mouse.set_pos(pos)
+        self.update(pos)
+
+    def update(self, pos):
+        self.rect.topleft = pos
+
+
+class Arrow:
+    def __init__(self, surface, start=(0, 0), end=(0, 0), color=(0,0,0),
+                 width=1):
+        self.surface = surface
+        self.start = start
+        self.end = end
+        self.color = color
+        self.width = width
+
+        self.update()
+
+        return
+
+    def update(self, start=None, end=None):
+        if start:
+            self.start = start
+        if end:
+            self.end = end
+
+        pygame.draw.line(self.surface, self.color, self.start, self.end,
+                         self.width)
+
+        rotate = math.atan2(self.end[1] - self.start[1], 
+                               self.end[0] - self.start[0])
+        rotate = math.degrees(rotate)
+        h = 20
+        angle1 = math.radians(30 + rotate)
+        angle2 = math.radians(30 - rotate)
+
+        x1 = self.end[0] - math.cos(angle1) * h
+        y1 = self.end[1] - math.sin(angle1) * h
+        x2 = self.end[0] - math.cos(angle2) * h
+        y2 = self.end[1] + math.sin(angle2) * h
+        points = [(x1, y1), (x2, y2), (self.end)]
+        pygame.draw.polygon(self.surface, self.color, points) 
+        return
+
 
 # Activity 7
-class Shower(Activity):
-    def __init__(self, screen):
+class Links(Activity):
+    def __init__(self, screen, pos):
         Activity.__init__(self, screen)
 
-        pos = {
-                'towel': (150, 126),
-                'shampoo': (70, 255),
-                'brush': (125, 365),
-                'soap': (155, 470),
-                'hair': (500, 180),
-                'body': (510, 295),
-                'mouth': (500, 450),
-                }
-  
-        self.selections = []
-        self.actual_selection = []
+ 
         self.couple = set()
         self.couples = []
 
@@ -56,14 +129,9 @@ class Shower(Activity):
         self.arrows = []
         self.arrow = None
 
-    def setup_background(self):
-        self.background = common.load_image(constants.illustration_007)[0]
-
     def setup(self):
-        title = u"¡A la ducha!"
-
-        instructions = (u"Une con una flecha lo que necesitas para", 
-                        u"asear cada parte de tu cuerpo.")
+        title = self.title
+        instructions = self.instructions
 
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])
@@ -161,6 +229,39 @@ class Shower(Activity):
             self.pointer_.draw(self.screen)
             pygame.display.flip()
 
+    def draw_text(self):
+        x, y = 0, 0
+        for i in self.text:
+            x = i[1][0]
+            y = i[1][1]
+            surfaces = i[0]
+            for surface in surfaces:
+                pos = (x, y)
+                self.screen.blit(surface, pos)
+                y = y + surface.get_height()
+
+
+# Activity 7
+class Shower(Links):
+    def __init__(self, screen):
+        self.title = u"¡A la ducha!"
+        self.instructions = (u"Une con una flecha lo que necesitas para", 
+                             u"asear cada parte de tu cuerpo.")
+        pos = {
+                'towel': (150, 126),
+                'shampoo': (70, 255),
+                'brush': (125, 365),
+                'soap': (155, 470),
+                'hair': (500, 180),
+                'body': (510, 295),
+                'mouth': (500, 450),
+                }
+        Links.__init__(self, screen, pos)
+        return 
+
+    def setup_background(self):
+        self.background = common.load_image(constants.illustration_007)[0]
+
     def are_couple(self, couple):
         b, a = couple
         if a.active and b.active:
@@ -180,101 +281,58 @@ class Shower(Activity):
                 return True
             if a.name == 'body' and b.name == 'soap':
                 return True
-                
         return False 
 
-    def draw_text(self):
-        x, y = 0, 0
-        for i in self.text:
-            x = i[1][0]
-            y = i[1][1]
-            surfaces = i[0]
-            for surface in surfaces:
-                pos = (x, y)
-                self.screen.blit(surface, pos)
-                y = y + surface.get_height()
 
+# Activity 23
+class Meals(Links):
+    def __init__(self, screen):
+        self.title = u"Cada oveja con su pareja"
+        self.instructions = (u"Une con una línea el dibujo con la palabra " +
+                             u"que le corresponde",)
+        pos = {
+                'breakfast': (491, 476),
+                'lunch': (399, 75),
+                'dinner': (330, 341),
+                'snack': (512, 201),
+                'tlunch': (40, 115),
+                'tsnack': (70, 205),
+                'tdinner': (92, 347),
+                'tbreakfast': (20, 459),
+                }
+        Links.__init__(self, screen, pos)
 
-class Item(sprite.Sprite):
-        def __init__(self, name, position):
-            sprite.Sprite.__init__(self)
-            self.name = name
-            self.image_name = os.path.join(constants.data_folder, 
-                                           "links", name)
-            self.normal, self.rect = common.load_image(self.image_name + ".png")
-            self.over = common.load_image(self.image_name + "_over.png")[0]
-            self.image = self.normal
-            self.rect.move_ip(position)
-            self.active = False
+    def setup_background(self):
+        self.background = common.load_image(constants.illustration_023)[0]
 
-#            self.rect.inflate_ip(-self.rect[2]*0.3, -self.rect[3]*0.3)
+    def are_couple(self, couple):
+        b, a = couple
+        couple = False
+        if a.active and b.active:
+            if a.name == 'tbreakfast' and b.name == 'breakfast':
+                return True        
+            elif a.name == 'tlunch' and b.name == 'lunch':
+                return True        
+            elif a.name == 'tsnack' and b.name == 'snack':
+                return True        
+            elif a.name == 'tdinner' and b.name == 'dinner':
+                return True        
+            elif a.name == 'breakfast' and b.name == 'tbreakfast':
+                return True        
+            elif a.name == 'lunch' and b.name == 'tlunch':
+                return True        
+            elif a.name == 'snack' and b.name == 'tsnack':
+                return True        
+            elif a.name == 'dinner' and b.name == 'tdinner':
+                return True
+        return False
+       
 
-        def update(self):
-            if self.active:
-                self.deactivate()
-            else:
-                self.activate()
+ 
 
-        def activate(self):
-            self.active = True
-            self.image = self.over
+if __name__ == "__main__":
+	pygame.init()
 
-        select = activate
-
-        def deactivate(self):
-            self.active = False
-            self.image = self.normal
-
-
-class Pointer(sprite.Sprite):
-    def __init__(self):
-        sprite.Sprite.__init__(self) 
-        self.image, self.rect = common.load_image(constants.cursor_filename)
-
-        self.rect[2] = 10
-        self.rect[3] = 10
-
-        pos = (constants.screen_mode[0]/2.0, constants.screen_mode[1]/2.0)
-        pygame.mouse.set_pos(pos)
-        self.update(pos)
-
-    def update(self, pos):
-        self.rect.topleft = pos
-
-
-class Arrow:
-    def __init__(self, surface, start=(0, 0), end=(0, 0), color=(0,0,0),
-                 width=1):
-        self.surface = surface
-        self.start = start
-        self.end = end
-        self.color = color
-        self.width = width
-
-        self.update()
-
-        return
-
-    def update(self, start=None, end=None):
-        if start:
-            self.start = start
-        if end:
-            self.end = end
-
-        pygame.draw.line(self.surface, self.color, self.start, self.end,
-                         self.width)
-
-        rotate = math.atan2(self.end[1] - self.start[1], 
-                               self.end[0] - self.start[0])
-        rotate = math.degrees(rotate)
-        h = 20
-        angle1 = math.radians(30 + rotate)
-        angle2 = math.radians(30 - rotate)
-
-        x1 = self.end[0] - math.cos(angle1) * h
-        y1 = self.end[1] - math.sin(angle1) * h
-        x2 = self.end[0] - math.cos(angle2) * h
-        y2 = self.end[1] + math.sin(angle2) * h
-        points = [(x1, y1), (x2, y2), (self.end)]
-        pygame.draw.polygon(self.surface, self.color, points) 
-        return
+	screen = pygame.display.set_mode(constants.screen_mode, 32)
+    meals = Meals(screen)
+    meals.run()
