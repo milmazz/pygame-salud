@@ -129,17 +129,45 @@ class PaintBase(Activity):
         self.cursor.draw(self.screen)
         #self.text()
 
-class PaintActivity(PaintBase):
+class PaintBrickLayer(PaintBase):
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.bricklayer)
+
+class PaintNurse(PaintBase):
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.nurse)
+
+class PaintPolice(PaintBase):
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.police)
+
+class PaintStreetSweeper(PaintBase):
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.streetsweeper)
+
+class PaintBarber(PaintBase):
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.barber)
+
+class PaintDoctor(PaintBase):
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.doctor)
+
+class PaintFireFighter(PaintBase):
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.firefighter)
+
+class PaintTeacher(PaintBase):
     def setup_background(self):
         self.background, rect = common.load_image(constants.teacher)
-    
-class Paint2Activity(PaintBase):
+
+class PaintMechanic(PaintBase):
     def setup_background(self):
         self.background, rect = common.load_image(constants.mechanic)
-    
+
 if __name__ == "__main__":
 	pygame.init()
 
 	screen = pygame.display.set_mode(constants.screen_mode, 32)
-    paint = Paint2Activity(screen)
+    paint = PaintMechanic(screen)
 	paint.run()
