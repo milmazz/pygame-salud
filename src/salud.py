@@ -28,7 +28,7 @@ from riddle import Riddle1, Riddle2, Riddle3, Riddle4, Riddle5, Riddle6
 from select import SelectActivity, Select2Activity,\
         Select3Activity
 from careful import CarefulActivity
-
+from painting import PaintActivity, Paint2Activity
 
 def main():
 	# Mixer pre init
@@ -72,7 +72,8 @@ def main():
         # TODO Act 20
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
         MenuItem('cleaning', Labyrinth2Activity, 'labyrinth'), #  Act 22
-        # TODO Act 23
+        MenuItem('painting', PaintActivity, 'paint'), #  Act 23
+        MenuItem('painting', Paint2Activity, 'paint'), #  Act 23
         MenuItem('riddle', Riddle1, 'complete'), # Act 24-1
         MenuItem('riddle', Riddle2, 'complete'), # Act 24-2
         MenuItem('riddle', Riddle3, 'complete'), # Act 24-3
