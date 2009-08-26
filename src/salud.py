@@ -28,7 +28,9 @@ from riddle import Riddle1, Riddle2, Riddle3, Riddle4, Riddle5, Riddle6
 from select import SelectActivity, Select2Activity,\
         Select3Activity
 from careful import CarefulActivity
-from painting import PaintActivity, Paint2Activity
+from painting import PaintBrickLayer, PaintNurse, PaintPolice, \
+        PaintStreetSweeper, PaintBarber, PaintDoctor, \
+        PaintFireFighter, PaintTeacher, PaintMechanic
 
 def main():
 	# Mixer pre init
@@ -72,8 +74,15 @@ def main():
         # TODO Act 20
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
         MenuItem('cleaning', Labyrinth2Activity, 'labyrinth'), #  Act 22
-        MenuItem('painting', PaintActivity, 'paint'), #  Act 23
-        MenuItem('painting', Paint2Activity, 'paint'), #  Act 23
+        MenuItem('bricklayer', PaintBrickLayer, 'paint'), #  Act 23
+        MenuItem('nurse', PaintNurse, 'paint'), #  Act 23
+        MenuItem('police', PaintPolice, 'paint'), #  Act 23
+        MenuItem('streetsweeper', PaintStreetSweeper, 'paint'), #  Act 23
+        MenuItem('barber', PaintBarber, 'paint'), #  Act 23
+        MenuItem('doctor', PaintDoctor, 'paint'), #  Act 23
+        MenuItem('firefighter', PaintFireFighter, 'paint'), #  Act 23
+        MenuItem('teacher', PaintTeacher, 'paint'), #  Act 23
+        MenuItem('mechanic', PaintMechanic, 'paint'), #  Act 23
         MenuItem('riddle', Riddle1, 'complete'), # Act 24-1
         MenuItem('riddle', Riddle2, 'complete'), # Act 24-2
         MenuItem('riddle', Riddle3, 'complete'), # Act 24-3
