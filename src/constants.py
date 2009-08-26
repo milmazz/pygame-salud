@@ -101,8 +101,15 @@ illustration_018 = os.path.join(data_folder, "backgrounds", "illustration_018.jp
 
 # Painting
 painting_folder = os.path.join(data_folder, "painting")
+bricklayer = os.path.join(painting_folder, "027_1.png")
+nurse = os.path.join(painting_folder, "027_2.png")
+police = os.path.join(painting_folder, "027_3.png")
+streetsweeper = os.path.join(painting_folder, "027_4.png")
+barber = os.path.join(painting_folder, "027_5.png")
+doctor = os.path.join(painting_folder, "028_1.png")
+firefighter = os.path.join(painting_folder, "028_2.png")
 teacher = os.path.join(painting_folder, "028_3.png")
-mechanic = os.path.join(painting_folder, "028_4.jpg")
+mechanic = os.path.join(painting_folder, "028_4.png")
 
 # sound buffer length
 mixer_buffersize = 3 * 1024
