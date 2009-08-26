@@ -244,18 +244,16 @@ class Select3Activity(Activity):
             textRect.centery = 20
             self.background.blit(text, textRect)
 
-            messages = ['En cada uno de las ilustraciones, selecciona',
-            'según se indica. Ilustración A, el más alto;',
-            'ilustración B, la más flaca; ilustración C, el más blanco;',
-            'ilustración D, el más fuerte.']
+            messages = ['En cada uno de las ilustraciones, selecciona según se indica. Ilustración A, el más alto;',
+            'ilustración B, la más flaca; ilustración C, el más blanco; ilustración D, el más fuerte.']
             
-            y = font.get_linesize()
-            font = pygame.font.SysFont("dejavusans", 16)
+            y = 252
+            font = pygame.font.SysFont("dejavusans", 18)
             font_height = font.get_linesize()
 
             for message in messages:
                 message = unicode(message, 'utf-8')
-                text = font.render(message, True, (122, 122, 122))
+                text = font.render(message, True, (0, 0, 0))
                 textRect = text.get_rect()
                 textRect.centerx = self.screen.get_rect().centerx
                 y += font_height 
