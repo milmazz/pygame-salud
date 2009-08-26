@@ -135,7 +135,7 @@ class Menu:
             if len(self.content) == 8:
                 x = 55
             else:
-                x = 580
+                x = 608
 
         item.place((x, y))
         self.content.add(item)
