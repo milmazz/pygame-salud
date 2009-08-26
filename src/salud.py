@@ -11,7 +11,7 @@ import cProfile as profile
 import constants
 import common
 from menu import MenuItem, MainMenu
-from reads import PoetryActivity, PoetryActivity2
+from reads import PoetryActivity, PoetryActivity2, VerseActivity, Verse2Activity
 from links import Shower
 from soups import SoupActivity, SoupActivity2
 from crazyletter import CrazyLetterActivity
@@ -64,10 +64,11 @@ def main():
         MenuItem('diff', Select3Activity, 'select'), # Act 13
         MenuItem('environment', SoupActivity2, 'soups'), # Act 14
         # TODO Act 15
-        # TODO Act 16
+        MenuItem('verses', VerseActivity, 'readings'), # Act 16
+        MenuItem('verses', Verse2Activity, 'readings'), # Act 16
         MenuItem('room', Room, 'select'), # Act 17
         MenuItem('beach', Select2Activity, 'select'), # Act 18
-        MenuItem('beach', CarefulActivity, 'dragndrop'), # Act 19
+        MenuItem('warning', CarefulActivity, 'dragndrop'), # Act 19
         # TODO Act 20
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
         MenuItem('cleaning', Labyrinth2Activity, 'labyrinth'), #  Act 22
