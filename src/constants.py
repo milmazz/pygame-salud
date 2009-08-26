@@ -66,6 +66,9 @@ illustration_025 = os.path.join(data_folder, "backgrounds", "illustration_025.pn
 # Missing
 illustration_001 = os.path.join(data_folder, "backgrounds", "illustration_001.jpg")
 
+# Verses
+page_21a = os.path.join(data_folder, "backgrounds", "page_21a.png")
+page_21b = os.path.join(data_folder, "backgrounds", "page_21b.png")
 
 poetry = os.path.join(data_folder, "poetries", "poetry.txt")
 poetry2 = os.path.join(data_folder, "poetries", "poetry2.txt")
