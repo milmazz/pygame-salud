@@ -70,7 +70,7 @@ def main():
         MenuItem('room', Room, 'select'), # Act 17
         MenuItem('beach', Select2Activity, 'select'), # Act 18
         MenuItem('warning', CarefulActivity, 'dragndrop'), # Act 19
-        MenuItem('words', Words, 'dragndrop'), # Act 19
+        MenuItem('words', Words, 'dragndrop'), # Act 20
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
         MenuItem('painting', PaintActivity, 'paint'), #  Act 23
         MenuItem('painting', Paint2Activity, 'paint'), #  Act 23
