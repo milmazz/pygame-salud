@@ -67,7 +67,7 @@ def main():
         # TODO Act 16
         MenuItem('room', Room, 'select'), # Act 17
         MenuItem('beach', Select2Activity, 'select'), # Act 18
-        MenuItem('beach', CarefulActivity, 'select'), # Act 19
+        MenuItem('beach', CarefulActivity, 'dragndrop'), # Act 19
         # TODO Act 20
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
         MenuItem('cleaning', Labyrinth2Activity, 'labyrinth'), #  Act 22
