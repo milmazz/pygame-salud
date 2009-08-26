@@ -73,8 +73,8 @@ class CarefulActivity(Activity):
             textRect.topleft = (x, y)
             self.background.blit(text, textRect)
 
-            messages = ["Arrastra hasta los globitos lo que dice cada",
-            "personaje en cada situación."]
+            messages = ["Lee los mensajes que contienen los globos",
+            "y arrástralos hasta la imagen de la situación que corresponda."]
             
             y += font.get_linesize()
             font = pygame.font.SysFont("dejavusans", 16)
@@ -95,7 +95,7 @@ class CarefulActivity(Activity):
         self.button_down = 0
         self.rectList = [ 
                 pygame.Rect(218, 60, 106, 67),
-                pygame.Rect(372, 278, 87, 52),
+                pygame.Rect(322, 218, 87, 52),
                 pygame.Rect(552, 247, 77, 57),
                 ]
         self.sprites = pygame.sprite.OrderedUpdates()
