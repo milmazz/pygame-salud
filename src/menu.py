@@ -173,7 +173,7 @@ class MainMenu(Activity):
         self.cat_pos = (675, 60)
         
         # Position of the activities menu
-        self.act_pos = (270, 130)
+        self.act_pos = (270, 105)
 
         # items holds the categories
         self.menu = Menu(self.cat_pos)
