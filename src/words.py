@@ -110,10 +110,10 @@ class Words(Activity):
         title = u"Palabras largas, palabras cortas"
         instructions = (u"Estas palabras están relacionadas con la salud. ",
                         u"  ",
-                        u"Arrastra hacia la bolsa azul ",
+                        u"Arrastra hacia la bolsa roja ",
                         u"las palabras que tienen ",
                         u"menos de 5 letras y hacia la ",
-                        u"bolsa roja las que tienen ",
+                        u"bolsa azul las que tienen ",
                         u"más de 5 letras.")
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])

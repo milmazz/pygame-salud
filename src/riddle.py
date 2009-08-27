@@ -14,6 +14,7 @@ import common
 from activity import Activity
 from icons import Icons, Check
 
+# Activity 24-1
 class Riddle1(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
@@ -23,13 +24,12 @@ class Riddle1(Activity):
                             'illustration_029a.png')
         self.background, rect = common.load_image(path)
 
-        title = u"Adivina, adivinanza ..."
+        title = u"¿Qué será, qué será?"
         instructions = (u"Lee esta adivinanza, luego une los puntos de ",
 				        u"cada figura siguiendo el orden de mayor a menor. ",
                         u"Así descubrirás la respuesta.")
-		riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
-				  u"grato eres también;", u"donde yo no existo", 
-				  u"el mundo triste es:", u"adivina quién puede ser.", u"¿Quién soy?")
+		riddle = (u"Agua pasó por aquí, ", 
+                  u"¡cate! Que yo la ví",)
 
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])
@@ -97,7 +97,6 @@ class Riddle1(Activity):
                 (669, 133), #30
                 (651, 158), #31
                 (630, 183), #32
-
             )
         size = (8, 8)
         self.points = []
@@ -210,7 +209,7 @@ class Riddle1(Activity):
         self.sprites.draw(self.screen)
         pygame.display.flip()
 
-
+# Activity 24-2
 class Riddle2(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
@@ -220,13 +219,14 @@ class Riddle2(Activity):
                             'illustration_029b.png')
         self.background, rect = common.load_image(path)
 
-        title = u"Adivina, adivinanza ..."
-        instructions = (u"Lee esta adivinanza, luego une los puntos de ",
-				        u"cada figura siguiendo el orden de mayor a menor. ",
+        title = u"¿Qué será, qué será?"
+        instructions = (u"Lee esta adivinanza, luego une los puntos",
+				        u"de cada figura siguiendo",
+                        u"el orden de mayor a menor.",
                         u"Así descubrirás la respuesta.")
-		riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
-				  u"grato eres también;", u"donde yo no existo", 
-				  u"el mundo triste es:", u"adivina quién puede ser.", u"¿Quién soy?")
+		riddle = (u"Una hoja entre muchas", 
+                  u"hojas, buscando una hoja", 
+                  u"se llora.")
 
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])
@@ -407,6 +407,7 @@ class Riddle2(Activity):
         pygame.display.flip()
 
 
+# Activity 24-3
 class Riddle3(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
@@ -416,13 +417,12 @@ class Riddle3(Activity):
                             'illustration_030a.png')
         self.background, rect = common.load_image(path)
 
-        title = u"Adivina, adivinanza ..."
+        title = u"¿Qué será, qué será?"
         instructions = (u"Lee esta adivinanza, luego une los puntos de ",
 				        u"cada figura siguiendo el orden de mayor a menor. ",
                         u"Así descubrirás la respuesta.")
-		riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
-				  u"grato eres también;", u"donde yo no existo", 
-				  u"el mundo triste es:", u"adivina quién puede ser.", u"¿Quién soy?")
+		riddle = (u"El que sabe, sabe ",
+                  u"¿con qué se hace el casabe?",)
 
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])
@@ -601,7 +601,7 @@ class Riddle3(Activity):
         self.sprites.draw(self.screen)
         pygame.display.flip()
 
-
+# Activity 24-4
 class Riddle4(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
@@ -611,13 +611,14 @@ class Riddle4(Activity):
                             'illustration_030b.png')
         self.background, rect = common.load_image(path)
 
-        title = u"Adivina, adivinanza ..."
+        title = u"¿Qué será, qué será?"
         instructions = (u"Lee esta adivinanza, luego une los puntos de ",
 				        u"cada figura siguiendo el orden de mayor a menor. ",
                         u"Así descubrirás la respuesta.")
-		riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
-				  u"grato eres también;", u"donde yo no existo", 
-				  u"el mundo triste es:", u"adivina quién puede ser.", u"¿Quién soy?")
+		riddle = (u"Que sólo será", 
+                  u"que no lo será", 
+                  u"si no lo adivinas",
+                  u"el ratón se lo comerá",)
 
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])
@@ -788,7 +789,7 @@ class Riddle4(Activity):
         self.sprites.draw(self.screen)
         pygame.display.flip()
 
-
+# Activity 25
 class Riddle5(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)

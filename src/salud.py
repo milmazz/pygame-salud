@@ -78,8 +78,8 @@ def main():
         MenuItem('riddle', Riddle2, 'complete'), # Act 24-2
         MenuItem('riddle', Riddle3, 'complete'), # Act 24-3
         MenuItem('riddle', Riddle4, 'complete'), # Act 24-4
-        MenuItem('riddle', Riddle5, 'complete'), # Act 24-5
-        MenuItem('riddle', Riddle6, 'complete'), # Act 25
+        MenuItem('riddle', Riddle5, 'complete'), # Act 25
+#        MenuItem('riddle', Riddle6, 'complete'), # Act ??
         MenuItem('cooking', Cooking, 'dragndrop'), # Act 26
         MenuItem('meals', Meals, 'associations'), # Act 27
     ]
