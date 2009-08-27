@@ -74,7 +74,6 @@ def main():
         MenuItem('warning', CarefulActivity, 'dragndrop'), # Act 19
         MenuItem('words', Words, 'dragndrop'), # Act 20
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
-        MenuItem('cleaning', Labyrinth2Activity, 'labyrinth'), #  Act 22
         MenuItem('bricklayer', PaintBrickLayer, 'paint'), #  Act 23
         MenuItem('nurse', PaintNurse, 'paint'), #  Act 23
         MenuItem('police', PaintPolice, 'paint'), #  Act 23
