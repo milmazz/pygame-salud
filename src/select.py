@@ -151,7 +151,7 @@ class Select2Activity(Activity):
             textRect.topleft = (30, 10)
             self.background.blit(text, textRect)
 
-            messages = ["¿ Quien esta haciendo bien las cosas ?",
+            messages = ["¿Quién está haciendo bien las cosas?",
             "Selecciona las actividades correctas en el dibujo."]
             
             y = font.get_linesize()
