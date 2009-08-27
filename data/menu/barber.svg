@@ -90,19 +90,19 @@
    style="fill:none;stroke:#000000;stroke-width:0.75"
    id="path37"
    d=""
-   inkscape:export-filename="/home/mmazzarri/Trabajo/cenamec/pygame-salud/data/menu/teacher.png"
+   inkscape:export-filename="/home/mmazzarri/Trabajo/cenamec/pygame-salud/data/menu/barber.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90" /><path
    style="fill:none;stroke:#000000;stroke-width:0.75"
    id="path39"
    d=""
-   inkscape:export-filename="/home/mmazzarri/Trabajo/cenamec/pygame-salud/data/menu/teacher.png"
+   inkscape:export-filename="/home/mmazzarri/Trabajo/cenamec/pygame-salud/data/menu/barber.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90" /><path
    style="fill:none;stroke:#000000"
    id="path64"
    d="M 125.42719,38.5 C 125.42719,45.127 120.05419,50.5 113.42719,50.5 L 12.427197,50.5 C 5.800197,50.5 0.427197,45.127 0.427197,38.5 L 0.427197,12.5 C 0.427197,5.873 5.800197,0.5 12.427197,0.5 L 113.42719,0.5 C 120.05419,0.5 125.42719,5.873 125.42719,12.5 L 125.42719,38.5 z"
-   inkscape:export-filename="/home/mmazzarri/Trabajo/cenamec/pygame-salud/data/menu/teacher.png"
+   inkscape:export-filename="/home/mmazzarri/Trabajo/cenamec/pygame-salud/data/menu/barber.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90" />
 
@@ -110,17 +110,19 @@
 <text
    xml:space="preserve"
    style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-   x="25.064941"
-   y="32.583252"
+   x="15.379395"
+   y="30.741699"
    id="text3319"
-   inkscape:export-filename="/home/mmazzarri/Trabajo/cenamec/pygame-salud/data/menu/teacher.png"
+   inkscape:export-filename="/home/mmazzarri/Trabajo/cenamec/pygame-salud/data/menu/barber.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"><tspan
      sodipodi:role="line"
      id="tspan3321"
-     x="25.064941"
-     y="32.583252"
-     style="font-size:19px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans">Barbera</tspan></text>
+     x="15.379395"
+     y="30.741699"
+     style="font-size:19px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans">Peluquera</tspan></text>
+
+
 
 
 
