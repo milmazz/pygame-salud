@@ -33,18 +33,25 @@ class PaintBase(Activity):
         self.line_end = None
         self.text()
         self.transparent = pygame.Rect(297, 96, 400, 408)
-        # Colors
-        self.color_red = pygame.draw.rect(self.background, (255, 0, 0), (100, 100, 20, 20))
-        self.color_green = pygame.draw.rect(self.background, (0, 255, 0), (130, 100, 20, 20))
-        self.color_white = pygame.draw.rect(self.background, (255, 255, 255), (100, 130, 20, 20))
-        self.color_blue = pygame.draw.rect(self.background, (0, 0, 255), (130, 130, 20, 20))
-        self.color_black = pygame.draw.rect(self.background, (0, 0, 0), (100, 160, 20, 20))
+        # Color palette
+        self.palette = {}
+        self.mk_palette(constants.rgb_colors)
         #
         self.pincel1 = pygame.draw.circle(self.background, (0, 0, 0), (100, 200), 5)
         self.pincel2 = pygame.draw.circle(self.background, (0, 0, 0), (120, 200), 10)
         self.pincel3 = pygame.draw.circle(self.background, (0, 0, 0), (155, 200), 15)
         self.pincel3 = pygame.draw.circle(self.background, (0, 0, 0), (195, 200), 20)
     
+    def mk_palette(self, colors):
+        pos = (20, 245)
+        square = (20, 20)
+        count = 0
+        for key,color in colors.iteritems():
+            x = pos[0] + square[0] * (count % 11)
+            y = pos[1] + square[1] * (count / 11)
+            self.palette[key] = pygame.draw.rect(self.background, color, ((x, y), square))
+            count += 1
+
     def handle_events(self):
         for event in [pygame.event.wait()] + pygame.event.get():
             if event.type == QUIT:
@@ -59,27 +66,16 @@ class PaintBase(Activity):
                 if pygame.sprite.spritecollideany(self.finger, self.close_button):
                     self.quit = True
                     return
-                elif self.color_red.collidepoint(self.line_end):
-                    # Red
-                    self.draw_color = (255, 0, 0)
-                elif self.color_green.collidepoint(self.line_end):
-                    # Green
-                    self.draw_color = (0, 255, 0)
-                elif self.color_white.collidepoint(self.line_end):
-                    # White
-                    self.draw_color = (255, 255, 255)
-                elif self.color_blue.collidepoint(self.line_end):
-                    # Blue
-                    self.draw_color = (0, 0, 255)
-                elif self.color_black.collidepoint(self.line_end):
-                    # Black
-                    self.draw_color = (0, 0, 0)
                 elif self.pincel1.collidepoint(self.line_end):
                     self.line_width = 3
                 elif self.pincel2.collidepoint(self.line_end):
                     self.line_width = 10
                 elif self.pincel3.collidepoint(self.line_end):
                     self.line_width = 20
+                else:
+                    for key,rect in self.palette.iteritems():
+                        if rect.collidepoint(self.line_end):
+                            self.draw_color = constants.rgb_colors[key]
             elif event.type == KEYUP:
                 self.changed = False
                 if event.key == K_ESCAPE:
@@ -92,7 +88,6 @@ class PaintBase(Activity):
     def on_change(self):
         self.cursor.update()
         self.close_button.draw(self.screen)
-        #self.text()
         self.cursor.draw(self.screen)
         self.mprev = self.pos
 
@@ -127,41 +122,76 @@ class PaintBase(Activity):
         pygame.mouse.set_visible(False)
         self.close_button.draw(self.screen)
         self.cursor.draw(self.screen)
-        #self.text()
 
 class PaintBrickLayer(PaintBase):
+    def __init__(self, screen):
+        PaintBase.__init__(self, screen)
+        self.transparent = pygame.Rect(356, 156, 400, 410)
+
     def setup_background(self):
         self.background, rect = common.load_image(constants.bricklayer)
 
 class PaintNurse(PaintBase):
+    def __init__(self, screen):
+        PaintBase.__init__(self, screen)
+        self.transparent = pygame.Rect(356, 156, 400, 423)
+
     def setup_background(self):
         self.background, rect = common.load_image(constants.nurse)
 
 class PaintPolice(PaintBase):
+    def __init__(self, screen):
+        PaintBase.__init__(self, screen)
+        self.transparent = pygame.Rect(356, 156, 400, 415)
+
     def setup_background(self):
         self.background, rect = common.load_image(constants.police)
 
 class PaintStreetSweeper(PaintBase):
+    def __init__(self, screen):
+        PaintBase.__init__(self, screen)
+        self.transparent = pygame.Rect(356, 66, 400, 529)
+
     def setup_background(self):
         self.background, rect = common.load_image(constants.streetsweeper)
 
 class PaintBarber(PaintBase):
+    def __init__(self, screen):
+        PaintBase.__init__(self, screen)
+        self.transparent = pygame.Rect(356, 156, 400, 387)
+
     def setup_background(self):
         self.background, rect = common.load_image(constants.barber)
 
 class PaintDoctor(PaintBase):
+    def __init__(self, screen):
+        PaintBase.__init__(self, screen)
+        self.transparent = pygame.Rect(356, 156, 400, 404)
+
     def setup_background(self):
         self.background, rect = common.load_image(constants.doctor)
 
 class PaintFireFighter(PaintBase):
+    def __init__(self, screen):
+        PaintBase.__init__(self, screen)
+        self.transparent = pygame.Rect(356, 156, 400, 389)
+
     def setup_background(self):
         self.background, rect = common.load_image(constants.firefighter)
 
 class PaintTeacher(PaintBase):
+    def __init__(self, screen):
+        PaintBase.__init__(self, screen)
+        self.transparent = pygame.Rect(356, 156, 400, 408)
+
     def setup_background(self):
         self.background, rect = common.load_image(constants.teacher)
 
 class PaintMechanic(PaintBase):
+    def __init__(self, screen):
+        PaintBase.__init__(self, screen)
+        self.transparent = pygame.Rect(356, 156, 400, 426)
+
     def setup_background(self):
         self.background, rect = common.load_image(constants.mechanic)
 
