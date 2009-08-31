@@ -67,7 +67,7 @@ class OrderActivity(Activity):
 
     def instruction_text(self):
         if pygame.font:
-            font = pygame.font.SysFont('dejavusans', 32)
+            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             title = unicode("¿Qué va primero?", 'utf-8')
             text = font.render(title, 1, (0, 0, 0))
             textRect = text.get_rect()
@@ -79,7 +79,7 @@ class OrderActivity(Activity):
                 "en cada cuadro siguiendo la secuencia."]
             
             y = font.get_linesize()
-            font = pygame.font.SysFont("dejavusans", 20)
+            font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             font_height = font.get_linesize()
 
             for message in messages:
@@ -188,7 +188,7 @@ class OrderActivity2(Activity):
 
     def instruction_text(self):
         if pygame.font:
-            font = pygame.font.SysFont('dejavusans', 24)
+            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             title = unicode("Nuestro cuerpo cambia cuando crecemos", 'utf-8')
             text = font.render(title, True, (0, 0, 0))
             textRect = text.get_rect()
@@ -203,7 +203,7 @@ class OrderActivity2(Activity):
             "el número (1, 2, 3 y 4) al", "círculo correspondiente."]
             
             y = font.get_linesize()
-            font = pygame.font.SysFont("dejavusans", 16)
+            font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             font_height = font.get_linesize()
 
             for message in messages:

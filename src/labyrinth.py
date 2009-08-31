@@ -131,14 +131,14 @@ class Labyrinth(Activity):
 
     def informative_text(self):
         if pygame.font:
-            font = pygame.font.SysFont("dejavusans", 32)
-            text = font.render("El laberinto de la salud", 1, (0, 0, 0))
+            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
+            text = font.render("El laberinto de la salud", True, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
             self.background.blit(text, textRect)
 
-            font = pygame.font.SysFont("dejavusans", 20)
+            font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             instructions = \
                     [u"  Ayuda a Nina a realizar",
                     u"las tareas diarias a través",
@@ -246,14 +246,14 @@ class Labyrinth2Activity(Activity):
 
     def informative_text(self):
         if pygame.font:
-            font = pygame.font.SysFont("dejavusans", 32)
+            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             text = font.render(u"Día de limpieza", 1, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
             self.background.blit(text, textRect)
 
-            font = pygame.font.SysFont("dejavusans", 20)
+            font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             instructions = \
                     [u"Recorre el laberinto y une",
                     u"los objetos con las palabras"]

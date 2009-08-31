@@ -50,7 +50,7 @@ class SelectActivity(Activity):
 
     def instruction_text(self):
         if pygame.font:
-            font = pygame.font.SysFont('dejavusans', 24)
+            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             title = unicode("Una boca bien sana", 'utf-8')
             text = font.render(title, True, (0, 0, 0))
             textRect = text.get_rect()
@@ -62,7 +62,7 @@ class SelectActivity(Activity):
             "que son necesarios para mantener tu boca sana."]
             
             y = font.get_linesize()
-            font = pygame.font.SysFont("dejavusans", 16)
+            font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             font_height = font.get_linesize()
 
             for message in messages:
@@ -144,7 +144,7 @@ class Select2Activity(Activity):
 
     def instruction_text(self):
         if pygame.font:
-            font = pygame.font.SysFont('dejavusans', 24)
+            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             title = unicode("La salud en nuestras playas", 'utf-8')
             text = font.render(title, True, (0, 0, 0))
             textRect = text.get_rect()
@@ -152,10 +152,10 @@ class Select2Activity(Activity):
             self.background.blit(text, textRect)
 
             messages = ["¿Quién está haciendo bien las cosas?",
-            "Selecciona las actividades correctas en el dibujo."]
+            "Selecciona las actividades", "correctas en el dibujo."]
             
             y = font.get_linesize()
-            font = pygame.font.SysFont("dejavusans", 16)
+            font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             font_height = font.get_linesize()
 
             for message in messages:
@@ -236,7 +236,7 @@ class Select3Activity(Activity):
 
     def instruction_text(self):
         if pygame.font:
-            font = pygame.font.SysFont('dejavusans', 24)
+            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             title = unicode("Somos diferentes", 'utf-8')
             text = font.render(title, True, (0, 0, 0))
             textRect = text.get_rect()
@@ -248,7 +248,7 @@ class Select3Activity(Activity):
             'ilustración B, la más flaca; ilustración C, el más blanco; ilustración D, el más fuerte.']
             
             y = 252
-            font = pygame.font.SysFont("dejavusans", 18)
+            font = pygame.font.SysFont(constants.font_default[0], 25)
             font_height = font.get_linesize()
 
             for message in messages:

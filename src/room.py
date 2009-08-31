@@ -49,8 +49,8 @@ class Room(Activity):
         self.background, rect = common.load_image(path)
 
         title = u"¡Orden en mi habitación!"
-        instructions = (u"Observa estas dos habitaciones. Una está ordenada " +
-                u"y la otra desordenada:", u"descubre las diferencias y " + 
+        instructions = (u"Observa estas dos habitaciones. Una está ordenada",
+                u"y la otra desordenada: descubre las diferencias y",
                 u"márcalas con una X en la habitación desordenada")
 
         font_title = pygame.font.SysFont(constants.font_title[0],

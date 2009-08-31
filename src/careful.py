@@ -65,7 +65,7 @@ class CarefulActivity(Activity):
 
     def instruction_text(self):
         if pygame.font:
-            font = pygame.font.SysFont('dejavusans', 24)
+            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             title = unicode("Cuidado con los accidentes", 'utf-8')
             text = font.render(title, True, (0, 0, 0))
             textRect = text.get_rect()
@@ -77,7 +77,7 @@ class CarefulActivity(Activity):
             "y arrástralos hasta la imagen de la situación que corresponda."]
             
             y += font.get_linesize()
-            font = pygame.font.SysFont("dejavusans", 16)
+            font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             font_height = font.get_linesize()
 
             for message in messages:

@@ -96,7 +96,7 @@ class PaintBase(Activity):
 
     def text(self):
         # Title
-        font = pygame.font.SysFont("dejavusans", 32)
+        font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
         font_height = font.get_linesize()
         x, y = 20, 20
 
@@ -111,7 +111,7 @@ class PaintBase(Activity):
             'Diviértete coloreándolos.']
 
         y += font_height
-        font = pygame.font.SysFont("dejavusans", 20)
+        font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
         font_height = font.get_linesize()
 
         for message in messages:

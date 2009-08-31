@@ -92,8 +92,8 @@ class Healthy(Activity):
             self.background = self.back1
 
     def instruction_text(self):
-        font_title = pygame.font.SysFont("dejavusans", 40)
-        font_instructions = pygame.font.SysFont("dejavusans", 20)
+        font_title = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
+        font_instructions = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
         title = u"Para estar sano debo..."
         title_width, title_height = font_title.size(title)
         instructions = [u"Todas estas actividades sirven para que"\

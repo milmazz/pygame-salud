@@ -134,14 +134,14 @@ class CrazyLetterActivity(Activity):
 
     def informative_text(self):
         if pygame.font:
-            font = pygame.font.SysFont("dejavusans", 32)
+            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             text = font.render("Letras locas", 1, (0, 0, 0))
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
             self.background.blit(text, textRect)
 
-            font = pygame.font.SysFont("dejavusans", 20)
+            font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             instructions = [u"     Busca las letras que conforman la palabra"\
               +  u"\"HIGIENE\" y arrástralas ",
               u"a los cuadros  rojos una por una. También  puedes buscar"\

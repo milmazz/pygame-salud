@@ -26,7 +26,7 @@ cursor_filename = os.path.join(data_folder, u"cursors", u"pointer.png")
 
 # Fonts
 font_title = ("dejavusans", 40)
-font_default = ("dejavusans", 20)
+font_default = ("dejavusans", 30)
 
 # icons and pictures for main menu
 background_filename = os.path.join(data_folder, u"backgrounds", u"background-main.jpg")

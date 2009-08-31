@@ -61,7 +61,7 @@ class PoetryActivity(Activity):
     def text(self):
         messages = common.load_file(constants.poetry)
         # Title
-        font = pygame.font.SysFont("dejavusans", 32)
+        font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
         font_height = font.get_linesize()
         y = 20
 
@@ -71,7 +71,7 @@ class PoetryActivity(Activity):
         self.screen.blit(text, text_pos)
 
         y = 35 + font_height
-        font = pygame.font.SysFont("dejavusans", 28)
+        font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
         font_height = font.get_linesize()
 
         for message in messages[1:]:
@@ -129,7 +129,7 @@ class PoetryActivity2(Activity):
         messages = common.load_file(constants.poetry2)
         
         # Title
-        font = pygame.font.SysFont("dejavusans", 28)
+        font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
         font_height = font.get_linesize()
         y = 10
         
@@ -139,7 +139,7 @@ class PoetryActivity2(Activity):
         self.screen.blit(text, text_pos)
 
         y = 20 + font_height
-        font = pygame.font.SysFont("dejavusans", 24)
+        font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
         font_height = font.get_linesize()
 
         for message in messages[1:]:
@@ -191,8 +191,8 @@ class VerseActivity(Activity):
     def setup_background(self):
         self.background = pygame.image.load(constants.page_21a)
         
-    def info_text(self, messages, pos, size=20):
-        font = pygame.font.SysFont("dejavusans", size)
+    def info_text(self, messages, pos, size=constants.font_default[1]):
+        font = pygame.font.SysFont(constants.font_default[0], size)
         font_height = font.get_linesize()
         for message in messages:
             message = unicode(message, 'utf-8')
@@ -203,7 +203,7 @@ class VerseActivity(Activity):
             
     def text(self):
         # Title
-        font = pygame.font.SysFont("dejavusans", 28)
+        font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
         font_height = font.get_linesize()
         y = 10
         
@@ -234,7 +234,7 @@ class VerseActivity(Activity):
         self.info_text(messages, [20, y])
         self.info_text(mango, [50, 280])
         self.info_text(guavas, [470, 320])
-        self.info_text(copyright, [315, 570], 14)
+        self.info_text(copyright, [315, 570], 18)
 
     def setup(self):
         self.CloseButton.draw(self.screen)
@@ -278,8 +278,8 @@ class Verse2Activity(Activity):
     def setup_background(self):
         self.background = pygame.image.load(constants.page_21b)
         
-    def info_text(self, messages, pos, size=20):
-        font = pygame.font.SysFont("dejavusans", size)
+    def info_text(self, messages, pos, size=constants.font_default[1]):
+        font = pygame.font.SysFont(constants.font_default[0], size)
         font_height = font.get_linesize()
         for message in messages:
             message = unicode(message, 'utf-8')
@@ -290,7 +290,7 @@ class Verse2Activity(Activity):
             
     def text(self):
         # Title
-        font = pygame.font.SysFont("dejavusans", 28)
+        font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
         font_height = font.get_linesize()
         y = 10
         
@@ -321,7 +321,7 @@ class Verse2Activity(Activity):
         self.info_text(messages, [20, y])
         self.info_text(soup, [187, 200])
         self.info_text(breakfast, [355, 390])
-        self.info_text(copyright, [315, 570], 14)
+        self.info_text(copyright, [315, 570], 18)
 
     def setup(self):
         self.CloseButton.draw(self.screen)

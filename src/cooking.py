@@ -66,8 +66,8 @@ class Cooking(Activity):
         return ingredients
 
     def instruction_text(self):
-        font_title = pygame.font.SysFont("dejavusans", 32)
-        font_instructions = pygame.font.SysFont("dejavusans", 20)
+        font_title = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
+        font_instructions = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
         title = u"¡A Cocinar!"
         title_width, title_height = font_title.size(title)
         instructions = [u"Vamos a hacer una torta...", \
