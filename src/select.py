@@ -321,4 +321,94 @@ class Select3Activity(Activity):
         if len(self.rectList) == 0:
             self.finished_ = True
 
+class Select4Activity(Activity):
+    def __init__(self, screen):
+        Activity.__init__(self, screen)
+
+    def setup_background(self):
+        self.background, self.rect = common.load_image(constants.illustration_026)
+        self.instruction_text()
+
+    def instruction_text(self):
+        if pygame.font:
+            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
+            title = unicode("Un desayuno sano", 'utf-8')
+            text = font.render(title, True, (0, 0, 0))
+            textRect = text.get_rect()
+            textRect.centerx = self.screen.get_rect().centerx
+            textRect.centery = 20
+            self.background.blit(text, textRect)
+
+            messages = ['Haz click en cinco alimentos saludables', 
+                'para el desayuno de Ricardo.']
+            
+            y = 252
+            font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
+            font_height = font.get_linesize()
+
+            for message in messages:
+                message = unicode(message, 'utf-8')
+                text = font.render(message, True, (0, 0, 0))
+                textRect = text.get_rect()
+                textRect.centerx = self.screen.get_rect().centerx
+                y += font_height 
+                textRect.centery = y
+                self.background.blit(text, textRect)
+
+    def setup(self):
+        """Turn off the mouse pointer"""
+        pygame.mouse.set_visible( False )
+        """change the mouse pointer by a hand"""
+        self.button_down = 0
+        self.rectList = [ 
+                pygame.Rect(332, 360, 47, 36),
+                pygame.Rect(322, 399, 32, 32),
+                pygame.Rect(356, 401, 27, 31),
+                pygame.Rect(418, 346, 54, 84),
+                ]
+        self.sprites = pygame.sprite.OrderedUpdates()
+        self.icons = pygame.sprite.Group()
+        self.icons.add([Icons('stop')])
+        self.checked = pygame.sprite.Group()
+        self.hand = Hand()
+        self.sprites.add([self.icons, self.hand, self.checked])
+        pos = pygame.mouse.get_pos()
+        self.sprites.draw(self.screen)
+
+    def handle_events(self):
+        verify_rect = None
+        for event in self.get_event():
+            pos = pygame.mouse.get_pos()
+            if event.type == QUIT:
+                self.quit = True
+                return
+            elif event.type == MOUSEMOTION:
+                    self.hand.update(pos)
+            elif event.type == KEYUP:
+                if event.key == K_ESCAPE:
+                    self.quit = True
+                    return
+            elif event.type == MOUSEBUTTONDOWN:
+                if pygame.sprite.spritecollideany\
+                  (self.hand, self.icons):
+                    self.quit = True
+                    return
+                verify_rect = self.hand.rect.collidelistall(self.rectList)
+                if verify_rect:
+                    """If the selection is a valid object,
+                    delete the object from the list"""
+                    objectSelected = self.rectList[verify_rect[0]]
+                    del self.rectList[verify_rect[0]]
+                    """draw the check image in the center
+                    of the rect selected"""
+                    self.checked.add(Check(objectSelected.bottomright, 0, (20, 20)))
+                    self.sprites.remove(self.checked)
+                    self.sprites.add(self.checked)
+
+        self.screen.blit(self.background, (0,0))
+        self.sprites.draw(self.screen)
+        pygame.display.update()
+
+        if len(self.rectList) == 0:
+            self.finished_ = True
 
