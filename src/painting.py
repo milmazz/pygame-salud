@@ -36,14 +36,19 @@ class PaintBase(Activity):
         # Color palette
         self.palette = {}
         self.mk_palette(constants.rgb_colors)
-        #
-        self.pincel1 = pygame.draw.circle(self.background, (0, 0, 0), (100, 200), 5)
-        self.pincel2 = pygame.draw.circle(self.background, (0, 0, 0), (120, 200), 10)
-        self.pincel3 = pygame.draw.circle(self.background, (0, 0, 0), (155, 200), 15)
-        self.pincel3 = pygame.draw.circle(self.background, (0, 0, 0), (195, 200), 20)
+        # Thickness
+        self.thickness = {}
+        self.mk_thickness()
+
+    def mk_thickness(self):
+        options = (5, 10, 15, 20)
+        pos = [0, 215]
+        for option in options:
+            pos[0] += option + 25
+            self.thickness[option] = pygame.draw.circle(self.background, (0, 0, 0), pos, option)
     
     def mk_palette(self, colors):
-        pos = (20, 245)
+        pos = (20, 285)
         square = (20, 20)
         count = 0
         for key,color in colors.iteritems():
@@ -66,16 +71,14 @@ class PaintBase(Activity):
                 if pygame.sprite.spritecollideany(self.finger, self.close_button):
                     self.quit = True
                     return
-                elif self.pincel1.collidepoint(self.line_end):
-                    self.line_width = 3
-                elif self.pincel2.collidepoint(self.line_end):
-                    self.line_width = 10
-                elif self.pincel3.collidepoint(self.line_end):
-                    self.line_width = 20
                 else:
                     for key,rect in self.palette.iteritems():
                         if rect.collidepoint(self.line_end):
                             self.draw_color = constants.rgb_colors[key]
+                    else:
+                        for key,rect in self.thickness.iteritems():
+                            if rect.collidepoint(self.line_end):
+                                self.line_width = key
             elif event.type == KEYUP:
                 self.changed = False
                 if event.key == K_ESCAPE:
@@ -100,7 +103,7 @@ class PaintBase(Activity):
         title = unicode("La salud de nuestra comunidad", 'utf-8')
         text = font.render(title, True, (0, 0, 0))
         text_pos = (x, y)
-        self.screen.blit(text, text_pos)
+        self.background.blit(text, text_pos)
 
         messages = ['Alguna de estas personas', \
             'trabajan para mantener', \
@@ -117,6 +120,18 @@ class PaintBase(Activity):
             text_pos = (x, y)
             self.background.blit(text, text_pos)
             y += font_height
+
+        # Tools
+        palette_text = unicode("Paleta de colores", 'utf-8')
+        text = font.render(palette_text, True, (0, 0, 0))
+        text_pos = (x, 250)
+        self.background.blit(text, text_pos)
+
+        pincel_text = unicode("Grosor del pincel", 'utf-8')
+        text = font.render(pincel_text, True, (0, 0, 0))
+        text_pos = (x, 170)
+        self.background.blit(text, text_pos)
+
 
     def setup(self):
         pygame.mouse.set_visible(False)
