@@ -26,7 +26,7 @@ from room import Room
 from labyrinth import Labyrinth, Labyrinth2Activity
 from riddle import Riddle1, Riddle2, Riddle3, Riddle4, Riddle5, Riddle6
 from select import SelectActivity, Select2Activity,\
-        Select3Activity
+        Select3Activity, Select4Activity
 from careful import CarefulActivity
 from painting import PaintBrickLayer, PaintNurse, PaintPolice, \
         PaintStreetSweeper, PaintBarber, PaintDoctor, \
@@ -74,6 +74,7 @@ def main():
         MenuItem('warning', CarefulActivity, 'dragndrop'), # Act 19
         MenuItem('words', Words, 'dragndrop'), # Act 20
         MenuItem('shopping', Shopping, 'dragndrop'), # Act 21
+        MenuItem('breakfast', Select4Activity, 'select'), # Act 22
         MenuItem('bricklayer', PaintBrickLayer, 'paint'), #  Act 23
         MenuItem('nurse', PaintNurse, 'paint'), #  Act 23
         MenuItem('police', PaintPolice, 'paint'), #  Act 23
