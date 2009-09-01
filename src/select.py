@@ -365,6 +365,7 @@ class Select4Activity(Activity):
                 pygame.Rect(322, 399, 32, 32),
                 pygame.Rect(356, 401, 27, 31),
                 pygame.Rect(418, 346, 54, 84),
+                pygame.Rect(534, 478, 176, 113),
                 ]
         self.sprites = pygame.sprite.OrderedUpdates()
         self.icons = pygame.sprite.Group()
