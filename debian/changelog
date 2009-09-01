@@ -1,3 +1,9 @@
+pygame-salud (0.3-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Milton R. Mazzarri S. <milmazz@gmail.com.com>  Mon, 31 Aug 2009 13:45:35 -0430
+
 pygame-salud (0.2-2) unstable; urgency=low
 
   * Inclusion de dpatch para el manejo de parches.
