@@ -20,14 +20,14 @@ class Finger(pygame.sprite.Sprite):
         self.rect.midtop = pos
 
 
-# Actividad 7
-class PoetryActivity(Activity):
+class PoetryBase(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
         self.CloseButton = pygame.sprite.RenderUpdates(([Icons('stop')]))
         self.finger = Finger()
         self.Cursor = pygame.sprite.RenderUpdates((self.finger))
         self.pos = None
+        self.messages_filename = constants.poetry
     
     def handle_events(self):
         for event in [pygame.event.wait()] + pygame.event.get():
@@ -51,15 +51,15 @@ class PoetryActivity(Activity):
     def on_change(self):
         self.Cursor.update()
         self.CloseButton.draw(self.screen)
-        self.text()
+        self.text(self.messages_filename)
         self.Cursor.draw(self.screen)
         self.mprev = self.pos
 
     def setup_background(self):
         self.background = pygame.image.load(constants.illustration_008)
 
-    def text(self):
-        messages = common.load_file(constants.poetry)
+    def text(self, info):
+        messages = common.load_file(info)
         # Title
         font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
         font_height = font.get_linesize()
@@ -84,75 +84,22 @@ class PoetryActivity(Activity):
     def setup(self):
         self.CloseButton.draw(self.screen)
         self.Cursor.draw(self.screen)
-        self.text()
+        self.text(self.messages_filename)
 
 
-# Actividad 11
-class PoetryActivity2(Activity):
+class PoetryActivity(PoetryBase):
     def __init__(self, screen):
-        Activity.__init__(self, screen)
-        self.CloseButton = pygame.sprite.RenderUpdates(([Icons('stop')]))
-        self.finger = Finger()
-        self.Cursor = pygame.sprite.RenderUpdates((self.finger))
-        self.pos = None
-    
-    def handle_events(self):
-        for event in [pygame.event.wait()] + pygame.event.get():
-            if event.type == QUIT:
-                self.quit = True
-                return
-            elif event.type == KEYUP:
-                self.changed = False
-                if event.key == K_ESCAPE:
-                    self.quit = True
-                    return
-            elif event.type == MOUSEBUTTONDOWN:
-                if pygame.sprite.spritecollideany(self.finger, \
-                        self.CloseButton):
-                    self.quit = True
-                    return
-        self.pos = pygame.mouse.get_pos()
-        if self.pos != self.mprev:
-            self.changed = True
+        PoetryBase.__init__(self, screen)
 
-    def on_change(self):
-        self.Cursor.update()
-        self.CloseButton.draw(self.screen)
-        self.text()
-        self.Cursor.draw(self.screen)
-        self.mprev = self.pos
+
+class PoetryActivity2(PoetryBase):
+    def __init__(self, screen):
+        PoetryBase.__init__(self, screen)
+        self.messages_filename = constants.poetry2
 
     def setup_background(self):
         self.background = pygame.image.load(constants.illustration_012)
         
-    def text(self):
-        messages = common.load_file(constants.poetry2)
-        
-        # Title
-        font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
-        font_height = font.get_linesize()
-        y = 10
-        
-        title = unicode(messages[0], 'utf-8')
-        text = font.render(title, True, (0, 0, 0))
-        text_pos = (20, 20)
-        self.screen.blit(text, text_pos)
-
-        y = 20 + font_height
-        font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
-        font_height = font.get_linesize()
-
-        for message in messages[1:]:
-            message = unicode(message, 'utf-8')
-            text = font.render(message, True, (102, 102, 102))
-            text_pos = (20, y)
-            y += font_height
-            self.screen.blit(text, text_pos)
-
-    def setup(self):
-        self.CloseButton.draw(self.screen)
-        self.text()
-        self.Cursor.draw(self.screen)
 
 class VerseActivity(Activity):
     def __init__(self, screen):
