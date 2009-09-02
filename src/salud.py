@@ -23,7 +23,7 @@ from order import OrderActivity, OrderActivity2
 from shopping import Shopping
 from missing import Missing
 from room import Room
-from labyrinth import Labyrinth, Labyrinth2Activity
+from labyrinth import LabyrinthActivity, Labyrinth2Activity
 from riddle import Riddle1, Riddle2, Riddle3, Riddle4, Riddle5, Riddle6
 from select import SelectActivity, Select2Activity,\
         Select3Activity, Select4Activity
@@ -60,7 +60,7 @@ def main():
         MenuItem('healthy', Healthy, 'dragndrop'), # Act 6
         MenuItem('readings2', PoetryActivity, 'readings'), # Act 7
         MenuItem('order1', OrderActivity, 'order'), # Act 8
-        MenuItem('health', Labyrinth, 'labyrinth'), # Act 9
+        MenuItem('health', LabyrinthActivity, 'labyrinth'), # Act 9
         MenuItem('mouth', SelectActivity, 'select'), # Act 10
         MenuItem('readings1', PoetryActivity2, 'readings'), # Act 11
         MenuItem('order2', OrderActivity2, 'order'), # Act 12
