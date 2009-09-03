@@ -14,48 +14,19 @@ import common
 from activity import Activity
 from icons import Icons, Check
 
-# Activity 24-1
-class Riddle1(Activity):
+class RiddleBase(Activity):
     def __init__(self, screen):
         Activity.__init__(self, screen)
 
         self.screen = screen
-        path = os.path.join(constants.data_folder, "backgrounds",
-                            'illustration_029a.png')
-        self.background, rect = common.load_image(path)
 
-        title = u"¿Qué será, qué será?"
-        instructions = (u"Lee esta adivinanza, luego une los puntos de ",
+        self.title = u"¿Qué será, qué será?"
+        self.instructions = (u"Lee esta adivinanza, luego une los puntos de ",
 				        u"cada figura siguiendo el orden de mayor a menor. ",
                         u"Así descubrirás la respuesta.")
-		riddle = (u"Agua pasó por aquí, ", 
+		self.riddle = (u"Agua pasó por aquí, ", 
                   u"¡cate! Que yo la ví",)
 
-        font_title = pygame.font.SysFont(constants.font_title[0],
-                                         constants.font_title[1])
-        font_default = pygame.font.SysFont(constants.font_default[0],
-                                           constants.font_default[1])
-
-        tsize = font_title.size(title)
-        isize = font_default.size(instructions[0])[1]
-
-        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
-        instruction_pos = (10, title_pos[1] + tsize[1])
-        riddle_pos = (50, 200)
-        title = font_title.render(title, True, (102, 102, 102))
-        
-        instructions_ = []
-        for i in instructions:
-            line = font_default.render(i, True, (102, 102, 102))
-            instructions_.append(line)
-
-		riddle_ = []
-		for i in riddle:
-            line = font_default.render(i, True, (102, 102, 102))
-			riddle_.append(line)
-
-        self.text = (((title,), title_pos), (instructions_, instruction_pos),
-					 (riddle_, riddle_pos))
 
         self.icons      = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
@@ -64,7 +35,7 @@ class Riddle1(Activity):
         self.sprites.add([self.icons, self.pointer])
         self.lines = []
 
-        points = (
+        self.points_reference = (
                 (655, 225), #1
                 (634, 303), #2
                 (654, 378), #3
@@ -98,17 +69,43 @@ class Riddle1(Activity):
                 (651, 158), #31
                 (630, 183), #32
             )
-        size = (8, 8)
+        self.size = (8, 8)
         self.points = []
-        for i in points:
-            rect = Rect(i, size)
-            rect.center = i
-            self.points.append(rect)
-            
         self.couple = []
         self.line = None
         self.exist = None
         self.pos = None
+        self.total_lines = 31
+
+    def informative_text(self, title, instructions, riddle):
+        font_title = pygame.font.SysFont(constants.font_title[0],
+                                         constants.font_title[1])
+        font_default = pygame.font.SysFont(constants.font_default[0],
+                                           constants.font_default[1])
+
+        tsize = font_title.size(title)
+        isize = font_default.size(instructions[0])[1]
+
+        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
+        instruction_pos = (10, title_pos[1] + tsize[1])
+        riddle_pos = (50, 200)
+        title = font_title.render(title, True, (102, 102, 102))
+        
+        instructions_ = []
+        for i in instructions:
+            line = font_default.render(i, True, (102, 102, 102))
+            instructions_.append(line)
+
+		riddle_ = []
+		for i in riddle:
+            line = font_default.render(i, True, (102, 102, 102))
+			riddle_.append(line)
+
+        self.text = (((title,), title_pos), (instructions_, instruction_pos),
+					 (riddle_, riddle_pos))
+
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.illustration_029a)
 
     def draw_text(self):
         x, y = 0, 0
@@ -122,6 +119,12 @@ class Riddle1(Activity):
                 y = y + surface.get_height()
 
     def setup(self):
+        self.lastcouple = False
+        for i in self.points_reference:
+            rect = Rect(i, self.size)
+            rect.center = i
+            self.points.append(rect)
+        self.informative_text(self.title, self.instructions, self.riddle)
         self.draw_text()
         self.sprites.draw(self.screen)
 
@@ -193,7 +196,7 @@ class Riddle1(Activity):
 
                 self.screen.blit(self.background, (0, 0))
 
-        if len(self.lines) == 31:
+        if len(self.lines) == self.total_lines:
             self.finished_ = True
             self.line = None
             self.sprites.add(Check(zoom=2))
@@ -209,59 +212,16 @@ class Riddle1(Activity):
         self.sprites.draw(self.screen)
         pygame.display.flip()
 
-# Activity 24-2
-class Riddle2(Activity):
+# Activity 24-1
+class Riddle1(RiddleBase):
     def __init__(self, screen):
-        Activity.__init__(self, screen)
+        RiddleBase.__init__(self, screen)
 
-        self.screen = screen
-        path = os.path.join(constants.data_folder, "backgrounds",
-                            'illustration_029b.png')
-        self.background, rect = common.load_image(path)
-
-        title = u"¿Qué será, qué será?"
-        instructions = (u"Lee esta adivinanza, luego une los puntos",
-				        u"de cada figura siguiendo",
-                        u"el orden de mayor a menor.",
-                        u"Así descubrirás la respuesta.")
-		riddle = (u"Una hoja entre muchas", 
-                  u"hojas, buscando una hoja", 
-                  u"se llora.")
-
-        font_title = pygame.font.SysFont(constants.font_title[0],
-                                         constants.font_title[1])
-        font_default = pygame.font.SysFont(constants.font_default[0],
-                                           constants.font_default[1])
-
-        tsize = font_title.size(title)
-        isize = font_default.size(instructions[0])[1]
-
-        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
-        instruction_pos = (10, title_pos[1] + tsize[1])
-        riddle_pos = (50, 200)
-        title = font_title.render(title, True, (102, 102, 102))
-        
-        instructions_ = []
-        for i in instructions:
-            line = font_default.render(i, True, (102, 102, 102))
-            instructions_.append(line)
-
-		riddle_ = []
-		for i in riddle:
-            line = font_default.render(i, True, (102, 102, 102))
-			riddle_.append(line)
-
-        self.text = (((title,), title_pos), (instructions_, instruction_pos),
-					 (riddle_, riddle_pos))
-
-        self.icons      = pygame.sprite.Group()
-        self.icons.add([Icons('stop')])
-        self.pointer = Pointer()
-        self.sprites = sprite.OrderedUpdates()
-        self.sprites.add([self.icons, self.pointer])
-        self.lines = []
-
-        points = (
+# Activity 24-2
+class Riddle2(RiddleBase):
+    def __init__(self, screen):
+        RiddleBase.__init__(self, screen)
+        self.points_reference = (
                 (439, 103), #1
                 (465, 185), #2
                 (488, 268), #3
@@ -293,171 +253,19 @@ class Riddle2(Activity):
                 (452, 199), #29
                 (427, 141), #30
             )
-        size = (8, 8)
-        self.points = []
-        for i in points:
-            rect = Rect(i, size)
-            rect.center = i
-            self.points.append(rect)
-            
-        self.couple = []
-        self.line = None
-        self.exist = None
-        self.pos = None
+        self.total_lines = 29
+		self.riddle = (u"Una hoja entre muchas", 
+                  u"hojas, buscando una hoja", 
+                  u"se llora.")
 
-    def draw_text(self):
-        x, y = 0, 0
-        for i in self.text:
-            x = i[1][0]
-            y = i[1][1]
-            surfaces = i[0]
-            for surface in surfaces:
-                pos = (x, y)
-                self.background.blit(surface, pos)
-                y = y + surface.get_height()
-
-    def setup(self):
-        self.lastcouple = False
-        self.draw_text()
-        self.sprites.draw(self.screen)
-
-    def handle_events(self):
-        mouse_pos = pygame.mouse.get_pos()
-        for event in self.get_event():
-            mouse_pos = pygame.mouse.get_pos()
-            if event.type == QUIT:
-                self.quit = True
-                return
-            elif event.type == KEYUP:
-                self.changed = False
-                if event.key == K_ESCAPE:
-                    self.quit = True                        
-                    return
-            elif event.type == MOUSEBUTTONDOWN:
-                if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
-                    self.quit = True
-                    return
-                for pos in range(0, len(self.points)):
-                    if self.points[pos].collidepoint(mouse_pos):
-                        self.pos = pos
-                if self.pos != None:
-                    self.couple.append(self.pos)
-                    if len(self.couple) == 1:
-                        start = self.points[self.pos].center
-                        self.line = Line(surface=self.screen, \
-                                start=start, end=start, width=3)
-                    elif len(self.couple) == 2:
-                        are_adjacent = (self.couple[0] - self.couple[1])**2
-                        if are_adjacent == 1:
-                            start = self.points[self.couple[0]].center
-                            end = self.points[self.couple[1]].center
-                            self.line = Line(surface=self.screen, \
-                                    start=start, end=end, width=3)
-                            if len(self.lines) == 0:
-                                self.lines.append(self.line)
-                                self.couple[0] = self.couple[1]
-                                self.couple.pop()
-                                start = self.points[self.couple[0]].center
-                                self.line = Line(surface=self.screen, \
-                                        start=start, end=start, width=3)
-                            else:
-                                for i in range(0,len(self.lines)):
-                                    if (((self.line.end == self.lines[i].end) and
-                                        (self.line.start == self.lines[i].start)) or
-                                        ((self.line.end == self.lines[i].start) and
-                                        (self.line.start == self.lines[i].end))):
-                                            self.exist = True
-                                    else:
-                                        self.exist = False
-                                if not self.exist:
-                                    self.lines.append(self.line)
-                                    self.couple[0] = self.couple[1]
-                                    self.couple.pop()
-                                    start = self.points[self.couple[0]].center
-                                    self.line = Line(surface=self.screen, \
-                                            start=start, end=start, width=3)
-                                else:
-                                    self.couple = []
-                                    self.line = None
-                        else:
-                            self.couple = []
-                            self.line = None
-
-            if event.type == MOUSEMOTION:
-                if self.line:
-                    end = pygame.mouse.get_pos()
-                    self.line.update(end=end)
-
-                self.screen.blit(self.background, (0, 0))
-
-        if len(self.lines) == 29:
-            self.finished_ = True
-            self.line = None
-            self.sprites.add(Check(zoom=2))
-            self.pointer.kill()
-            self.sprites.add(self.pointer)
-
-        self.screen.blit(self.background, (0, 0))
-        if self.line:
-            self.line.update()
-        for i in self.lines:
-            i.update()
-        self.pointer.update(mouse_pos)
-        self.sprites.draw(self.screen)
-        pygame.display.flip()
-
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.illustration_029b)
 
 # Activity 24-3
-class Riddle3(Activity):
+class Riddle3(RiddleBase):
     def __init__(self, screen):
-        Activity.__init__(self, screen)
-
-        self.screen = screen
-        path = os.path.join(constants.data_folder, "backgrounds",
-                            'illustration_030a.png')
-        self.background, rect = common.load_image(path)
-
-        title = u"¿Qué será, qué será?"
-        instructions = (u"Lee esta adivinanza, luego une los puntos de ",
-				        u"cada figura siguiendo el orden de mayor a menor. ",
-                        u"Así descubrirás la respuesta.")
-		riddle = (u"El que sabe, sabe ",
-                  u"¿con qué se hace el casabe?",)
-
-        font_title = pygame.font.SysFont(constants.font_title[0],
-                                         constants.font_title[1])
-        font_default = pygame.font.SysFont(constants.font_default[0],
-                                           constants.font_default[1])
-
-        tsize = font_title.size(title)
-        isize = font_default.size(instructions[0])[1]
-
-        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
-        instruction_pos = (10, title_pos[1] + tsize[1])
-        riddle_pos = (50, 200)
-        title = font_title.render(title, True, (102, 102, 102))
-        
-        instructions_ = []
-        for i in instructions:
-            line = font_default.render(i, True, (102, 102, 102))
-            instructions_.append(line)
-
-		riddle_ = []
-		for i in riddle:
-            line = font_default.render(i, True, (102, 102, 102))
-			riddle_.append(line)
-
-        self.text = (((title,), title_pos), (instructions_, instruction_pos),
-					 (riddle_, riddle_pos))
-
-        self.icons      = pygame.sprite.Group()
-        self.icons.add([Icons('stop')])
-        self.pointer = Pointer()
-        self.sprites = sprite.OrderedUpdates()
-        self.sprites.add([self.icons, self.pointer])
-        self.lines = []
-
-        points = (
+        RiddleBase.__init__(self, screen)
+        self.points_reference = (
                 (302, 432), #1
                 (318, 390), #2
                 (346, 342), #3
@@ -489,171 +297,18 @@ class Riddle3(Activity):
                 (365, 547), #29
                 (402, 562), #30
             )
-        size = (8, 8)
-        self.points = []
-        for i in points:
-            rect = Rect(i, size)
-            rect.center = i
-            self.points.append(rect)
-            
-        self.couple = []
-        self.line = None
-        self.exist = None
-        self.pos = None
+        self.total_lines = 29
+		self.riddle = (u"El que sabe, sabe ",
+                  u"¿con qué se hace el casabe?",)
 
-    def draw_text(self):
-        x, y = 0, 0
-        for i in self.text:
-            x = i[1][0]
-            y = i[1][1]
-            surfaces = i[0]
-            for surface in surfaces:
-                pos = (x, y)
-                self.background.blit(surface, pos)
-                y = y + surface.get_height()
-
-    def setup(self):
-        self.lastcouple = False
-        self.draw_text()
-        self.sprites.draw(self.screen)
-
-    def handle_events(self):
-        mouse_pos = pygame.mouse.get_pos()
-        for event in self.get_event():
-            mouse_pos = pygame.mouse.get_pos()
-            if event.type == QUIT:
-                self.quit = True
-                return
-            elif event.type == KEYUP:
-                self.changed = False
-                if event.key == K_ESCAPE:
-                    self.quit = True                        
-                    return
-            elif event.type == MOUSEBUTTONDOWN:
-                if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
-                    self.quit = True
-                    return
-                for pos in range(0, len(self.points)):
-                    if self.points[pos].collidepoint(mouse_pos):
-                        self.pos = pos
-                if self.pos != None:
-                    self.couple.append(self.pos)
-                    if len(self.couple) == 1:
-                        start = self.points[self.pos].center
-                        self.line = Line(surface=self.screen, \
-                                start=start, end=start, width=3)
-                    elif len(self.couple) == 2:
-                        are_adjacent = (self.couple[0] - self.couple[1])**2
-                        if are_adjacent == 1:
-                            start = self.points[self.couple[0]].center
-                            end = self.points[self.couple[1]].center
-                            self.line = Line(surface=self.screen, \
-                                    start=start, end=end, width=3)
-                            if len(self.lines) == 0:
-                                self.lines.append(self.line)
-                                self.couple[0] = self.couple[1]
-                                self.couple.pop()
-                                start = self.points[self.couple[0]].center
-                                self.line = Line(surface=self.screen, \
-                                        start=start, end=start, width=3)
-                            else:
-                                for i in range(0,len(self.lines)):
-                                    if (((self.line.end == self.lines[i].end) and
-                                        (self.line.start == self.lines[i].start)) or
-                                        ((self.line.end == self.lines[i].start) and
-                                        (self.line.start == self.lines[i].end))):
-                                            self.exist = True
-                                    else:
-                                        self.exist = False
-                                if not self.exist:
-                                    self.lines.append(self.line)
-                                    self.couple[0] = self.couple[1]
-                                    self.couple.pop()
-                                    start = self.points[self.couple[0]].center
-                                    self.line = Line(surface=self.screen, \
-                                            start=start, end=start, width=3)
-                                else:
-                                    self.couple = []
-                                    self.line = None
-                        else:
-                            self.couple = []
-                            self.line = None
-            if event.type == MOUSEMOTION:
-                if self.line:
-                    end = pygame.mouse.get_pos()
-                    self.line.update(end=end)
-
-                self.screen.blit(self.background, (0, 0))
-
-        if len(self.lines) == 29:
-            self.finished_ = True
-            self.line = None
-            self.sprites.add(Check(zoom=2))
-            self.pointer.kill()
-            self.sprites.add(self.pointer)
-
-        self.screen.blit(self.background, (0, 0))
-        if self.line:
-            self.line.update()
-        for i in self.lines:
-            i.update()
-        self.pointer.update(mouse_pos)
-        self.sprites.draw(self.screen)
-        pygame.display.flip()
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.illustration_030a)
 
 # Activity 24-4
-class Riddle4(Activity):
+class Riddle4(RiddleBase):
     def __init__(self, screen):
-        Activity.__init__(self, screen)
-
-        self.screen = screen
-        path = os.path.join(constants.data_folder, "backgrounds",
-                            'illustration_030b.png')
-        self.background, rect = common.load_image(path)
-
-        title = u"¿Qué será, qué será?"
-        instructions = (u"Lee esta adivinanza, luego une los puntos de ",
-				        u"cada figura siguiendo el orden de mayor a menor. ",
-                        u"Así descubrirás la respuesta.")
-		riddle = (u"Que sólo será", 
-                  u"que no lo será", 
-                  u"si no lo adivinas",
-                  u"el ratón se lo comerá",)
-
-        font_title = pygame.font.SysFont(constants.font_title[0],
-                                         constants.font_title[1])
-        font_default = pygame.font.SysFont(constants.font_default[0],
-                                           constants.font_default[1])
-
-        tsize = font_title.size(title)
-        isize = font_default.size(instructions[0])[1]
-
-        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
-        instruction_pos = (10, title_pos[1] + tsize[1])
-        riddle_pos = (50, 200)
-        title = font_title.render(title, True, (102, 102, 102))
-        
-        instructions_ = []
-        for i in instructions:
-            line = font_default.render(i, True, (102, 102, 102))
-            instructions_.append(line)
-
-		riddle_ = []
-		for i in riddle:
-            line = font_default.render(i, True, (102, 102, 102))
-			riddle_.append(line)
-
-        self.text = (((title,), title_pos), (instructions_, instruction_pos),
-					 (riddle_, riddle_pos))
-
-        self.icons      = pygame.sprite.Group()
-        self.icons.add([Icons('stop')])
-        self.pointer = Pointer()
-        self.sprites = sprite.OrderedUpdates()
-        self.sprites.add([self.icons, self.pointer])
-        self.lines = []
-
-        points = (
+        RiddleBase.__init__(self, screen)
+        self.points_reference = (
                 (697, 261), #1
                 (690, 348), #2
                 (682, 432), #3
@@ -677,170 +332,20 @@ class Riddle4(Activity):
                 (302, 292), #21
                 (287, 386), #22
             )
-        size = (8, 8)
-        self.points = []
-        for i in points:
-            rect = Rect(i, size)
-            rect.center = i
-            self.points.append(rect)
-            
-        self.couple = []
-        self.line = None
-        self.exist = None
-        self.pos = None
+        self.total_lines = 21
+		self.riddle = (u"Que sólo será", 
+                  u"que no lo será", 
+                  u"si no lo adivinas",
+                  u"el ratón se lo comerá",)
 
-    def draw_text(self):
-        x, y = 0, 0
-        for i in self.text:
-            x = i[1][0]
-            y = i[1][1]
-            surfaces = i[0]
-            for surface in surfaces:
-                pos = (x, y)
-                self.background.blit(surface, pos)
-                y = y + surface.get_height()
-
-    def setup(self):
-        self.lastcouple = False
-        self.draw_text()
-        self.sprites.draw(self.screen)
-
-    def handle_events(self):
-        mouse_pos = pygame.mouse.get_pos()
-        for event in self.get_event():
-            mouse_pos = pygame.mouse.get_pos()
-            if event.type == QUIT:
-                self.quit = True
-                return
-            elif event.type == KEYUP:
-                self.changed = False
-                if event.key == K_ESCAPE:
-                    self.quit = True                        
-                    return
-            elif event.type == MOUSEBUTTONDOWN:
-                if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
-                    self.quit = True
-                    return
-                for pos in range(0, len(self.points)):
-                    if self.points[pos].collidepoint(mouse_pos):
-                        self.pos = pos
-                if self.pos != None:
-                    self.couple.append(self.pos)
-                    if len(self.couple) == 1:
-                        start = self.points[self.pos].center
-                        self.line = Line(surface=self.screen, \
-                                start=start, end=start, width=3)
-                    elif len(self.couple) == 2:
-                        are_adjacent = (self.couple[0] - self.couple[1])**2
-                        if are_adjacent == 1:
-                            start = self.points[self.couple[0]].center
-                            end = self.points[self.couple[1]].center
-                            self.line = Line(surface=self.screen, \
-                                    start=start, end=end, width=3)
-                            if len(self.lines) == 0:
-                                self.lines.append(self.line)
-                                self.couple[0] = self.couple[1]
-                                self.couple.pop()
-                                start = self.points[self.couple[0]].center
-                                self.line = Line(surface=self.screen, \
-                                        start=start, end=start, width=3)
-                            else:
-                                for i in range(0,len(self.lines)):
-                                    if (((self.line.end == self.lines[i].end) and
-                                        (self.line.start == self.lines[i].start)) or
-                                        ((self.line.end == self.lines[i].start) and
-                                        (self.line.start == self.lines[i].end))):
-                                            self.exist = True
-                                    else:
-                                        self.exist = False
-                                if not self.exist:
-                                    self.lines.append(self.line)
-                                    self.couple[0] = self.couple[1]
-                                    self.couple.pop()
-                                    start = self.points[self.couple[0]].center
-                                    self.line = Line(surface=self.screen, \
-                                            start=start, end=start, width=3)
-                                else:
-                                    self.couple = []
-                                    self.line = None
-                        else:
-                            self.couple = []
-                            self.line = None
-            if event.type == MOUSEMOTION:
-                if self.line:
-                    end = pygame.mouse.get_pos()
-                    self.line.update(end=end)
-
-                self.screen.blit(self.background, (0, 0))
-
-        if len(self.lines) == 21:
-            self.finished_ = True
-            self.line = None
-            self.sprites.add(Check(zoom=2))
-            self.pointer.kill()
-            self.sprites.add(self.pointer)
-
-        self.screen.blit(self.background, (0, 0))
-        if self.line:
-            self.line.update()
-        for i in self.lines:
-            i.update()
-        self.pointer.update(mouse_pos)
-        self.sprites.draw(self.screen)
-        pygame.display.flip()
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.illustration_030b)
 
 # Activity 25
-class Riddle5(Activity):
+class Riddle5(RiddleBase):
     def __init__(self, screen):
-        Activity.__init__(self, screen)
-
-        self.screen = screen
-        path = os.path.join(constants.data_folder, "backgrounds",
-                            'illustration_031a.png')
-        self.background, rect = common.load_image(path)
-
-        title = u"Adivina, adivinanza ..."
-        instructions = (u"Lee esta adivinanza, luego une los puntos de ",
-				        u"cada figura siguiendo el orden de mayor a menor. ",
-                        u"Así descubrirás la respuesta.")
-		riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
-				  u"grato eres también;", u"donde yo no existo", 
-				  u"el mundo triste es:", u"adivina quién puede ser.", u"¿Quién soy?")
-
-        font_title = pygame.font.SysFont(constants.font_title[0],
-                                         constants.font_title[1])
-        font_default = pygame.font.SysFont(constants.font_default[0],
-                                           constants.font_default[1])
-
-        tsize = font_title.size(title)
-        isize = font_default.size(instructions[0])[1]
-
-        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
-        instruction_pos = (10, title_pos[1] + tsize[1])
-        riddle_pos = (50, 200)
-        title = font_title.render(title, True, (102, 102, 102))
-        
-        instructions_ = []
-        for i in instructions:
-            line = font_default.render(i, True, (102, 102, 102))
-            instructions_.append(line)
-
-		riddle_ = []
-		for i in riddle:
-            line = font_default.render(i, True, (102, 102, 102))
-			riddle_.append(line)
-
-        self.text = (((title,), title_pos), (instructions_, instruction_pos),
-					 (riddle_, riddle_pos))
-
-        self.icons      = pygame.sprite.Group()
-        self.icons.add([Icons('stop')])
-        self.pointer = Pointer()
-        self.sprites = sprite.OrderedUpdates()
-        self.sprites.add([self.icons, self.pointer])
-        self.lines = []
-
-        points = (
+        RiddleBase.__init__(self, screen)
+        self.points_reference = (
                 (649, 158),
                 (638, 170),
                 (627, 186),
@@ -882,170 +387,19 @@ class Riddle5(Activity):
                 (593, 269),
                 (602, 237),
             )
-        size = (8, 8)
-        self.points = []
-        for i in points:
-            rect = Rect(i, size)
-            rect.center = i
-            self.points.append(rect)
-            
-        self.couple = []
-        self.line = None
-        self.exist = None
-        self.pos = None
-
-    def draw_text(self):
-        x, y = 0, 0
-        for i in self.text:
-            x = i[1][0]
-            y = i[1][1]
-            surfaces = i[0]
-            for surface in surfaces:
-                pos = (x, y)
-                self.background.blit(surface, pos)
-                y = y + surface.get_height()
-
-    def setup(self):
-        self.lastcouple = False
-        self.draw_text()
-        self.sprites.draw(self.screen)
-
-    def handle_events(self):
-        mouse_pos = pygame.mouse.get_pos()
-        for event in self.get_event():
-            mouse_pos = pygame.mouse.get_pos()
-            if event.type == QUIT:
-                self.quit = True
-                return
-            elif event.type == KEYUP:
-                self.changed = False
-                if event.key == K_ESCAPE:
-                    self.quit = True                        
-                    return
-            elif event.type == MOUSEBUTTONDOWN:
-                if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
-                    self.quit = True
-                    return
-                for pos in range(0, len(self.points)):
-                    if self.points[pos].collidepoint(mouse_pos):
-                        self.pos = pos
-                if self.pos != None:
-                    self.couple.append(self.pos)
-                    if len(self.couple) == 1:
-                        start = self.points[self.pos].center
-                        self.line = Line(surface=self.screen, \
-                                start=start, end=start, width=3)
-                    elif len(self.couple) == 2:
-                        are_adjacent = (self.couple[0] - self.couple[1])**2
-                        if are_adjacent == 1:
-                            start = self.points[self.couple[0]].center
-                            end = self.points[self.couple[1]].center
-                            self.line = Line(surface=self.screen, \
-                                    start=start, end=end, width=3)
-                            if len(self.lines) == 0:
-                                self.lines.append(self.line)
-                                self.couple[0] = self.couple[1]
-                                self.couple.pop()
-                                start = self.points[self.couple[0]].center
-                                self.line = Line(surface=self.screen, \
-                                        start=start, end=start, width=3)
-                            else:
-                                for i in range(0,len(self.lines)):
-                                    if (((self.line.end == self.lines[i].end) and
-                                        (self.line.start == self.lines[i].start)) or
-                                        ((self.line.end == self.lines[i].start) and
-                                        (self.line.start == self.lines[i].end))):
-                                            self.exist = True
-                                    else:
-                                        self.exist = False
-                                if not self.exist:
-                                    self.lines.append(self.line)
-                                    self.couple[0] = self.couple[1]
-                                    self.couple.pop()
-                                    start = self.points[self.couple[0]].center
-                                    self.line = Line(surface=self.screen, \
-                                            start=start, end=start, width=3)
-                                else:
-                                    self.couple = []
-                                    self.line = None
-                        else:
-                            self.couple = []
-                            self.line = None
-            if event.type == MOUSEMOTION:
-                if self.line:
-                    end = pygame.mouse.get_pos()
-                    self.line.update(end=end)
-
-                self.screen.blit(self.background, (0, 0))
-
-        if len(self.lines) == 39:
-            self.finished_ = True
-            self.line = None
-            self.sprites.add(Check(zoom=2))
-            self.pointer.kill()
-            self.sprites.add(self.pointer)
-
-        self.screen.blit(self.background, (0, 0))
-        if self.line:
-            self.line.update()
-        for i in self.lines:
-            i.update()
-        self.pointer.update(mouse_pos)
-        self.sprites.draw(self.screen)
-        pygame.display.flip()
-
-
-class Riddle6(Activity):
-    def __init__(self, screen):
-        Activity.__init__(self, screen)
-
-        self.screen = screen
-        path = os.path.join(constants.data_folder, "backgrounds",
-                            'illustration_031b.png')
-        self.background, rect = common.load_image(path)
-
-        title = u"Adivina, adivinanza ..."
-        instructions = (u"Lee esta adivinanza, luego une los puntos de ",
-				        u"cada figura siguiendo el orden de mayor a menor. ",
-                        u"Así descubrirás la respuesta.")
-		riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
+        self.total_lines = 39
+        self.title = u"Adivina, adivinanza..."
+		self.riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
 				  u"grato eres también;", u"donde yo no existo", 
 				  u"el mundo triste es:", u"adivina quién puede ser.", u"¿Quién soy?")
 
-        font_title = pygame.font.SysFont(constants.font_title[0],
-                                         constants.font_title[1])
-        font_default = pygame.font.SysFont(constants.font_default[0],
-                                           constants.font_default[1])
+    def setup_background(self):
+        self.background, rect = common.load_image(constants.illustration_031a)
 
-        tsize = font_title.size(title)
-        isize = font_default.size(instructions[0])[1]
-
-        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
-        instruction_pos = (10, title_pos[1] + tsize[1])
-        riddle_pos = (50, 200)
-        title = font_title.render(title, True, (102, 102, 102))
-        
-        instructions_ = []
-        for i in instructions:
-            line = font_default.render(i, True, (102, 102, 102))
-            instructions_.append(line)
-
-		riddle_ = []
-		for i in riddle:
-            line = font_default.render(i, True, (102, 102, 102))
-			riddle_.append(line)
-
-        self.text = (((title,), title_pos), (instructions_, instruction_pos),
-					 (riddle_, riddle_pos))
-
-        self.icons      = pygame.sprite.Group()
-        self.icons.add([Icons('stop')])
-        self.pointer = Pointer()
-        self.sprites = sprite.OrderedUpdates()
-        self.sprites.add([self.icons, self.pointer])
-        self.lines = []
-
-        points = (
+class Riddle6(RiddleBase):
+    def __init__(self, screen):
+        RiddleBase.__init__(self, screen)
+        self.points_reference = (
                 (431, 207), #1
                 (399, 201), #2
                 (347, 217), #3
@@ -1077,118 +431,14 @@ class Riddle6(Activity):
                 (485, 239), #29
                 (456, 244), #30
             )
-        size = (8, 8)
-        self.points = []
-        for i in points:
-            rect = Rect(i, size)
-            rect.center = i
-            self.points.append(rect)
-            
-        self.couple = []
-        self.line = None
-        self.exist = None
-        self.pos = None
+        self.total_lines = 29
+        self.title = u"Adivina, adivinanza..."
+		self.riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
+				  u"grato eres también;", u"donde yo no existo", 
+				  u"el mundo triste es:", u"adivina quién puede ser.", u"¿Quién soy?")
 
-    def draw_text(self):
-        x, y = 0, 0
-        for i in self.text:
-            x = i[1][0]
-            y = i[1][1]
-            surfaces = i[0]
-            for surface in surfaces:
-                pos = (x, y)
-                self.background.blit(surface, pos)
-                y = y + surface.get_height()
-
-    def setup(self):
-        self.lastcouple = False
-        self.draw_text()
-        self.sprites.draw(self.screen)
-
-    def handle_events(self):
-        mouse_pos = pygame.mouse.get_pos()
-        for event in self.get_event():
-            mouse_pos = pygame.mouse.get_pos()
-            if event.type == QUIT:
-                self.quit = True
-                return
-            elif event.type == KEYUP:
-                self.changed = False
-                if event.key == K_ESCAPE:
-                    self.quit = True                        
-                    return
-            elif event.type == MOUSEBUTTONDOWN:
-                if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
-                    self.quit = True
-                    return
-                for pos in range(0, len(self.points)):
-                    if self.points[pos].collidepoint(mouse_pos):
-                        self.pos = pos
-                if self.pos != None:
-                    self.couple.append(self.pos)
-                    if len(self.couple) == 1:
-                        start = self.points[self.pos].center
-                        self.line = Line(surface=self.screen, \
-                                start=start, end=start, width=3)
-                    elif len(self.couple) == 2:
-                        are_adjacent = (self.couple[0] - self.couple[1])**2
-                        if are_adjacent == 1:
-                            start = self.points[self.couple[0]].center
-                            end = self.points[self.couple[1]].center
-                            self.line = Line(surface=self.screen, \
-                                    start=start, end=end, width=3)
-                            if len(self.lines) == 0:
-                                self.lines.append(self.line)
-                                self.couple[0] = self.couple[1]
-                                self.couple.pop()
-                                start = self.points[self.couple[0]].center
-                                self.line = Line(surface=self.screen, \
-                                        start=start, end=start, width=3)
-                            else:
-                                for i in range(0,len(self.lines)):
-                                    if (((self.line.end == self.lines[i].end) and
-                                        (self.line.start == self.lines[i].start)) or
-                                        ((self.line.end == self.lines[i].start) and
-                                        (self.line.start == self.lines[i].end))):
-                                            self.exist = True
-                                    else:
-                                        self.exist = False
-                                if not self.exist:
-                                    self.lines.append(self.line)
-                                    self.couple[0] = self.couple[1]
-                                    self.couple.pop()
-                                    start = self.points[self.couple[0]].center
-                                    self.line = Line(surface=self.screen, \
-                                            start=start, end=start, width=3)
-                                else:
-                                    self.couple = []
-                                    self.line = None
-                        else:
-                            self.couple = []
-                            self.line = None
-            if event.type == MOUSEMOTION:
-                if self.line:
-                    end = pygame.mouse.get_pos()
-                    self.line.update(end=end)
-
-                self.screen.blit(self.background, (0, 0))
-
-        if len(self.lines) == 29:
-            self.line = None
-            self.finished_ = True
-            self.sprites.add(Check(zoom=2))
-            self.pointer.kill()
-            self.sprites.add(self.pointer)
-
-        self.screen.blit(self.background, (0, 0))
-        if self.line:
-            self.line.update()
-        for i in self.lines:
-            i.update()
-        self.pointer.update(mouse_pos)
-        self.sprites.draw(self.screen)
-        pygame.display.flip()
-
+    def setup_background(self):
+        self.background, rect = common.load_image(illustration_031b)
 
 class Pointer(sprite.Sprite):
     def __init__(self, pos = None):
