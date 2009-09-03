@@ -22,6 +22,7 @@ class Text(Sprite):
         self.id = id
         self.finalRect = finalRect
         self.update(initPos)
+        self.orig = initPos
 
     def update(self, move):
         self.rect.x = move[0]
@@ -156,6 +157,8 @@ class CarefulActivity(Activity):
                         self.background.blit(self.checkImage,\
                         (objectSelected.centerx - self.checkRect.centerx,\
                         objectSelected.centery - self.checkRect.centery))
+                    else:
+                        self.selection.update(self.selection.orig)
 
                 self.selection = None
 
