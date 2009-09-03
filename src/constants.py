@@ -113,6 +113,14 @@ firefighter = os.path.join(painting_folder, "firefighter.png")
 teacher = os.path.join(painting_folder, "teacher.png")
 mechanic = os.path.join(painting_folder, "mechanic.png")
 
+# Riddle
+illustration_029a = os.path.join(data_folder, "backgrounds", 'illustration_029a.png')
+illustration_029b = os.path.join(data_folder, "backgrounds", 'illustration_029b.png')
+illustration_030a = os.path.join(data_folder, "backgrounds", 'illustration_030a.png')
+illustration_030b = os.path.join(data_folder, "backgrounds", 'illustration_030b.png')
+illustration_031a = os.path.join(data_folder, "backgrounds", 'illustration_031a.png')
+illustration_031b = os.path.join(data_folder, "backgrounds", 'illustration_031b.png')
+
 # sound buffer length
 mixer_buffersize = 3 * 1024
 
