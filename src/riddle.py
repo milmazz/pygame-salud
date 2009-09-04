@@ -443,9 +443,7 @@ class Riddle6(RiddleBase):
 class Pointer(sprite.Sprite):
     def __init__(self, pos = None):
         sprite.Sprite.__init__(self) 
-        path = os.path.join(constants.data_folder, "cursors", 
-							"gartoon", "draw-freehand.png")
-        self.image, self.rect = common.load_image(path)
+        self.image, self.rect = common.load_image(constants.draw_freehand)
 
         if not pos:
             pos = map(lambda x: x/2.0, constants.screen_mode)

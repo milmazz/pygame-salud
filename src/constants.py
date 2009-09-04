@@ -23,6 +23,8 @@ log_file = os.path.join(folder_log, u"canaima-salud.log")
 
 # cursors
 cursor_filename = os.path.join(data_folder, u"cursors", u"pointer.png")
+draw_freehand = os.path.join(constants.data_folder, "cursors", \
+    "gartoon", "draw-freehand.png")
 
 # Fonts
 font_title = ("dejavusans", 40)
