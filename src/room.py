@@ -155,21 +155,6 @@ class Xs(sprite.Sprite):
         self.rect.midtop = pos
 
 
-"""
-class Check(Xs):
-    def __init__(self, pos = None):
-        sprite.Sprite.__init__(self) 
-        path = os.path.join(constants.data_folder, "room", "check.png")
-        self.image, self.rect = common.load_image(path)
-        self.image = pygame.transform.scale(self.image, (120, 120))
-        self.rect = self.image.get_rect()
-
-        if not pos:
-            pos = map(lambda x: 3*x, constants.screen_mode)
-        
-        self.update(pos)
-"""
-
 if __name__ == "__main__":
 	pygame.init()
 
