@@ -1,13 +1,14 @@
 # vim:ts=4:sts=4:et:nowrap:tw=77
 # -*- coding: utf-8 -*-
 
+import os
 import pygame
 from pygame.locals import *
 
 import constants
 from activity import Activity
 from menu import MenuItem, MenuActivity
-from icons import Icons
+from icons import Icons, Navigation
 import common
 
 class Finger(pygame.sprite.Sprite):
@@ -107,7 +108,10 @@ class VerseActivity(Activity):
         self.CloseButton = pygame.sprite.RenderUpdates(([Icons('stop')]))
         self.finger = Finger()
         self.Cursor = pygame.sprite.RenderUpdates((self.finger))
+        self.change = pygame.sprite.Group([Navigation()]) #load next and prev buttons
         self.pos = None
+        self.sprites = pygame.sprite.OrderedUpdates()
+        self.sprites.add([self.CloseButton, self.change, self.Cursor])
     
     def handle_events(self):
         for event in [pygame.event.wait()] + pygame.event.get():
@@ -124,28 +128,45 @@ class VerseActivity(Activity):
                         self.CloseButton):
                     self.quit = True
                     return
+                if pygame.sprite.spritecollideany(self.finger, self.change):
+                    self.sprites.remove([self.change, self.finger])
+                    self.update_background()
+                    self.change.update()
+                    self.sprites.add([self.change, self.finger])
+                    self.sprites.draw(self.screen)
+                    self.screen.blit(self.background, (0, 0))
+                    pygame.display.flip()
+
         self.pos = pygame.mouse.get_pos()
+
         if self.pos != self.mprev:
             self.changed = True
 
     def on_change(self):
         self.Cursor.update()
-        self.CloseButton.draw(self.screen)
-        self.text()
-        self.Cursor.draw(self.screen)
+        self.sprites.draw(self.screen)
         self.mprev = self.pos
 
     def setup_background(self):
-        self.background = pygame.image.load(constants.page_21a)
+        self.bg1 = pygame.image.load(constants.page_21a)
+        self.bg2 = pygame.image.load(constants.page_21b)
+        self.background = self.bg1
+
+    def update_background(self):
+        if self.background == self.bg1:
+            self.background = self.bg2
+        else:
+            self.background = self.bg1
         
-    def info_text(self, messages, pos, size=constants.font_default[1]):
+    def info_text(self, messages, pos, size=constants.font_default[1], bg=None):
         font = pygame.font.SysFont(constants.font_default[0], size)
         font_height = font.get_linesize()
+
         for message in messages:
             message = unicode(message, 'utf-8')
-            text = font.render(message, True, (102, 102, 102))
+            text = font.render(message, True, (0, 0, 0))
             text_pos = pos
-            self.screen.blit(text, text_pos)
+            bg.blit(text, text_pos)
             pos[1] += font_height
             
     def text(self):
@@ -157,7 +178,8 @@ class VerseActivity(Activity):
         title = "Versos y estribillos populares" 
         text = font.render(title, True, (0, 0, 0))
         text_pos = (20, 20)
-        self.screen.blit(text, text_pos)
+        self.bg1.blit(text, text_pos)
+        self.bg2.blit(text, text_pos)
 
         y = 20 + font_height
 
@@ -176,83 +198,6 @@ class VerseActivity(Activity):
             'el que siembra en tierra ajena', \
             'hasta la semilla pierde.']
         
-        copyright = ['Extraído de "El Folklore en la Alimentación Venezolana" INN (1996).',]
-
-        self.info_text(messages, [20, y])
-        self.info_text(mango, [50, 280])
-        self.info_text(guavas, [470, 320])
-        self.info_text(copyright, [315, 570], 18)
-
-    def setup(self):
-        self.CloseButton.draw(self.screen)
-        self.text()
-        self.Cursor.draw(self.screen)
-
-class Verse2Activity(Activity):
-    def __init__(self, screen):
-        Activity.__init__(self, screen)
-        self.CloseButton = pygame.sprite.RenderUpdates(([Icons('stop')]))
-        self.finger = Finger()
-        self.Cursor = pygame.sprite.RenderUpdates((self.finger))
-        self.pos = None
-    
-    def handle_events(self):
-        for event in [pygame.event.wait()] + pygame.event.get():
-            if event.type == QUIT:
-                self.quit = True
-                return
-            elif event.type == KEYUP:
-                self.changed = False
-                if event.key == K_ESCAPE:
-                    self.quit = True
-                    return
-            elif event.type == MOUSEBUTTONDOWN:
-                if pygame.sprite.spritecollideany(self.finger, \
-                        self.CloseButton):
-                    self.quit = True
-                    return
-        self.pos = pygame.mouse.get_pos()
-        if self.pos != self.mprev:
-            self.changed = True
-
-    def on_change(self):
-        self.Cursor.update()
-        self.CloseButton.draw(self.screen)
-        self.text()
-        self.Cursor.draw(self.screen)
-        self.mprev = self.pos
-
-    def setup_background(self):
-        self.background = pygame.image.load(constants.page_21b)
-        
-    def info_text(self, messages, pos, size=constants.font_default[1]):
-        font = pygame.font.SysFont(constants.font_default[0], size)
-        font_height = font.get_linesize()
-        for message in messages:
-            message = unicode(message, 'utf-8')
-            text = font.render(message, True, (102, 102, 102))
-            text_pos = pos
-            self.screen.blit(text, text_pos)
-            pos[1] += font_height
-            
-    def text(self):
-        # Title
-        font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
-        font_height = font.get_linesize()
-        y = 10
-        
-        title = "Versos y estribillos populares" 
-        text = font.render(title, True, (0, 0, 0))
-        text_pos = (20, 20)
-        self.screen.blit(text, text_pos)
-
-        y = 20 + font_height
-
-        messages = ['Alimentarse bien es muy importante para la salud.', \
-            'Aquí tienes algunos versos y estribillos populares sobre', \
-            'los alimentos. Seguro que tus papás los conocen de cuando', \
-            'tenía tu edad.', 'Puedes aprenderlos de memoria.']
-
         soup = ['No se vaya señor cura', \
             'que ya el sancocho va a está', \
             'tiene ñame, tiene ocumo', \
@@ -265,12 +210,16 @@ class Verse2Activity(Activity):
 
         copyright = ['Extraído de "El Folklore en la Alimentación Venezolana" INN (1996).',]
 
-        self.info_text(messages, [20, y])
-        self.info_text(soup, [187, 200])
-        self.info_text(breakfast, [355, 390])
-        self.info_text(copyright, [315, 570], 18)
+        self.info_text(messages, [20, y], bg=self.bg1)
+        self.info_text(mango, [50, 280], bg=self.bg1)
+        self.info_text(guavas, [470, 320], bg=self.bg1)
+        self.info_text(copyright, [10, 570], size=18, bg=self.bg1)
+        # Background 2
+        self.info_text(messages, [20, y], bg=self.bg2)
+        self.info_text(soup, [187, 200], bg=self.bg2)
+        self.info_text(breakfast, [355, 390], bg=self.bg2)
+        self.info_text(copyright, [315, 570], size=18, bg=self.bg2)
 
     def setup(self):
-        self.CloseButton.draw(self.screen)
         self.text()
-        self.Cursor.draw(self.screen)
+        self.sprites.draw(self.screen)
