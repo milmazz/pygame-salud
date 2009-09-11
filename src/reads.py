@@ -107,11 +107,12 @@ class VerseActivity(Activity):
         Activity.__init__(self, screen)
         self.CloseButton = pygame.sprite.RenderUpdates(([Icons('stop')]))
         self.finger = Finger()
-        self.Cursor = pygame.sprite.RenderUpdates((self.finger))
+        self.cursor = pygame.sprite.RenderUpdates((self.finger))
         self.change = pygame.sprite.Group([Navigation()]) #load next and prev buttons
         self.pos = None
         self.sprites = pygame.sprite.OrderedUpdates()
-        self.sprites.add([self.CloseButton, self.change, self.Cursor])
+        self.sprites.add([self.CloseButton, self.change, self.cursor])
+        self.text()
     
     def handle_events(self):
         for event in [pygame.event.wait()] + pygame.event.get():
@@ -143,7 +144,7 @@ class VerseActivity(Activity):
             self.changed = True
 
     def on_change(self):
-        self.Cursor.update()
+        self.cursor.update()
         self.sprites.draw(self.screen)
         self.mprev = self.pos
 
@@ -221,5 +222,4 @@ class VerseActivity(Activity):
         self.info_text(copyright, [315, 570], size=18, bg=self.bg2)
 
     def setup(self):
-        self.text()
         self.sprites.draw(self.screen)
