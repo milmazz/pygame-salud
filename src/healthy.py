@@ -10,7 +10,7 @@ from pygame.locals import *
 import constants
 from activity import Activity
 import common
-from icons import *
+from icons import Icons, Check, Navigation
 
 class textLine(Sprite):
     def __init__(self, textline, pos=(0,0)):
@@ -50,32 +50,6 @@ class Hand(Sprite):
             self.image = self.normal
         if self.color == 1:
             self.image = self.close
-
-
-class changeButtons(Sprite):
-    def __init__(self):
-        Sprite.__init__(self)
-        self.path_next = os.path.join(constants.data_folder, 'healthy',
-                                    "next.png")
-        self.path_prev = os.path.join(constants.data_folder, 'healthy', 
-                                    "prev.png")
-        self.next, self.next_rect = common.load_image(self.path_next)
-        self.prev, self.prev_rect = common.load_image(self.path_prev)
-        self.next_rect.move_ip(constants.screen_mode[0] - \
-                self.next_rect[2] - 5, constants.screen_mode[1] - \
-                self.next_rect[3] - 5)
-        self.prev_rect.move_ip(5, constants.screen_mode[1] - \
-                self.prev_rect[3] - 5)
-        self.image = self.next
-        self.rect = self.next_rect
-
-    def update(self):
-        if self.image == self.next:
-            self.image = self.prev
-            self.rect = self.prev_rect
-        else:
-            self.image = self.next
-            self.rect = self.next_rect
 
 
 class Healthy(Activity):
@@ -129,7 +103,7 @@ class Healthy(Activity):
         self.correctlines = self.correctlines1
         self.hand = Hand() #load hand
         self.change = pygame.sprite.Group()
-        self.change.add([changeButtons()]) #load next and prev buttons
+        self.change.add([Navigation()]) #load next and prev buttons
         self.icons = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
         self.checked = pygame.sprite.Group()
