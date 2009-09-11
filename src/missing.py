@@ -84,14 +84,14 @@ class Missing(Activity):
         title = u"¿Qué le falta a Kiko en cada figura?"
         instructions = [u"A Kiko le desaparecieron algunas partes de su cuerpo", 
                 u"¿Puedes unirlas arrastrando las partes?"]
-        text = font_title.render(title, True, (102, 102, 102))
+        text = font_title.render(title, True, constants.font_title_color)
         text_pos = (172, 35)
         self.background.blit(text, text_pos)
 
         y = 45
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
-            text = font_instructions.render(line, True, (102, 102, 102))
+            text = font_instructions.render(line, True, constants.font_default_color)
             y += line_height
             text_pos = (184, y)
             self.background.blit(text, text_pos)

@@ -67,7 +67,7 @@ class PoetryBase(Activity):
         y = 20
 
         title = unicode(messages[0], 'utf-8')
-        text = font.render(title, True, (0, 0, 0))
+        text = font.render(title, True, constants.font_title_color)
         text_pos = (20, 20)
         self.screen.blit(text, text_pos)
 
@@ -77,7 +77,7 @@ class PoetryBase(Activity):
 
         for message in messages[1:]:
             message = unicode(message, 'utf-8')
-            text = font.render(message, True, (102, 102, 102))
+            text = font.render(message, True, constants.font_default_color)
             text_pos = (20, y)
             y += font_height
             self.screen.blit(text, text_pos)
@@ -165,7 +165,7 @@ class VerseActivity(Activity):
 
         for message in messages:
             message = unicode(message, 'utf-8')
-            text = font.render(message, True, (0, 0, 0))
+            text = font.render(message, True, constants.font_default_color)
             text_pos = pos
             bg.blit(text, text_pos)
             pos[1] += font_height
@@ -177,7 +177,7 @@ class VerseActivity(Activity):
         y = 10
         
         title = "Versos y estribillos populares" 
-        text = font.render(title, True, (0, 0, 0))
+        text = font.render(title, True, constants.font_title_color)
         text_pos = (20, 20)
         self.bg1.blit(text, text_pos)
         self.bg2.blit(text, text_pos)

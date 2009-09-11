@@ -59,5 +59,3 @@ class Navigation(pygame.sprite.Sprite):
         else:
             self.image = self.next
             self.rect = self.next_rect
-
-

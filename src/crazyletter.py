@@ -135,7 +135,7 @@ class CrazyLetterActivity(Activity):
     def informative_text(self):
         if pygame.font:
             font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
-            text = font.render("Letras locas", 1, (0, 0, 0))
+            text = font.render("Letras locas", True, constants.font_title_color)
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
@@ -151,7 +151,7 @@ class CrazyLetterActivity(Activity):
               u"verdes una  por una."]
             y = 39
             for line in instructions:
-                text = font.render(line, 1,(0, 0, 0))
+                text = font.render(line, True, constants.font_default_color)
                 self.background.blit(text, (20, y))
                 y+=20
 

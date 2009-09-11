@@ -68,7 +68,7 @@ class CarefulActivity(Activity):
         if pygame.font:
             font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             title = unicode("Cuidado con los accidentes", 'utf-8')
-            text = font.render(title, True, (0, 0, 0))
+            text = font.render(title, True, constants.font_title_color)
             textRect = text.get_rect()
             x, y = 25, 520
             textRect.topleft = (x, y)
@@ -83,7 +83,7 @@ class CarefulActivity(Activity):
 
             for message in messages:
                 message = unicode(message, 'utf-8')
-                text = font.render(message, True, (122, 122, 122))
+                text = font.render(message, True, constants.font_default_color)
                 textRect = text.get_rect()
                 textRect.topleft = (x, y)
                 y += font_height

@@ -73,7 +73,7 @@ class SelectBase(Activity):
             title_pos = info['title'][1]
             messages = info['instructions'][0]
             font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
-            text = font.render(title, True, (0, 0, 0))
+            text = font.render(title, True, constants.font_title_color)
             # Centering the text
             if title_pos == None:
                 title_pos = text.get_rect()
@@ -92,7 +92,7 @@ class SelectBase(Activity):
             for message in messages:
                 y += font_height
                 message = unicode(message, 'utf-8')
-                text = font.render(message, True, (122, 122, 122))
+                text = font.render(message, True, constants.font_default_color)
                 message_pos = text.get_rect()
                 # Centering text instructions
                 if info['title'][1] == None:
@@ -205,7 +205,7 @@ class Select4Activity(Activity):
         if pygame.font:
             font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             title = unicode("Un desayuno sano", 'utf-8')
-            text = font.render(title, True, (0, 0, 0))
+            text = font.render(title, True, constants.font_title_color)
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
@@ -220,7 +220,7 @@ class Select4Activity(Activity):
 
             for message in messages:
                 message = unicode(message, 'utf-8')
-                text = font.render(message, True, (0, 0, 0))
+                text = font.render(message, True, constants.font_default_color)
                 textRect = text.get_rect()
                 textRect.centerx = self.screen.get_rect().centerx
                 y += font_height 

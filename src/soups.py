@@ -177,7 +177,7 @@ class SoupActivity(Activity):
     def informative_text(self):
         if pygame.font:
             font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
-            text = font.render("En busca de los cinco sentidos", 1, (0, 0, 0))
+            text = font.render("En busca de los cinco sentidos", True, constants.font_title_color)
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
@@ -187,7 +187,7 @@ class SoupActivity(Activity):
                             u"letras y marca con el lápiz cada palabra."]
             y = 45
             for line in instructions:
-                text = font.render(line, 1,(0, 0, 0))
+                text = font.render(line, True, constants.font_default_color)
                 self.background.blit(text, (350, y))
                 y+=20
         
@@ -378,7 +378,7 @@ class SoupActivity2(Activity):
     def informative_text(self):
         if pygame.font:
             font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
-            text = font.render("Letras escondidas", 1, (0, 0, 0))
+            text = font.render("Letras escondidas", True, constants.font_title_color)
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx - 120
             textRect.centery = 20
@@ -389,7 +389,7 @@ class SoupActivity2(Activity):
                             u"que nos rodea. Márcalas con el lápiz."]
             y = 40
             for line in instructions:
-                text = font.render(line, 1,(0, 0, 0))
+                text = font.render(line, True, constants.font_default_color)
                 self.background.blit(text, (20, y))
                 y+=20
  

@@ -101,7 +101,7 @@ class PaintBase(Activity):
         x, y = 20, 20
 
         title = unicode("La salud de nuestra comunidad", 'utf-8')
-        text = font.render(title, True, (0, 0, 0), (255, 255, 255))
+        text = font.render(title, True, constants.font_title_color, (255, 255, 255))
         text_pos = (x, y)
         self.background.blit(text, text_pos)
 
@@ -116,19 +116,19 @@ class PaintBase(Activity):
 
         for message in messages:
             message = unicode(message, 'utf-8')
-            text = font.render(message, True, (122, 122, 122), (255, 255, 255))
+            text = font.render(message, True, constants.font_default_color, (255, 255, 255))
             text_pos = (x, y)
             self.background.blit(text, text_pos)
             y += font_height
 
         # Tools
         palette_text = unicode("Paleta de colores", 'utf-8')
-        text = font.render(palette_text, True, (0, 0, 0), (255, 255, 255))
+        text = font.render(palette_text, True, constants.font_default_color, (255, 255, 255))
         text_pos = (x, 250)
         self.background.blit(text, text_pos)
 
         pincel_text = unicode("Grosor del pincel", 'utf-8')
-        text = font.render(pincel_text, True, (0, 0, 0), (255, 255, 255)) 
+        text = font.render(pincel_text, True, constants.font_default_color, (255, 255, 255)) 
         text_pos = (x, 170)
         self.background.blit(text, text_pos)
 

@@ -28,7 +28,9 @@ draw_freehand = os.path.join(data_folder, "cursors", "gartoon", \
 
 # Fonts
 font_title = ("dejavusans", 40)
+font_title_color = (0, 0, 0)
 font_default = ("dejavusans", 30)
+font_default_color = (0, 0, 0)
 
 # icons and pictures for main menu
 background_filename = os.path.join(data_folder, u"backgrounds", u"background-main.jpg")

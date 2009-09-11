@@ -63,11 +63,11 @@ class Room(Activity):
 
         title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
         instruction_pos = (10, title_pos[1] + tsize[1])
-        title = font_title.render(title, True, (102, 102, 102))
+        title = font_title.render(title, True, constants.font_title_color)
         
         instructions_ = []
         for i in instructions:
-            line = font_default.render(i, True, (102, 102, 102))
+            line = font_default.render(i, True, constants.font_default_color)
             instructions_.append(line)
         self.text = (((title,), title_pos), (instructions_, instruction_pos))
 

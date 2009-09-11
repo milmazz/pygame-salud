@@ -69,7 +69,7 @@ class OrderActivity(Activity):
         if pygame.font:
             font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             title = unicode("¿Qué va primero?", 'utf-8')
-            text = font.render(title, 1, (0, 0, 0))
+            text = font.render(title, True, constants.font_title_color)
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
@@ -84,7 +84,7 @@ class OrderActivity(Activity):
 
             for message in messages:
                 message = unicode(message, 'utf-8')
-                text = font.render(message, True, (122, 122, 122))
+                text = font.render(message, True, constants.font_default_color)
                 y += font_height 
                 textRect.midtop = (300, y) 
                 self.background.blit(text, textRect)
@@ -190,7 +190,7 @@ class OrderActivity2(Activity):
         if pygame.font:
             font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
             title = unicode("Nuestro cuerpo cambia cuando crecemos", 'utf-8')
-            text = font.render(title, True, (0, 0, 0))
+            text = font.render(title, True, constants.font_title_color)
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
             textRect.centery = 20
@@ -208,7 +208,7 @@ class OrderActivity2(Activity):
 
             for message in messages:
                 message = unicode(message, 'utf-8')
-                text = font.render(message, True, (122, 122, 122))
+                text = font.render(message, True, constants.font_default_color)
                 textRect = text.get_rect()
                 textRect.centerx = self.screen.get_rect().centerx
                 y += font_height 

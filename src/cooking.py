@@ -75,13 +75,13 @@ class Cooking(Activity):
                 u"que se necesitan", \
                 u"y arrástralos hasta la mesa."]
         y = 5
-        text = font_title.render(title, True, (102, 102, 102))
+        text = font_title.render(title, True, constants.font_title_color)
         text_pos = (constants.screen_mode[0]/2.0 - title_width/2.0, y)
         self.background.blit(text, text_pos)
         y = 450
         line_width, line_height = font_instructions.size(instructions[0])
         for line in instructions:
-            text = font_instructions.render(line, True, (102, 102, 102))
+            text = font_instructions.render(line, True, constants.font_default_color)
             y += line_height
             text_pos = (15, y)
             self.background.blit(text, text_pos)
