@@ -271,7 +271,7 @@ class Labyrinth2Activity(LabyrinthBase):
                 },
             'instructions': {
                 'text': [u"Recorre el laberinto y une",
-                        u"los objetos con las palabras"],
+                        u"los objetos con las palabras."],
                 'offset': 60
                 }
         }
