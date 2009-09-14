@@ -50,7 +50,7 @@ class Room(Activity):
 
         title = u"¡Orden en mi habitación!"
         instructions = (u"Observa estas dos habitaciones. Una está ordenada",
-                u"y la otra desordenada: descubre las diferencias y",
+                u"y la otra desordenada: descubre las 21 diferencias y",
                 u"márcalas con una X en la habitación desordenada")
 
         font_title = pygame.font.SysFont(constants.font_title[0],
