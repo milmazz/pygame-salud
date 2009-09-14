@@ -107,7 +107,7 @@ class Words(Activity):
                 'banarse': (193, 542),
                 }
 
-        title = u"Palabras largas, palabras cortas"
+        title = u"¡Palabras largas, palabras cortas!"
         instructions = (u"Estas palabras están relacionadas con la salud. ",
                         u"  ",
                         u"Arrastra hacia la bolsa roja ",
