@@ -21,9 +21,9 @@
    inkscape:version="0.46"
    sodipodi:docname="police.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="/home/mmazzarri/Trabajo/cenamec/pygame-salud/data/menu/bricklayer.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90"><metadata
+   inkscape:export-filename="/home/mmazzarri/Trabajo/cenamec/pygame-salud/data/menu/police.png"
+   inkscape:export-xdpi="70.588234"
+   inkscape:export-ydpi="70.588234"><metadata
    id="metadata69"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
          rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
@@ -120,7 +120,8 @@
      id="tspan3321"
      x="32.765137"
      y="32.583252"
-     style="font-size:19px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans">Policia</tspan></text>
+     style="font-size:19px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans">Policía</tspan></text>
+
 
 
 
