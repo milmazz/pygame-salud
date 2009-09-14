@@ -207,14 +207,14 @@ class Select4Activity(Activity):
             title = unicode("Un desayuno sano", 'utf-8')
             text = font.render(title, True, constants.font_title_color)
             textRect = text.get_rect()
-            textRect.centerx = self.screen.get_rect().centerx
-            textRect.centery = 20
+            textRect.centerx = self.screen.get_rect().centerx + 145
+            textRect.centery = 40
             self.background.blit(text, textRect)
 
-            messages = ['Haz click en cinco alimentos saludables', 
+            messages = ['Haz clic en cinco alimentos saludables', 
                 'para el desayuno de Ricardo.']
             
-            y = 252
+            y = 500
             font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             font_height = font.get_linesize()
 
@@ -222,9 +222,8 @@ class Select4Activity(Activity):
                 message = unicode(message, 'utf-8')
                 text = font.render(message, True, constants.font_default_color)
                 textRect = text.get_rect()
-                textRect.centerx = self.screen.get_rect().centerx
+                textRect.topleft = (10, y)
                 y += font_height 
-                textRect.centery = y
                 self.background.blit(text, textRect)
 
     def setup(self):
