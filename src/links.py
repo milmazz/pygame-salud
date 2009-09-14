@@ -289,7 +289,7 @@ class Meals(Links):
     def __init__(self, screen):
         self.title = u"Cada oveja con su pareja"
         self.instructions = (u"Une con una línea el dibujo con la palabra " +
-                             u"que le corresponde",)
+                             u"que le corresponde.",)
         pos = {
                 'breakfast': (491, 476),
                 'lunch': (399, 75),
@@ -326,9 +326,7 @@ class Meals(Links):
             elif a.name == 'dinner' and b.name == 'tdinner':
                 return True
         return False
-       
 
- 
 
 if __name__ == "__main__":
 	pygame.init()
