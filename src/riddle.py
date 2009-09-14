@@ -25,7 +25,7 @@ class RiddleBase(Activity):
 				        u"cada figura siguiendo el orden de mayor a menor. ",
                         u"Así descubrirás la respuesta.")
 		self.riddle = (u"Agua pasó por aquí, ", 
-                  u"¡cate! Que yo la ví",)
+                  u"¡cate! Que yo la ví.",)
 
 
         self.icons      = pygame.sprite.Group()
@@ -299,7 +299,7 @@ class Riddle3(RiddleBase):
             )
         self.total_lines = 29
 		self.riddle = (u"El que sabe, sabe ",
-                  u"¿con qué se hace el casabe?",)
+                  u"¿Con qué se hace el casabe?",)
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_030a)
@@ -334,9 +334,9 @@ class Riddle4(RiddleBase):
             )
         self.total_lines = 21
 		self.riddle = (u"Que sólo será", 
-                  u"que no lo será", 
+                  u"que no lo será,", 
                   u"si no lo adivinas",
-                  u"el ratón se lo comerá",)
+                  u"el ratón se lo comerá.",)
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_030b)
