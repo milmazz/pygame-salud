@@ -173,7 +173,7 @@ class LabyrinthBase(Activity):
 
             for line in instructions:
                 text = font.render(line, True, constants.font_default_color)
-                self.background.blit(text, (20, y))
+                self.background.blit(text, (10, y))
                 y += 20
 
     def setup(self):
@@ -272,7 +272,7 @@ class Labyrinth2Activity(LabyrinthBase):
             'instructions': {
                 'text': [u"Recorre el laberinto y une",
                         u"los objetos con las palabras."],
-                'offset': 60
+                'offset': 128
                 }
         }
  
