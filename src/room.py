@@ -48,28 +48,10 @@ class Room(Activity):
         path = os.path.join(constants.data_folder, "backgrounds", 'illustration_020_021.png')
         self.background, rect = common.load_image(path)
 
-        title = u"¡Orden en mi habitación!"
-        instructions = (u"Observa estas dos habitaciones. Una está ordenada",
-                u"y la otra desordenada: descubre las 21 diferencias y",
-                u"márcalas con una X en la habitación desordenada")
-
-        font_title = pygame.font.SysFont(constants.font_title[0],
-                                         constants.font_title[1])
-        font_default = pygame.font.SysFont(constants.font_default[0],
-                                           constants.font_default[1])
-
-        tsize = font_title.size(title)
-        isize = font_default.size(instructions[0])[1]
-
-        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
-        instruction_pos = (10, title_pos[1] + tsize[1])
-        title = font_title.render(title, True, constants.font_title_color)
-        
-        instructions_ = []
-        for i in instructions:
-            line = font_default.render(i, True, constants.font_default_color)
-            instructions_.append(line)
-        self.text = (((title,), title_pos), (instructions_, instruction_pos))
+        self.title = ("¡Orden en mi habitación!",)
+        self.instructions = ("Observa estas dos habitaciones. Una está ordenada",
+                "y la otra desordenada: descubre las 21 diferencias y",
+                "márcalas con una X en la habitación desordenada")
 
         self.icons = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
@@ -86,8 +68,33 @@ class Room(Activity):
         self.room = Rect(403, 129, 393, 467)
         pygame.display.update()
 
+    def info_text(self, messages, pos, size=constants.font_default[1], bg=None):
+        font = pygame.font.SysFont(constants.font_default[0], size)
+        font_height = font.get_linesize()
+
+        for message in messages:
+            message = unicode(message, 'utf-8')
+            text = font.render(message, True, constants.font_default_color)
+            text_pos = pos
+            bg.blit(text, text_pos)
+            pos[1] += font_height
+ 
+    def informative_text(self, title, instructions):
+        font_title = pygame.font.SysFont(constants.font_title[0],
+                                         constants.font_title[1])
+
+        tsize = font_title.size(title[0])
+
+        title_pos = [(constants.screen_mode[0] - tsize[0]) / 2.0, 0]
+       
+        tsize = font_title.get_linesize()
+        instructions_pos = [10, title_pos[1] + tsize]
+
+        self.info_text(title, title_pos, size=constants.font_title[1], bg=self.background)
+        self.info_text(instructions, instructions_pos, bg=self.background)
+
     def setup(self):
-        self.draw_text()
+        self.informative_text(self.title, self.instructions)
         self.pointer.draw(self.screen)
 
     def handle_events(self):
@@ -121,7 +128,6 @@ class Room(Activity):
             self.finished_ = True
 
         self.screen.blit(self.background, (0, 0))
-        self.draw_text()
         self.xs.draw(self.screen)
         self.check.draw(self.screen)
         self.pointer_.update(mouse_pos)
