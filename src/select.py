@@ -211,8 +211,9 @@ class Select4Activity(Activity):
             textRect.centery = 40
             self.background.blit(text, textRect)
 
-            messages = ['Haz clic en cinco alimentos saludables', 
-                'para el desayuno de Ricardo.']
+            messages = ['Haz clic en cinco alimentos', 
+                'saludables para el desayuno',  
+                'de Ricardo.']
             
             y = 500
             font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
