@@ -97,7 +97,7 @@ class RiddleBase(Activity):
         title_pos = [(constants.screen_mode[0] - tsize[0]) / 2.0, 0]
        
         tsize = font_title.get_linesize()
-        instructions_pos = [10, title_pos[1] + tsize]
+        instructions_pos = [10, title_pos[1] + 1.5 * tsize]
 
         self.info_text(title, title_pos, size=constants.font_title[1], bg=self.background)
         self.info_text(instructions, instructions_pos, bg=self.background)
@@ -241,6 +241,10 @@ class Riddle2(RiddleBase):
                 (427, 141), #30
             )
         self.total_lines = 29
+        self.instructions = ("Lee esta adivinanza, luego une los puntos de",
+                        "cada figura siguiendo el orden",
+                        "de mayor a menor.",
+                        "Así descubrirás la respuesta.")
 		self.riddle = ("Una hoja entre muchas",
                   "hojas, buscando una hoja",
                   "se llora.")

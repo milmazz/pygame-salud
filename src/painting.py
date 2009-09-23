@@ -98,7 +98,7 @@ class PaintBase(Activity):
         # Title
         font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
         font_height = font.get_linesize()
-        x, y = 20, 20
+        x, y = 20, 10
 
         title = unicode("La salud de nuestra comunidad", 'utf-8')
         text = font.render(title, True, constants.font_title_color, (255, 255, 255))
@@ -110,7 +110,7 @@ class PaintBase(Activity):
             'la salud de tu comunidad.', \
             'Diviértete coloreándolos.']
 
-        y += font_height
+        y += 1.5 * font_height
         font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
         font_height = font.get_linesize()
 

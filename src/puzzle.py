@@ -85,17 +85,19 @@ class PuzzleBase(Activity):
             text = font.render("Arma las piezas del rompecabezas", True, constants.font_title_color)
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
-            textRect.centery = 20
+            textRect.centery = font.get_linesize() / 2.0
             self.background.blit(text, textRect)
 
+            y = 1.5 * font.get_linesize()
             font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             instructions = [u"Arrastra las piezas con el ratón hacia el" \
                     + u" recuadro."]
-            y = 39
+            line_height = font.get_linesize()
+
             for line in instructions:
                 text = font.render(line, True, constants.font_default_color)
                 self.background.blit(text, (20, y))
-                y+=20
+                y += line_height
 
     def setup(self):
         """Turn off the mouse pointer"""

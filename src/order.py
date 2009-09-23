@@ -72,21 +72,21 @@ class OrderActivity(Activity):
             text = font.render(title, True, constants.font_title_color)
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
-            textRect.centery = 20
+            textRect.centery = font.get_linesize() / 2.0
             self.background.blit(text, textRect)
 
             messages = ["Ordena los dibujos y numéralos (1, 2, 3, 4 y 5)", \
                 "en cada cuadro siguiendo la secuencia."]
             
-            y = font.get_linesize()
+            y = 1.5 * font.get_linesize()
             font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             font_height = font.get_linesize()
 
             for message in messages:
                 message = unicode(message, 'utf-8')
                 text = font.render(message, True, constants.font_default_color)
-                y += font_height 
                 textRect.midtop = (300, y) 
+                y += font_height 
                 self.background.blit(text, textRect)
 
     def setup(self):
@@ -193,7 +193,7 @@ class OrderActivity2(Activity):
             text = font.render(title, True, constants.font_title_color)
             textRect = text.get_rect()
             textRect.centerx = self.screen.get_rect().centerx
-            textRect.centery = 20
+            textRect.centery = font.get_linesize() / 2.0
             self.background.blit(text, textRect)
 
             messages = ["Cuando eras un bebé, tomabas tetero y usabas pañal.",
@@ -202,7 +202,7 @@ class OrderActivity2(Activity):
             "pequeño al más grande, arrastra",
             "el número (1, 2, 3 y 4) al", "círculo correspondiente."]
             
-            y = font.get_linesize()
+            y = 2.0 * font.get_linesize()
             font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
             font_height = font.get_linesize()
 
@@ -211,9 +211,9 @@ class OrderActivity2(Activity):
                 text = font.render(message, True, constants.font_default_color)
                 textRect = text.get_rect()
                 textRect.centerx = self.screen.get_rect().centerx
-                y += font_height 
                 textRect.centery = y
                 self.background.blit(text, textRect)
+                y += font_height 
 
     def setup(self):
         """Turn off the mouse pointer"""
