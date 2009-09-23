@@ -184,9 +184,9 @@ class Select3Activity(SelectBase):
         self.tex_info = {
             'title': ["Somos diferentes", None],
             'instructions' : [["En cada uno de las ilustraciones, " + \
-                    "selecciona según se indica. Ilustración A, el más alto;",
-                    "ilustración B, la más flaca; ilustración C, el" + \
-                    "más blanco; ilustración D, el más fuerte."], 252]
+                    "selecciona según se indica. Ilustración A, el", "más alto; " + \
+                    "ilustración B, la más flaca; ilustración C, el " + \
+                    "más blanco; ilustración D,", "el más fuerte."], 245]
         }
 
     def setup_background(self):

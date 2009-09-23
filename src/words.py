@@ -107,28 +107,15 @@ class Words(Activity):
                 'banarse': (193, 542),
                 }
 
-        title = u"¡Palabras largas, palabras cortas!"
-        instructions = (u"Estas palabras están relacionadas con la salud. ",
-                        u"  ",
-                        u"Arrastra hacia la bolsa roja ",
-                        u"las palabras que tienen ",
-                        u"menos de 5 letras y hacia la ",
-                        u"bolsa azul las que tienen ",
-                        u"más de 5 letras.")
-        font_title = pygame.font.SysFont(constants.font_title[0],
-                                         constants.font_title[1])
-        font_default = pygame.font.SysFont(constants.font_default[0],
-                                           constants.font_default[1])
-        tsize = font_title.size(title)
-        isize = font_default.size(instructions[0])[1]
-        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
-        instruction_pos = (10, title_pos[1] + tsize[1])
-        title = font_title.render(title, True, constants.font_title_color)
-        instructions_ = []
-        for i in instructions:
-            line = font_default.render(i, True, constants.font_default_color)
-            instructions_.append(line)
-        self.text = (((title,), title_pos), (instructions_, instruction_pos))
+        self.title = ("¡Palabras largas, palabras cortas!",)
+        self.instructions = ("Estas palabras están relacionadas con la salud.",
+                        "  ",
+                        "Arrastra hacia la bolsa roja",
+                        "las palabras que tienen",
+                        "menos de 5 letras y hacia la",
+                        "bolsa azul las que tienen",
+                        "más de 5 letras.")
+        self.informative_text(self.title, self.instructions)
         self.hand = Hand()
         self.icons = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
@@ -146,22 +133,33 @@ class Words(Activity):
                 
         return
 
-    def draw_text(self):
-        x, y = 0, 0
-        for i in self.text:
-            x = i[1][0]
-            y = i[1][1]
-            surfaces = i[0]
-            for surface in surfaces:
-                pos = (x, y)
-                self.screen.blit(surface, pos)
-                y = y + surface.get_height()
+    def info_text(self, messages, pos, size=constants.font_default[1], bg=None):
+        font = pygame.font.SysFont(constants.font_default[0], size)
+        font_height = font.get_linesize()
 
-        return
+        for message in messages:
+            message = unicode(message, 'utf-8')
+            text = font.render(message, True, constants.font_default_color)
+            text_pos = pos
+            bg.blit(text, text_pos)
+            pos[1] += font_height
+ 
+    def informative_text(self, title, instructions):
+        font_title = pygame.font.SysFont(constants.font_title[0],
+                                         constants.font_title[1])
+
+        tsize = font_title.size(title[0])
+
+        title_pos = [(constants.screen_mode[0] - tsize[0]) / 2.0, 0]
+       
+        tsize = font_title.get_linesize()
+        instructions_pos = [10, title_pos[1] + 1.5 * tsize]
+
+        self.info_text(title, title_pos, size=constants.font_title[1], bg=self.background)
+        self.info_text(instructions, instructions_pos, bg=self.background)
 
     def setup(self):
         pygame.event.clear()
-        self.draw_text()
         self.sprites.draw(self.screen)
         pygame.display.update()
 
@@ -209,7 +207,6 @@ class Words(Activity):
                 self.finished_ = True
 
             self.screen.blit(self.background, (0,0))
-            self.draw_text()
             self.sprites.draw(self.screen)
             pygame.display.update()
 
