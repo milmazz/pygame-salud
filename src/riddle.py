@@ -20,12 +20,12 @@ class RiddleBase(Activity):
 
         self.screen = screen
 
-        self.title = u"¿Qué será, qué será?"
-        self.instructions = (u"Lee esta adivinanza, luego une los puntos de ",
-				        u"cada figura siguiendo el orden de mayor a menor. ",
-                        u"Así descubrirás la respuesta.")
-		self.riddle = (u"Agua pasó por aquí, ", 
-                  u"¡cate! Que yo la ví.",)
+        self.title = ("¿Qué será, qué será?",)
+        self.instructions = ("Lee esta adivinanza, luego une los puntos de",
+                        "cada figura siguiendo el orden de mayor a menor.",
+                        "Así descubrirás la respuesta.")
+		self.riddle = ("Agua pasó por aquí,", 
+                        "¡cate! Que yo la ví.",)
 
 
         self.icons      = pygame.sprite.Group()
@@ -77,47 +77,35 @@ class RiddleBase(Activity):
         self.pos = None
         self.total_lines = 31
 
+    def info_text(self, messages, pos, size=constants.font_default[1], bg=None):
+        font = pygame.font.SysFont(constants.font_default[0], size)
+        font_height = font.get_linesize()
+
+        for message in messages:
+            message = unicode(message, 'utf-8')
+            text = font.render(message, True, constants.font_default_color)
+            text_pos = pos
+            bg.blit(text, text_pos)
+            pos[1] += font_height
+ 
     def informative_text(self, title, instructions, riddle):
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])
-        font_default = pygame.font.SysFont(constants.font_default[0],
-                                           constants.font_default[1])
 
-        tsize = font_title.size(title)
-        isize = font_default.size(instructions[0])[1]
+        tsize = font_title.size(title[0])
 
-        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
-        instruction_pos = (10, title_pos[1] + tsize[1])
-        riddle_pos = (50, 200)
-        title = font_title.render(title, True, constants.font_title_color)
-        
-        instructions_ = []
-        for i in instructions:
-            line = font_default.render(i, True, constants.font_default_color)
-            instructions_.append(line)
+        title_pos = [(constants.screen_mode[0] - tsize[0]) / 2.0, 0]
+       
+        tsize = font_title.get_linesize()
+        instructions_pos = [10, title_pos[1] + tsize]
 
-		riddle_ = []
-		for i in riddle:
-            line = font_default.render(i, True, constants.font_default_color)
-			riddle_.append(line)
-
-        self.text = (((title,), title_pos), (instructions_, instruction_pos),
-					 (riddle_, riddle_pos))
+        self.info_text(title, title_pos, size=constants.font_title[1], bg=self.background)
+        self.info_text(instructions, instructions_pos, bg=self.background)
+        self.info_text(riddle, [50, 200], bg=self.background)
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_029a)
-
-    def draw_text(self):
-        x, y = 0, 0
-        for i in self.text:
-            x = i[1][0]
-            y = i[1][1]
-            surfaces = i[0]
-            for surface in surfaces:
-                pos = (x, y)
-                self.background.blit(surface, pos)
-                y = y + surface.get_height()
-
+ 
     def setup(self):
         self.lastcouple = False
         for i in self.points_reference:
@@ -125,7 +113,6 @@ class RiddleBase(Activity):
             rect.center = i
             self.points.append(rect)
         self.informative_text(self.title, self.instructions, self.riddle)
-        self.draw_text()
         self.sprites.draw(self.screen)
 
     def handle_events(self):
@@ -254,9 +241,9 @@ class Riddle2(RiddleBase):
                 (427, 141), #30
             )
         self.total_lines = 29
-		self.riddle = (u"Una hoja entre muchas", 
-                  u"hojas, buscando una hoja", 
-                  u"se llora.")
+		self.riddle = ("Una hoja entre muchas",
+                  "hojas, buscando una hoja",
+                  "se llora.")
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_029b)
@@ -298,8 +285,8 @@ class Riddle3(RiddleBase):
                 (402, 562), #30
             )
         self.total_lines = 29
-		self.riddle = (u"El que sabe, sabe ",
-                  u"¿Con qué se hace el casabe?",)
+		self.riddle = ("El que sabe, sabe",
+                  "¿Con qué se hace el casabe?",)
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_030a)
@@ -333,10 +320,10 @@ class Riddle4(RiddleBase):
                 (287, 386), #22
             )
         self.total_lines = 21
-		self.riddle = (u"Que sólo será", 
-                  u"que no lo será,", 
-                  u"si no lo adivinas",
-                  u"el ratón se lo comerá.",)
+		self.riddle = ("Que sólo será",
+                  "que no lo será,",
+                  "si no lo adivinas",
+                  "el ratón se lo comerá.",)
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_030b)
@@ -388,10 +375,15 @@ class Riddle5(RiddleBase):
                 (602, 237),
             )
         self.total_lines = 39
-        self.title = u"Adivina, adivinanza..."
-		self.riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
-				  u"grato eres también;", u"donde yo no existo", 
-				  u"el mundo triste es:", u"adivina quién puede ser.", u"¿Quién soy?")
+        self.title = ("Adivina, adivinanza...",)
+		self.riddle = ("Te quito la sed,",
+                    "te quito el calor",
+                    "por mi eres limpio,",
+                    "grato eres también;",
+                    "donde yo no existo",
+                    "el mundo triste es:",
+                    "adivina quién puede ser.",
+                    "¿Quién soy?")
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_031a)
@@ -432,10 +424,15 @@ class Riddle6(RiddleBase):
                 (456, 244), #30
             )
         self.total_lines = 29
-        self.title = u"Adivina, adivinanza..."
-		self.riddle = (u"Te quito la sed, ", u"te quito el calor", u"por mi eres limpio,",
-				  u"grato eres también;", u"donde yo no existo", 
-				  u"el mundo triste es:", u"adivina quién puede ser.", u"¿Quién soy?")
+        self.title = ("Adivina, adivinanza...",)
+		self.riddle = ("Te quito la sed, ",
+                    "te quito el calor",
+                    "por mi eres limpio,",
+                    "grato eres también;",
+                    "donde yo no existo", 
+                    "el mundo triste es:",
+                    "adivina quién puede ser.",
+                    "¿Quién soy?")
 
     def setup_background(self):
         self.background, rect = common.load_image(illustration_031b)

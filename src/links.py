@@ -26,8 +26,6 @@ class Item(sprite.Sprite):
             self.rect.move_ip(position)
             self.active = False
 
-#            self.rect.inflate_ip(-self.rect[2]*0.3, -self.rect[3]*0.3)
-
         def update(self):
             if self.active:
                 self.deactivate()
@@ -129,30 +127,33 @@ class Links(Activity):
         self.arrows = []
         self.arrow = None
 
-    def setup(self):
-        title = self.title
-        instructions = self.instructions
+    def info_text(self, messages, pos, size=constants.font_default[1], bg=None):
+        font = pygame.font.SysFont(constants.font_default[0], size)
+        font_height = font.get_linesize()
 
+        for message in messages:
+            message = unicode(message, 'utf-8')
+            text = font.render(message, True, constants.font_default_color)
+            text_pos = pos
+            bg.blit(text, text_pos)
+            pos[1] += font_height
+ 
+    def informative_text(self, title, instructions):
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])
-        font_default = pygame.font.SysFont(constants.font_default[0],
-                                           constants.font_default[1])
 
-        tsize = font_title.size(title)
-        isize = font_default.size(instructions[0])[1]
+        tsize = font_title.size(title[0])
 
-        title_pos = (constants.screen_mode[0]/2.0 - tsize[0]/2.0, 0)
-        instruction_pos = (10, title_pos[1] + tsize[1])
-        title = font_title.render(title, True, constants.font_title_color)
-        
-        instructions_ = []
-        for i in instructions:
-            line = font_default.render(i, True, constants.font_default_color)
-            instructions_.append(line)
-        self.text = (((title,), title_pos), (instructions_, instruction_pos))
+        title_pos = [(constants.screen_mode[0] - tsize[0]) / 2.0, 0]
+       
+        tsize = font_title.get_linesize()
+        instructions_pos = [10, title_pos[1] + tsize]
 
-        self.draw_text()
+        self.info_text(title, title_pos, size=constants.font_title[1], bg=self.background)
+        self.info_text(instructions, instructions_pos, bg=self.background)
 
+    def setup(self):
+        self.informative_text(self.title, self.instructions)
         pygame.display.update()
         
     def handle_events(self):
@@ -218,7 +219,6 @@ class Links(Activity):
                 self.finished_ = True
 
             self.screen.blit(self.background, (0,0))
-            self.draw_text()
             self.sprites0.draw(self.screen)
             if self.arrow:
                 self.arrow.update()
@@ -229,24 +229,13 @@ class Links(Activity):
             self.pointer_.draw(self.screen)
             pygame.display.flip()
 
-    def draw_text(self):
-        x, y = 0, 0
-        for i in self.text:
-            x = i[1][0]
-            y = i[1][1]
-            surfaces = i[0]
-            for surface in surfaces:
-                pos = (x, y)
-                self.screen.blit(surface, pos)
-                y = y + surface.get_height()
-
 
 # Activity 7
 class Shower(Links):
     def __init__(self, screen):
-        self.title = u"¡A la ducha!"
-        self.instructions = (u"Une con una flecha lo que necesitas para", 
-                             u"asear cada parte de tu cuerpo.")
+        self.title = ("¡A la ducha!",)
+        self.instructions = ("Une con una flecha lo que necesitas para",
+                             "asear cada parte de tu cuerpo.")
         pos = {
                 'towel': (150, 126),
                 'shampoo': (70, 255),
@@ -287,9 +276,9 @@ class Shower(Links):
 # Activity 23
 class Meals(Links):
     def __init__(self, screen):
-        self.title = u"Cada oveja con su pareja"
-        self.instructions = (u"Une con una línea el dibujo con la palabra " +
-                             u"que le corresponde.",)
+        self.title = ("Cada oveja con su pareja",)
+        self.instructions = ("Une con una línea el dibujo con la palabra",
+                             "que le corresponde.",)
         pos = {
                 'breakfast': (491, 476),
                 'lunch': (399, 75),
