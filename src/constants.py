@@ -14,17 +14,17 @@ icons_folder = os.path.join(data_folder, u"icons")
 
 # If OS is Linux/Unix
 if (os.name == "posix"):
-	home_dir = os.path.join(os.getenv('HOME'), u".canaima-salud")
+    home_dir = os.path.join(os.getenv('HOME'), u".canaima-salud")
 else:
-	home_dir = u".."
+    home_dir = u".."
 
 folder_log = os.path.join(home_dir, u"log")
 log_file = os.path.join(folder_log, u"canaima-salud.log")
 
 # cursors
 cursor_filename = os.path.join(data_folder, u"cursors", u"pointer.png")
-draw_freehand = os.path.join(data_folder, "cursors", "gartoon", \
-                "draw-freehand.png")
+draw_freehand = os.path.join(data_folder, "cursors", "gartoon",
+                             "draw-freehand.png")
 
 # Fonts
 font_title = ("dejavusans", 40)
@@ -33,7 +33,8 @@ font_default = ("dejavusans", 30)
 font_default_color = (0, 0, 0)
 
 # icons and pictures for main menu
-background_filename = os.path.join(data_folder, u"backgrounds", u"background-main.jpg")
+background_filename = os.path.join(data_folder, u"backgrounds",
+                                   u"background-main.jpg")
 
 process_stop_filename = os.path.join(icons_folder, u"gartoon", u"process-stop.png")
 

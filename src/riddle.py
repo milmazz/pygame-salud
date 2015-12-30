@@ -24,7 +24,7 @@ class RiddleBase(Activity):
         self.instructions = ("Lee esta adivinanza, luego une los puntos de",
                         "cada figura siguiendo el orden de mayor a menor.",
                         "Así descubrirás la respuesta.")
-		self.riddle = ("Agua pasó por aquí,", 
+		self.riddle = ("Agua pasó por aquí,",
                         "¡cate! Que yo la ví.",)
 
 
@@ -87,7 +87,7 @@ class RiddleBase(Activity):
             text_pos = pos
             bg.blit(text, text_pos)
             pos[1] += font_height
- 
+
     def informative_text(self, title, instructions, riddle):
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])
@@ -95,7 +95,7 @@ class RiddleBase(Activity):
         tsize = font_title.size(title[0])
 
         title_pos = [(constants.screen_mode[0] - tsize[0]) / 2.0, 0]
-       
+
         tsize = font_title.get_linesize()
         instructions_pos = [10, title_pos[1] + 1.5 * tsize]
 
@@ -105,7 +105,7 @@ class RiddleBase(Activity):
 
     def setup_background(self):
         self.background, rect = common.load_image(constants.illustration_029a)
- 
+
     def setup(self):
         self.lastcouple = False
         for i in self.points_reference:
@@ -125,7 +125,7 @@ class RiddleBase(Activity):
             elif event.type == KEYUP:
                 self.changed = False
                 if event.key == K_ESCAPE:
-                    self.quit = True                        
+                    self.quit = True
                     return
             elif event.type == MOUSEBUTTONDOWN:
                 if self.icons.sprites()[0].rect.collidepoint(mouse_pos):
@@ -257,10 +257,10 @@ class Riddle3(RiddleBase):
     def __init__(self, screen):
         RiddleBase.__init__(self, screen)
         self.points_reference = (
-                (302, 432), #1
-                (318, 390), #2
-                (346, 342), #3
-                (380, 286), #4
+                (302, 432),  # 1
+                (318, 390),  # 2
+                (346, 342),  # 3
+                (380, 286),  # 4
                 (405, 259), #5
                 (439, 245), #6
                 (474, 203), #7
@@ -433,7 +433,7 @@ class Riddle6(RiddleBase):
                     "te quito el calor",
                     "por mi eres limpio,",
                     "grato eres también;",
-                    "donde yo no existo", 
+                    "donde yo no existo",
                     "el mundo triste es:",
                     "adivina quién puede ser.",
                     "¿Quién soy?")
@@ -443,12 +443,12 @@ class Riddle6(RiddleBase):
 
 class Pointer(sprite.Sprite):
     def __init__(self, pos = None):
-        sprite.Sprite.__init__(self) 
+        sprite.Sprite.__init__(self)
         self.image, self.rect = common.load_image(constants.draw_freehand)
 
         if not pos:
             pos = map(lambda x: x/2.0, constants.screen_mode)
-        
+
         pygame.mouse.set_pos(pos)
         self.update(pos)
 

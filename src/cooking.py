@@ -12,8 +12,9 @@ from activity import Activity
 import common
 from icons import *
 
+
 class Ingredient(Sprite):
-    def __init__(self, name, pos=(0,0)):
+    def __init__(self, name, pos=(0, 0)):
         Sprite.__init__(self)
         image_name = os.path.join(constants.data_folder, "cooking",
                                   name + ".png")
@@ -22,7 +23,7 @@ class Ingredient(Sprite):
         self.rect.move_ip(pos)
         self.orig = pos
         self.name = name
-	
+
     def update(self, pos):
         self.rect.topleft = pos
 
@@ -31,9 +32,9 @@ class Hand(Sprite):
     def __init__(self):
         Sprite.__init__(self)
         self.image_normal = os.path.join(constants.data_folder, 'cursors',
-                                    "hand-open.png")
-        self.image_close = os.path.join(constants.data_folder, 'cursors', 
-                                    "hand-close.png")
+                                         "hand-open.png")
+        self.image_close = os.path.join(constants.data_folder, 'cursors',
+                                        "hand-close.png")
         self.normal, self.rect = common.load_image(self.image_normal)
         self.close, self.rect = common.load_image(self.image_close)
         self.image = self.normal
@@ -45,7 +46,7 @@ class Hand(Sprite):
         else:
             self.color = 0
 
-    def update(self, mover=(0,0)):
+    def update(self, mover=(0, 0)):
         self.rect.topleft = mover
         if self.color == 0:
             self.image = self.normal
@@ -66,8 +67,10 @@ class Cooking(Activity):
         return ingredients
 
     def instruction_text(self):
-        font_title = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
-        font_instructions = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
+        font_title = pygame.font.SysFont(constants.font_title[0],
+                                         constants.font_title[1])
+        font_instructions = pygame.font.SysFont(constants.font_default[0],
+                                                constants.font_default[1])
         title = u"¡A Cocinar!"
         title_width, title_height = font_title.size(title)
         instructions = [u"Vamos a hacer una torta...", \
@@ -94,10 +97,9 @@ class Cooking(Activity):
                 (580, 170), 'mayonnaise': (715, 175), 'ketchup': \
                 (555, 163), 'pepper': (645, 197)}
         # list of all food and positions on the screen
-        self.correct_ingredients = ['butter', 'eggs', 'milk', 'flour', \
-                'sugar']
+        self.correct_ingredients = ['butter', 'eggs', 'milk', 'flour', 'sugar']
         self.checked_ingredients = 0
-        self.hand = Hand() #load hand
+        self.hand = Hand()  # load hand
         self.icons = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
         self.checked = pygame.sprite.Group()
@@ -105,7 +107,7 @@ class Cooking(Activity):
         self.container = pygame.Rect(370, 315, 225, 65)
         self.sprites = pygame.sprite.OrderedUpdates()
         self.sprites.add([self.icons, self.ingredients, self.hand])
-        pygame.mouse.set_visible( False ) #hide pointer
+        pygame.mouse.set_visible(False)  # hide pointer
         self.button_down = 0
         pos = pygame.mouse.get_pos()
         self.hand.update(pos)
@@ -170,8 +172,8 @@ class Cooking(Activity):
                     self.selection.update((self.selection.orig))
             if event.type == MOUSEBUTTONDOWN:
                 self.selection = pygame.sprite.Group()
-                if pygame.sprite.spritecollideany(self.hand, \
-                        self.ingredients):
+                if pygame.sprite.spritecollideany(self.hand,
+                                                  self.ingredients):
                     self.selection = pygame.sprite.spritecollideany(self.hand, \
                             self.ingredients)
                 if self.selection:
@@ -180,6 +182,6 @@ class Cooking(Activity):
                     self.selection.add(self.sprites)
             self.hand.remove(self.sprites)
             self.hand.add(self.sprites)
-            self.screen.blit(self.background, (0,0))
+            self.screen.blit(self.background, (0, 0))
             self.sprites.draw(self.screen)
             pygame.display.update()

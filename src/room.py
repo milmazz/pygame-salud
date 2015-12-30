@@ -45,7 +45,8 @@ class Room(Activity):
         self.found = 0
 
         self.screen = screen
-        path = os.path.join(constants.data_folder, "backgrounds", 'illustration_020_021.png')
+        path = os.path.join(constants.data_folder, "backgrounds",
+                            'illustration_020_021.png')
         self.background, rect = common.load_image(path)
 
         self.title = ("¡Orden en mi habitación!",)
@@ -64,7 +65,7 @@ class Room(Activity):
         self.pointer.draw(self.screen)
 
         self.check = sprite.RenderUpdates()
-        
+
         self.room = Rect(403, 129, 393, 467)
         pygame.display.update()
 
@@ -78,7 +79,7 @@ class Room(Activity):
             text_pos = pos
             bg.blit(text, text_pos)
             pos[1] += font_height
- 
+
     def informative_text(self, title, instructions):
         font_title = pygame.font.SysFont(constants.font_title[0],
                                          constants.font_title[1])
@@ -86,11 +87,12 @@ class Room(Activity):
         tsize = font_title.size(title[0])
 
         title_pos = [(constants.screen_mode[0] - tsize[0]) / 2.0, 0]
-       
+
         tsize = font_title.get_linesize()
         instructions_pos = [10, title_pos[1] + tsize]
 
-        self.info_text(title, title_pos, size=constants.font_title[1], bg=self.background)
+        self.info_text(title, title_pos, size=constants.font_title[1],
+                       bg=self.background)
         self.info_text(instructions, instructions_pos, bg=self.background)
 
     def setup(self):
@@ -107,7 +109,7 @@ class Room(Activity):
             elif event.type == KEYUP:
                 self.changed = False
                 if event.key == K_ESCAPE:
-                    self.quit = True                        
+                    self.quit = True
                     return
             elif event.type == MOUSEBUTTONDOWN:
                 if pygame.sprite.spritecollideany(self.pointer_, self.icons):
@@ -122,7 +124,7 @@ class Room(Activity):
                             break
 
         if not self.wrong_pos:
-            center = (constants.screen_mode[0]/2.0, 
+            center = (constants.screen_mode[0]/2.0,
                       constants.screen_mode[0]/2.0)
             self.xs.add(Check(pos=center, zoom=2))
             self.finished_ = True
@@ -145,15 +147,16 @@ class Room(Activity):
                 self.screen.blit(surface, pos)
                 y = y + surface.get_height()
 
+
 class Xs(sprite.Sprite):
-    def __init__(self, pos = None):
-        sprite.Sprite.__init__(self) 
+    def __init__(self, pos=None):
+        sprite.Sprite.__init__(self)
         path = os.path.join(constants.data_folder, "room", "xs.png")
         self.image, self.rect = common.load_image(path)
 
         if not pos:
             pos = map(lambda x: x/2.0, constants.screen_mode)
-        
+
         self.update(pos)
 
     def update(self, pos):
@@ -162,8 +165,8 @@ class Xs(sprite.Sprite):
 
 
 if __name__ == "__main__":
-	pygame.init()
+    pygame.init()
 
-	screen = pygame.display.set_mode(constants.screen_mode, 32)
+    screen = pygame.display.set_mode(constants.screen_mode, 32)
     room = Room(screen)
     room.run()

@@ -5,13 +5,14 @@ import string
 import pygame
 from pygame.locals import *
 
+
 def load_image(path, colorkey=None):
     """Load image resources"""
     try:
         image = pygame.image.load(path)
     except pygame.error, message:
         print "Cannot load image: ", path
-        raise SystemExit, message
+        raise SystemExit(message)
 
     if image.get_alpha() is None:
         image = image.convert()
@@ -20,18 +21,21 @@ def load_image(path, colorkey=None):
 
     return image, image.get_rect()
 
+
 def load_sound(path):
     class NoneSound:
-        def play(self): pass
+        def play(self):
+            pass
     if not pygame.mixer:
         return NoneSound()
     try:
         sound = pygame.mixer.Sound(path)
     except pygame.error, message:
         print 'Cannot load sound: ', path
-        raise SystemExit, message
+        raise SystemExit(message)
 
     return sound
+
 
 def load_file(path):
     try:
@@ -42,6 +46,6 @@ def load_file(path):
 
     except IOError, message:
         print 'Cannot load file: ', path
-        raise SystemExit, message
+        raise SystemExit(message)
 
     return lines

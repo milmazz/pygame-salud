@@ -13,11 +13,12 @@ from activity import Activity
 import common
 from icons import *
 
+
 class Text(Sprite):
     def __init__(self, id, finalRect, initPos):
         Sprite.__init__(self)
-        image_path = os.path.join(constants.data_folder,\
-          'careful', 'text_'+id+'.png')
+        image_path = os.path.join(constants.data_folder,
+                                  'careful', 'text_'+id+'.png')
         self.image, self.rect = common.load_image(image_path)
         self.id = id
         self.finalRect = finalRect
@@ -32,13 +33,13 @@ class Text(Sprite):
 class Hand(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image_normal = os.path.join(constants.data_folder,\
-          'cursors', "hand-open.png")
-        self.image_close = os.path.join(constants.data_folder,\
-          'cursors', "hand-close.png")
+        self.image_normal = os.path.join(constants.data_folder,
+                                         'cursors', "hand-open.png")
+        self.image_close = os.path.join(constants.data_folder,
+                                        'cursors', "hand-close.png")
         self.normal, self.rect = common.load_image(self.image_normal)
         self.close, self.rect = common.load_image(self.image_close)
-        self.image = self.normal 
+        self.image = self.normal
         self.color = 0
 
     def change_hand(self):
@@ -47,9 +48,9 @@ class Hand(Sprite):
         else:
             self.color = 0
 
-    def update(self, mover=(0,0)):
-        self.rect.x = mover[0] 
-        self.rect.y = mover[1] 
+    def update(self, mover=(0, 0)):
+        self.rect.x = mover[0]
+        self.rect.y = mover[1]
         if self.color == 0:
             self.image = pygame.image.load(self.image_normal)
         if self.color == 1:
@@ -66,7 +67,8 @@ class CarefulActivity(Activity):
 
     def instruction_text(self):
         if pygame.font:
-            font = pygame.font.SysFont(constants.font_title[0], constants.font_title[1])
+            font = pygame.font.SysFont(constants.font_title[0],
+                                       constants.font_title[1])
             title = unicode("Cuidado con los accidentes", 'utf-8')
             text = font.render(title, True, constants.font_title_color)
             textRect = text.get_rect()
@@ -76,9 +78,10 @@ class CarefulActivity(Activity):
 
             messages = ["Lee los mensajes que contienen los globos",
             "y arrástralos hasta la imagen de la situación que corresponda."]
-            
+
             y += font.get_linesize()
-            font = pygame.font.SysFont(constants.font_default[0], constants.font_default[1])
+            font = pygame.font.SysFont(constants.font_default[0],
+                                       constants.font_default[1])
             font_height = font.get_linesize()
 
             for message in messages:
@@ -91,10 +94,10 @@ class CarefulActivity(Activity):
 
     def setup(self):
         """Turn off the mouse pointer"""
-        pygame.mouse.set_visible( False )
+        pygame.mouse.set_visible(False)
         """change the mouse pointer by a hand"""
         self.button_down = 0
-        self.rectList = [ 
+        self.rectList = [
                 pygame.Rect(218, 60, 106, 67),
                 pygame.Rect(322, 218, 87, 52),
                 pygame.Rect(552, 247, 77, 57),
@@ -102,8 +105,8 @@ class CarefulActivity(Activity):
         self.sprites = pygame.sprite.OrderedUpdates()
         self.icons = pygame.sprite.Group()
         self.icons.add([Icons('stop')])
-        image_check = image_normal = os.path.join(constants.icons_folder,\
-                "check.png")
+        image_check = image_normal = os.path.join(constants.icons_folder,
+                                                  "check.png")
         self.checkImage, self.checkRect = common.load_image\
           (image_check)
         self.hand = Hand()
@@ -129,8 +132,8 @@ class CarefulActivity(Activity):
                 return
             elif event.type == MOUSEMOTION:
                 if self.down == 1:
-                    self.selection = pygame.sprite.spritecollideany\
-                      (self.hand, self.text)
+                    self.selection = pygame.sprite.spritecollideany(self.hand,
+                                                                    self.text)
                     if self.selection:
                         self.selection.update(pos)
                 self.hand.update(pos)
@@ -164,12 +167,11 @@ class CarefulActivity(Activity):
 
             elif event.type == MOUSEBUTTONDOWN:
                 self.down = 1
-                if pygame.sprite.spritecollideany\
-                  (self.hand, self.icons):
+                if pygame.sprite.spritecollideany(self.hand, self.icons):
                     self.quit = True
                     return
 
-        self.screen.blit(self.background, (0,0))
+        self.screen.blit(self.background, (0, 0))
         self.sprites.draw(self.screen)
         pygame.display.update()
 
